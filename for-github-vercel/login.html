@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Log in · Cloudways</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--heading:#253858;--body:#4b5971;--brand:#2f39bf;--brand-hover:#252ea3;--border:#dfe1e6;--danger:#d92d20}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{font-family:Poppins,system-ui,sans-serif;color:var(--heading);background:#fff;font-size:13px;line-height:normal;display:flex;min-height:100vh}
+a{color:var(--brand);text-decoration:none;font-weight:500}
+a:hover{text-decoration:underline}
+button,input{font:inherit}
+img{display:block}
+
+/* left column */
+.left{flex:1;min-width:0;display:flex;flex-direction:column;padding:32px}
+.top{display:flex;align-items:center;justify-content:space-between;height:28px}
+.top .logo{height:28px;width:auto}
+.top p{font-size:13px;color:var(--heading)}
+.content{flex:1;display:flex;align-items:center;justify-content:center;padding:32px 0}
+.card{width:440px;max-width:100%}
+h1{font-size:20px;font-weight:700;line-height:28px}
+.sub{color:var(--body);line-height:20px;margin-bottom:20px}
+
+.social{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.social button{height:54px;border:1px solid var(--border);border-radius:4px;background:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;font-size:11px;color:var(--heading);cursor:pointer;transition:background .15s,border-color .15s}
+.social button:hover{background:#f8f9fc;border-color:#c5c9d3}
+.social button img{width:16px;height:16px}
+.or{display:flex;align-items:center;gap:10px;margin:24px 0;font-size:11px;color:var(--body);text-transform:uppercase;letter-spacing:.01em}
+.or::before,.or::after{content:"";flex:1;height:1px;background:var(--border)}
+
+.field{margin-bottom:16px}
+.field label{display:block;font-size:12px;font-weight:500;line-height:18px;margin-bottom:6px}
+.input{position:relative}
+.input input{width:100%;height:40px;border:1px solid var(--border);border-radius:4px;padding:0 12px;font-size:13px;color:var(--heading);background:#fff;outline:0;transition:border-color .15s,box-shadow .15s}
+.input input::placeholder{color:#97a0af}
+.input input:hover{border-color:#c5c9d3}
+.input input:focus{border-color:var(--brand);box-shadow:0 0 0 3px rgba(47,57,191,.12)}
+.field.err .input input{border-color:var(--danger)}
+.field.err .input input:focus{box-shadow:0 0 0 3px rgba(217,45,32,.12)}
+.input .eye{position:absolute;right:4px;top:4px;width:32px;height:32px;display:grid;place-items:center;background:none;border:0;color:var(--body);cursor:pointer;border-radius:4px}
+.input .eye:hover{background:#f1f2f6}
+.input.has-eye input{padding-right:44px}
+.msg{display:none;color:var(--danger);font-size:11px;margin-top:4px}
+.field.err .msg{display:block}
+
+.submit{width:100%;height:40px;border:0;border-radius:4px;background:var(--brand);color:#fff;font-size:13px;font-weight:500;cursor:pointer;margin-top:8px;transition:background .15s}
+.submit:hover{background:var(--brand-hover)}
+.submit:disabled{opacity:.7;cursor:progress}
+.reset{display:inline-block;margin-top:20px;font-weight:400}
+
+/* right promo panel */
+.right{width:37.3%;min-width:420px;max-width:560px;position:relative;overflow:hidden;color:#fff;background:#0a1580 url("assets/login/panel-bg.jpg") center/cover no-repeat;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:32px 32px 72px}
+.promo{display:flex;flex-direction:column;align-items:center;gap:30px;text-align:center}
+.promo .illu{width:min(440px,100%);height:auto}
+.promo .copy{width:295px;max-width:100%}
+.eyebrow{display:block;font-size:12px;font-weight:500;line-height:14px;background:linear-gradient(90deg,#ffb27a,#ffd0f0);-webkit-background-clip:text;background-clip:text;color:transparent}
+.promo h2{font-size:18px;font-weight:600;line-height:24px;margin:8px 0}
+.promo p{font-size:12px;line-height:18px;color:rgba(255,255,255,.92)}
+.learn{display:inline-flex;align-items:center;justify-content:center;height:32px;padding:0 16px;margin-top:16px;border:1px solid #fff;border-radius:4px;color:#fff;font-size:13px;font-weight:500;background:transparent;transition:background .15s}
+.learn:hover{background:rgba(255,255,255,.12);text-decoration:none}
+.dots{position:absolute;bottom:32px;left:50%;transform:translateX(-50%);display:flex;gap:6px}
+.dots i{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.35)}
+.dots i.on{width:26px;border-radius:4px;background:#fff}
+
+@media(max-width:900px){.right{display:none}.left{padding:20px}}
+@media(max-width:480px){.social{grid-template-columns:repeat(2,1fr)}.top p{font-size:12px}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<main class="left">
+  <div class="top">
+    <img class="logo" src="assets/login/logo.svg" alt="Cloudways by DigitalOcean">
+    <p>New to Cloudways? <a href="#">Sign Up</a></p>
+  </div>
+
+  <div class="content">
+    <section class="card" aria-labelledby="login-title">
+      <h1 id="login-title">Login</h1>
+      <p class="sub">Welcome back! Select method to log in</p>
+
+      <div class="social">
+        <button type="button" data-provider="DigitalOcean"><img src="assets/login/do.svg" alt="">DigitalOcean</button>
+        <button type="button" data-provider="LinkedIn"><img src="assets/login/linkedin.svg" alt="">Linkedin</button>
+        <button type="button" data-provider="GitHub"><img src="assets/login/github.svg" alt="">GitHub</button>
+        <button type="button" data-provider="Google"><img src="assets/login/google.svg" alt="">Google</button>
+      </div>
+
+      <div class="or">Or continue with</div>
+
+      <form id="login-form" novalidate>
+        <div class="field" id="f-email">
+          <label for="email">Email</label>
+          <div class="input"><input id="email" name="email" type="email" autocomplete="email" placeholder="Enter your email" required></div>
+          <p class="msg" id="e-email" role="alert">Enter a valid email address.</p>
+        </div>
+        <div class="field" id="f-pass">
+          <label for="password">Password</label>
+          <div class="input has-eye">
+            <input id="password" name="password" type="password" autocomplete="current-password" placeholder="Enter your password" required>
+            <button type="button" class="eye" id="toggle-pass" aria-label="Show password" aria-pressed="false">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/><path id="slash" d="M3 3l18 18" style="display:none"/></svg>
+            </button>
+          </div>
+          <p class="msg" id="e-pass" role="alert">Enter your password.</p>
+        </div>
+        <button class="submit" id="submit" type="submit">Log in</button>
+      </form>
+
+      <a class="reset" href="#">Reset your password</a>
+    </section>
+  </div>
+</main>
+
+<aside class="right" aria-label="Announcement">
+  <div class="promo">
+    <img class="illu" src="assets/login/illustration.svg" alt="">
+    <div class="copy">
+      <span class="eyebrow">Announcing</span>
+      <h2>AWS Micro for Smaller Sites</h2>
+      <p>Fully Managed WordPress Hosting Built On Kubernetes With Auto Scaling for Growing Sites.</p>
+      <a class="learn" href="#">Learn More</a>
+    </div>
+  </div>
+  <div class="dots" aria-hidden="true"><i class="on"></i><i></i><i></i></div>
+</aside>
+
+<script>
+const DASHBOARD='index.html';
+const form=document.getElementById('login-form');
+const email=document.getElementById('email'),pass=document.getElementById('password');
+const fEmail=document.getElementById('f-email'),fPass=document.getElementById('f-pass');
+const btn=document.getElementById('submit');
+
+// show/hide password
+const eye=document.getElementById('toggle-pass');
+eye.addEventListener('click',()=>{
+  const show=pass.type==='password';
+  pass.type=show?'text':'password';
+  eye.setAttribute('aria-pressed',String(show));
+  eye.setAttribute('aria-label',show?'Hide password':'Show password');
+  document.getElementById('slash').style.display=show?'':'none';
+});
+
+function goToDashboard(who){
+  sessionStorage.setItem('cw_user',who);sessionStorage.setItem('cw_splash','1');
+  btn.disabled=true;btn.textContent='Logging in…';
+  setTimeout(()=>{location.href=DASHBOARD},450);
+}
+
+form.addEventListener('submit',e=>{
+  e.preventDefault();
+  const okEmail=/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value.trim());
+  const okPass=pass.value.length>0;
+  fEmail.classList.toggle('err',!okEmail);
+  fPass.classList.toggle('err',!okPass);
+  if(!okEmail){email.focus();return}
+  if(!okPass){pass.focus();return}
+  goToDashboard(email.value.trim());
+});
+[email,pass].forEach(i=>i.addEventListener('input',()=>i.closest('.field').classList.remove('err')));
+
+// social providers (prototype: all go straight to the dashboard)
+document.querySelectorAll('[data-provider]').forEach(b=>b.addEventListener('click',()=>goToDashboard(b.dataset.provider)));
+</script>
+</body>
+</html>

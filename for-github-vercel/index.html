@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cloudways Dashboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --heading:#253858; --body:#4b5971; --brand:#2f39bf; --brand-soft:#e9eaf9;
+  --border:#eff0f3; --tint:#f5f5fc;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Poppins,system-ui,sans-serif;color:var(--heading);background:#fff;font-size:14px;line-height:normal}
+a{color:var(--brand);text-decoration:none;font-weight:500}
+button{font:inherit;cursor:pointer;border:0;background:none;color:inherit}
+img{display:block}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* top bar */
+.topbar{height:48px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 12px 0 16px;position:sticky;top:0;background:#fff;z-index:10}
+.topbar .logo{width:147px;height:28px}
+.top-right{display:flex;align-items:center;gap:24px;font-size:12px}
+.refer{display:flex;align-items:center;gap:6px}
+.refer img{width:20px;height:20px}
+.vline{width:1px;height:30px;background:var(--border)}
+.top-right .icons{width:132px;height:24px}
+.user{display:flex;align-items:center;gap:8px}
+.user .avatar{width:30px;height:30px;border-radius:50%}
+.user .chev{width:22px;height:20px}
+.switcher{display:flex;gap:2px;background:var(--tint);border:1px solid var(--border);border-radius:6px;padding:2px}
+.switcher button{padding:2px 10px;font-size:11px;border-radius:4px;color:var(--body)}
+.switcher button.on{background:var(--brand);color:#fff}
+
+/* layout */
+.layout{display:flex;min-height:calc(100vh - 48px)}
+.side{width:88px;border-right:1px solid var(--border);display:flex;flex-direction:column;justify-content:space-between;padding:20px 0;position:sticky;top:48px;height:calc(100vh - 48px);max-height:1035px;flex-shrink:0}
+.side nav{display:flex;flex-direction:column;align-items:center;gap:12px}
+.side a{display:block}
+main{flex:1;padding:52px 24px 120px;min-width:0}
+.wrap{max-width:1155px;margin:0 auto}
+
+/* hero */
+.hero{display:flex;flex-direction:column;align-items:center;gap:16px}
+.hero h1{font-size:20px;font-weight:600;line-height:36px;text-align:center}
+.chat{width:569px;max-width:100%;height:116px;border:1px solid var(--border);border-radius:4px;padding:13px 20px 0;position:relative;background:#fff}
+/* border beam: a short gradient arc that travels around the box edge */
+@property --beam-angle{syntax:"<angle>";initial-value:0deg;inherits:false}
+.chat::before,.chat::after{content:"";position:absolute;inset:-1px;border-radius:5px;padding:1.5px;pointer-events:none;
+  background:conic-gradient(from var(--beam-angle),transparent 0deg,transparent 280deg,#8b5cf6 320deg,#2f39bf 345deg,#0fafff 360deg);
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
+  -webkit-mask-composite:xor;mask-composite:exclude;
+  animation:beam 4s linear infinite}
+.chat::after{filter:blur(6px);opacity:.55}
+.chat:focus-within::before,.chat:focus-within::after{animation-duration:2.2s}
+@keyframes beam{to{--beam-angle:360deg}}
+@media(prefers-reduced-motion:reduce){.chat::before,.chat::after{animation:none;background:linear-gradient(90deg,#8b5cf6,#2f39bf,#0fafff)}}
+.chat textarea{border:0;outline:0;resize:none;font:inherit;font-size:13px;line-height:22.75px;color:var(--heading);width:100%;height:68px;background:transparent}
+.chat textarea::placeholder{color:var(--body)}
+.chat .acts{position:absolute;right:13px;bottom:13px;display:flex;gap:9px}
+.chat .acts button{width:24px;height:24px;border-radius:3px;display:grid;place-items:center;color:var(--body)}
+.chat .send{background:#d5d7f2;color:#fff}
+.chat .send.ready{background:var(--brand)}
+.chips{display:flex;justify-content:space-between;width:569px;max-width:100%;gap:8px;flex-wrap:wrap}
+.chip{display:flex;align-items:center;gap:4px;padding:6px 8px;border:1px solid var(--border);border-radius:4px;font-size:10px;font-weight:500;background:#fff}
+.chip img{width:11px;height:11px}
+.chip:hover{background:var(--tint)}
+
+/* sections */
+section{margin-top:32px}
+h2{font-size:16px;font-weight:500;line-height:24px}
+.sec-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:24px}
+.sec-head a{display:flex;align-items:center;gap:6px;font-size:12px}
+h2.sp{margin-bottom:24px}
+.grid{display:grid;gap:24px}
+.g4{grid-template-columns:repeat(4,1fr)}
+.g3{grid-template-columns:repeat(3,1fr)}
+.g2{grid-template-columns:repeat(2,1fr)}
+.card{border:1px solid var(--border);border-radius:4px;background:#fff;overflow:hidden}
+
+/* getting started */
+.gs{display:flex;flex-direction:column}
+.gs .thumb{height:150px;width:100%;object-fit:cover;object-position:top left}
+.gs .body{padding:30px 21px 21px;display:flex;flex-direction:column;flex:1}
+.prod{display:flex;align-items:center;gap:8px;font-size:12px;font-weight:500;height:18px}
+.prod img{height:18px;width:auto}
+.gs h3{font-size:15px;font-weight:500;line-height:21px;margin:15px 0 4px}
+.gs p{font-size:12px;color:var(--body);line-height:18px;margin-bottom:auto}
+.cta{font-size:12px;display:inline-flex;gap:6px;align-items:center;padding:7px 0;margin-top:16px}
+
+/* tabs + lists */
+.tabs{display:flex;gap:16px;border-bottom:1px solid var(--border);margin:20px 0 20px}
+.tab{padding:5px 4px 7px;font-size:12px;font-weight:400;border-bottom:2px solid transparent;margin-bottom:-1px;color:var(--heading)}
+.tab.on{color:var(--brand);font-weight:500;border-color:var(--brand)}
+.apps{display:flex;flex-direction:column;gap:16px}
+.app{display:flex;align-items:center;justify-content:space-between;height:63px;padding:0 20px;font-weight:500;font-size:13px}
+.app .l{display:flex;align-items:center;gap:20px}
+.app .ico{width:42px;height:42px;background-repeat:no-repeat;background-size:1157px 63px;background-position:-16px -10px}
+.app .kebab{font-size:18px;line-height:1;color:var(--body);padding:8px}
+.app.img{padding:0 20px 0 0;height:60px}
+.app.img .l{gap:20px;height:100%}
+.app.img .shot{width:135px;height:100%;object-fit:cover}
+
+/* add-ons banner */
+.addons{margin-top:20px;background:linear-gradient(180deg,#efeffb,#f7f7fd);padding:16px;border-radius:4px}
+.addons h4{text-align:center;font-weight:400;font-size:12px;margin-bottom:16px}
+.addons .card{padding:17px;height:130px;display:flex;flex-direction:column}
+.addons .card h5{font-size:12px;font-weight:500;display:flex;gap:8px;align-items:center;height:18px}
+.addons .card h5 img{height:18px;width:auto}
+.addons .card p{color:var(--body);font-size:11px;line-height:16.5px;margin:8px 0 auto}
+
+
+/* more from cloudways */
+.wide{position:relative;height:207px;padding:28px 21px;display:block}
+.wide .art{position:absolute;right:0;top:-1px;width:209px;height:209px;object-fit:cover;object-position:right top}
+.wide h3{font-size:14px;font-weight:500;line-height:21px;margin:14px 0 4px;width:300px}
+.wide p{font-size:12px;line-height:18px;color:var(--body);width:260px}
+.wide .cta{position:absolute;left:21px;bottom:12px;margin:0}
+
+/* agents */
+.agent{display:flex;align-items:center;justify-content:space-between;padding:20px 21px;gap:16px;height:106px}
+.agent .l{display:flex;gap:16px;align-items:center}
+.agent .face{width:64px;height:64px;flex-shrink:0}
+.agent h3{font-size:14px;font-weight:500;display:flex;gap:6px;align-items:center;line-height:21px}
+.agent p{font-size:12px;color:var(--body);line-height:18px;max-width:319px}
+.agent a{font-size:12px;white-space:nowrap}
+.badge{font-size:10px;line-height:17px;padding:0 6px;background:var(--brand-soft);color:var(--brand);border-radius:3px;font-weight:500;display:inline-block}
+
+/* quick start: image fills are the original ~3x Figma bitmaps, text is live */
+.qs{display:grid;grid-template-columns:563fr 272fr 272fr;gap:24px}
+.qs .col{display:flex;flex-direction:column;gap:20px}
+.tile{position:relative;display:flex;flex-direction:column;justify-content:flex-start;overflow:hidden;border:1px solid var(--border);border-radius:8px;padding:16px;color:var(--heading);isolation:isolate;
+  background:linear-gradient(154deg,rgba(221,233,255,.4),rgba(252,252,252,.4))}
+.tile h3{font-size:18px;font-weight:500;line-height:36px;position:relative;z-index:2}
+.tile p{font-size:13px;line-height:normal;color:var(--body);position:relative;z-index:2}
+.tile>img{position:absolute;z-index:0;max-width:none;height:auto}
+.tile .play{position:absolute;right:16px;top:17px;width:32px;height:32px;z-index:2}
+.t-big,.t-help{height:270px}
+.t-small{height:125px;justify-content:flex-end}
+/* tiles */
+.qs .t-big{padding:0}
+.qs .t-big>img.flat{position:static;width:100%;height:100%;object-fit:cover}
+.qs .t-help{background:linear-gradient(270deg,#291f73,#463fc6);justify-content:flex-end;color:#fcfcfc}
+.qs .t-help>img{left:13.6%;width:91.1%;top:9.9%;border-radius:10px}
+.qs .t-help::after,.qs .t-tut::after{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(177.4deg,rgba(0,0,0,0) 52%,#000 90.8%)}
+.qs .t-tut{color:#fcfcfc;background:linear-gradient(155deg,rgba(221,233,255,.4),rgba(252,252,252,.4))}
+.qs .t-tut>img.photo{left:-1.5%;width:101.7%;top:-22.6%}
+.qs .t-help h3,.qs .t-help p,.qs .t-tut h3,.qs .t-tut p{color:#fcfcfc}
+.qs .t-blog{padding:0;border:1px solid var(--border)}
+.qs .t-blog>img.flat{position:static;width:100%;height:100%;object-fit:cover}
+@media(max-width:1100px){.qs{grid-template-columns:1fr}.t-big,.t-help{height:auto;aspect-ratio:563/270}}
+
+/* share */
+.share{position:relative;height:109px;padding:0 16px;display:flex;flex-direction:column;justify-content:center;background:linear-gradient(163deg,rgba(221,233,255,.4),rgba(252,252,252,.4));border:1px solid rgba(213,215,242,.2);border-radius:4px}
+.share h3{font-size:14px;font-weight:500}
+.share p{font-size:12px;color:var(--body);width:180px;line-height:18px}
+.share img{position:absolute;right:16px;top:50%;transform:translateY(-50%)}
+
+/* trial: the timer and upgrade CTA live on the application row they belong to */
+.btn-primary{background:var(--brand);color:#fff;font-size:12px;font-weight:500;padding:7px 16px;border-radius:4px;white-space:nowrap}
+.btn-primary:hover{background:#252ea3}
+.pill-trial{display:none;font-size:10px;font-weight:500;line-height:17px;padding:0 6px;border-radius:3px;background:#fff3d6;color:#9a6200;margin-left:12px}
+.app .r{display:flex;align-items:center;gap:16px}
+.trial-meta{display:none;align-items:center;gap:12px;font-size:12px;color:var(--body)}
+.trial-meta .left{display:flex;align-items:center;gap:6px}
+.trial-meta svg{width:16px;height:16px;color:#9a6200}
+.trial-meta .timer{display:flex;gap:4px}
+.trial-meta .timer div{min-width:38px;padding:2px 5px;background:#fff8e6;border:1px solid #f6e3b4;border-radius:4px;text-align:center;font-weight:600;font-size:12px;line-height:16px;color:#6b4500;font-variant-numeric:tabular-nums}
+.trial-meta .timer small{display:block;font-weight:400;font-size:8px;text-transform:uppercase;letter-spacing:.04em;color:#9a6200}
+body[data-trial=on] .pill-trial{display:inline-block}
+body[data-trial=on] .trial-meta{display:flex}
+body[data-apps=one] .multi{display:none}
+@media(max-width:900px){.trial-meta .left{display:none}.app .r{gap:8px}}
+@media(max-width:700px){.trial-meta .timer{display:none}}
+.toggle{padding:2px 10px;font-size:11px;border-radius:4px;color:var(--body)}
+.toggle[aria-pressed=true]{background:var(--brand);color:#fff}
+.toggle:disabled{opacity:.4;cursor:not-allowed}
+
+
+/* cloudways copilot (incidents) */
+.copilot,.copilot-only{display:none}
+body[data-copilot=on] .copilot-only{display:block}
+body[data-copilot=on][data-state=empty] .copilot{display:none}
+body[data-copilot=on]:not([data-state=empty]) .copilot{display:block}
+body[data-copilot=on] .ph-default{display:none}
+body:not([data-copilot=on]) .ph-copilot{display:none}
+.copilot{margin-top:32px}
+.cp-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
+.cp-tools{display:flex;align-items:center;gap:16px;font-size:11px;color:var(--heading)}
+.cp-tools .credits{display:flex;align-items:center;gap:5px;line-height:20px}
+.cp-tools .credits img{width:14px;height:14px}
+.cp-tools .sep{width:1px;height:11px;background:var(--border)}
+.cp-tools .btns{display:flex;gap:4px;align-items:center}
+.cp-tools .btns button{padding:8px;border-radius:4px;display:grid;place-items:center}
+.cp-tools .btns button:hover{background:var(--tint)}
+.cp-tools .btns img{width:16px;height:16px}
+.incidents{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;align-items:start}
+.incident{position:relative;background:#fff;border:1px solid var(--border);border-radius:4px;padding:15px 13px 16px;min-height:186px;display:flex;flex-direction:column}
+.inc-top{display:flex;align-items:flex-start;gap:7px}
+.inc-top .ico{width:38px;height:38px;flex-shrink:0;margin:-2px 0 0 -4px}
+.inc-main{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
+.inc-src{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--body);line-height:17px}
+.inc-src .badge-s{display:inline-block;height:17px;padding:0 4.7px;border-radius:3px;background:#f4f5f7;color:var(--body);font-size:9.4px;font-weight:500;line-height:17px}
+.inc-title{font-size:13px;font-weight:500;line-height:20px;color:var(--heading)}
+.inc-status{position:absolute;right:13px;top:15px;display:flex;align-items:center;gap:8px;font-size:11px;line-height:16px}
+.inc-status .open{display:flex;align-items:center;gap:2px;color:var(--heading)}
+.inc-status .open img{width:12px;height:12px}
+.inc-status .dot{width:2px;height:2px}
+.inc-status .age{color:var(--body)}
+.inc-body{margin:14px 0 0 51px;font-size:12px;line-height:18px;color:#4e555f}
+.inc-actions{margin:16px 0 0 51px;display:flex;align-items:center}
+.btn-outline{display:inline-flex;align-items:center;gap:4px;padding:7px 14px;border:1px solid var(--brand);border-radius:4px;color:var(--brand);font-size:12px;font-weight:500;white-space:nowrap}
+.btn-outline img{width:16px;height:16px}
+.btn-ghost{display:inline-flex;align-items:center;padding:7px 14px;color:var(--brand);font-size:12px;font-weight:500}
+.cp-foot{display:flex;justify-content:space-between;align-items:center;margin-top:12px;font-size:13px;color:var(--body)}
+.cp-foot b{font-weight:600;font-size:12px;color:var(--heading)}
+.cp-foot span.t{font-size:12px}
+.cp-foot a,.view-all{display:inline-flex;align-items:center;gap:4px;font-size:12px;padding:7px 0}
+.cp-foot a img,.view-all img{width:16px;height:16px}
+.view-all{display:none;justify-content:flex-end;width:100%;margin-top:4px}
+body[data-copilot=on] .view-all{display:flex}
+@media(max-width:1100px){.incidents{grid-template-columns:1fr}}
+
+
+/* setup required: pill on the app row + checklist drawer */
+.setup-app,.setup-only{display:none}
+.pill-setup{display:none;align-items:center;gap:4px;padding:1px 4px;border-radius:4px;background:var(--brand-soft);color:var(--brand);font-size:11px;font-weight:500;line-height:18px;white-space:nowrap;cursor:pointer}
+.pill-setup img{width:12px;height:12px}
+.pill-setup:hover{background:#dcdef5}
+.pill-setup:focus-visible{outline:2px solid var(--brand);outline-offset:2px}
+body[data-setup=on] .setup-app{display:flex}
+body[data-setup=on] .pill-setup{display:inline-flex}
+body[data-setup=on] .flex-only .a-tdf,body[data-setup=on] .auto-only .a-core{display:none}
+body[data-setup=on][data-apps=one] .a-first{display:none}
+.app .l .app-ico{width:40px;height:40px;flex-shrink:0}
+.app.img .shot-wrap{display:contents}
+
+.drawer{position:fixed;top:48px;right:0;bottom:0;width:360px;max-width:100vw;background:#fff;border-left:1px solid var(--border);z-index:15;display:flex;flex-direction:column;transform:translateX(100%);visibility:hidden;transition:transform .25s ease,visibility 0s linear .25s;overflow-y:auto}
+body[data-drawer=open] .drawer{transform:none;visibility:visible;transition:transform .25s ease}
+body[data-drawer=open] .layout{padding-right:360px}
+.layout{transition:padding-right .25s ease}
+.drawer header{display:flex;align-items:center;gap:8px;height:56px;padding:12px;border-bottom:1px solid var(--border);flex-shrink:0}
+.drawer header button{width:16px;height:16px;display:grid;place-items:center;padding:0}
+.drawer header button img{width:16px;height:16px}
+.drawer header h2{font-size:13px;font-weight:500;line-height:normal}
+.drawer .count{padding:8px 16px}
+.drawer .count span{display:block;padding:4px 8px;font-size:11px;text-transform:uppercase;color:var(--body)}
+.steps{list-style:none}
+.step{padding:8px 16px}
+.step-head{display:flex;align-items:center;gap:8px;width:100%;padding:4px 8px;font-size:11px;color:var(--heading);text-align:left;border-radius:4px}
+.step-head:hover{background:var(--tint)}
+.step-head:focus-visible{outline:2px solid var(--brand)}
+.step-head img{width:20px;height:20px;flex-shrink:0}
+.step-body{display:none;padding:8px 8px 12px 8px;background:#fbfbfe;border-radius:4px}
+.step.open .step-body{display:flex;flex-direction:column;gap:16px;padding-top:0}
+.step.open .step-head{background:#fbfbfe;border-radius:4px 4px 0 0;padding-bottom:8px}
+.step.open{}
+.step.open .step-wrap{background:#fbfbfe;border-radius:4px;padding:4px 0 12px}
+.step-wrap{}
+.step-text{padding:0 12px;font-size:11px;line-height:17px;color:var(--body)}
+.step-text p+p{margin-top:17px}
+.step-text a{font-weight:400;text-decoration:underline;color:var(--body)}
+.step-text a:hover{color:var(--brand)}
+.step-cta{margin:16px 12px 0;align-self:flex-start;display:inline-flex;align-items:center;justify-content:center;padding:4px 12px;border-radius:4px;background:var(--brand);color:#fff;font-size:11px;font-weight:500}
+.step-cta:hover{background:#252ea3}
+@media(max-width:900px){body[data-drawer=open] .layout{padding-right:0}.drawer{width:100%}}
+
+
+/* loading splash: vertical text roll */
+.splash{display:none;position:fixed;inset:0;z-index:1000;background:#fff;flex-direction:column;align-items:center;justify-content:center;gap:20px;padding:24px;opacity:1;transition:opacity .45s ease}
+html.splash-on .splash{display:flex}
+html.splash-on body{overflow:hidden}
+.splash.leaving{opacity:0;pointer-events:none}
+.splash-line{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:0;max-width:960px;text-align:center;font-size:clamp(15px,1.6vw,20px);font-weight:400;line-height:1.5;color:var(--heading);letter-spacing:-.01em}
+.splash-line>span:first-child{margin-right:.3em}
+.roll{position:relative;display:inline-block;height:1.5em;overflow:hidden;vertical-align:bottom;transition:width .6s cubic-bezier(.22,1,.36,1);text-align:left}
+.roll .item{position:absolute;left:0;top:0;white-space:nowrap;font-weight:400;color:transparent;background:linear-gradient(100deg,#2f39bf 0%,#8b5cf6 25%,#e84dd8 50%,#ff8a3d 70%,#0fafff 100%);background-size:220% 100%;-webkit-background-clip:text;background-clip:text;animation:ai-shimmer 4s linear infinite;transform:translateY(110%);opacity:0;filter:blur(3px);transition:transform .6s cubic-bezier(.22,1,.36,1),opacity .45s ease,filter .45s ease}
+.roll .item.active{transform:none;opacity:1;filter:none}
+.roll .item.out{transform:translateY(-110%);opacity:0;filter:blur(3px)}
+.loader{width:22px;height:22px;border-radius:50%;background:conic-gradient(from 0deg,rgba(47,57,191,0) 0deg,#2f39bf 60deg,#8b5cf6 140deg,#e84dd8 220deg,#ff8a3d 290deg,#0fafff 350deg,rgba(15,175,255,0) 360deg);-webkit-mask:radial-gradient(farthest-side,transparent calc(100% - 3px),#000 calc(100% - 2.5px));mask:radial-gradient(farthest-side,transparent calc(100% - 3px),#000 calc(100% - 2.5px));animation:loader-spin .9s linear infinite}
+@keyframes loader-spin{to{transform:rotate(360deg)}}
+@keyframes ai-shimmer{0%{background-position:0% 50%}100%{background-position:220% 50%}}
+@media(prefers-reduced-motion:reduce){.roll,.roll .item{transition:none;animation:none}.loader{animation-duration:3s}}
+
+
+body[data-state=vel] .m-velocity{display:none}
+body[data-state=vel] .more-grid{grid-template-columns:1fr}
+/* velocity app icons: round badge with a framework logo */
+.fw-ico{width:40px;height:40px;border-radius:50%;flex-shrink:0;display:grid;place-items:center}
+.fw-ico.express{background:#f2f2f2}
+.fw-ico.react{background:#ebfffb}
+.fw-ico img{width:20px;height:20px;object-fit:cover}
+.fw-ico .react-crop{position:relative;width:20px;height:20px;overflow:hidden}
+.fw-ico .react-crop img{position:absolute;max-width:none;width:307.69%;height:174.52%;left:-104.1%;top:-38.23%;object-fit:fill}
+
+
+/* BFCM: Black Friday theme from Figma (banner, dark product thumbnails, 80% OFF badges) */
+.bfcm-banner{display:none;margin-top:32px}
+.bfcm-banner a{display:block;border-radius:4px;overflow:hidden}
+.bfcm-banner img{width:100%;height:auto;aspect-ratio:1159/80;object-fit:cover}
+body[data-bfv="1"] .bfcm-banner{display:block}
+.bf-only{display:none}
+.thumb-bf{display:none}
+body[data-bfcm=on] .gs .thumb{display:none}
+body[data-bfcm=on] .gs .thumb-bf{display:block}
+body[data-bfcm=on] span.bf-only{display:inline-block}
+.pill-off{margin-left:4px;padding:0 5px;border-radius:3px;background:var(--brand-soft);color:var(--brand);font-size:10px;font-weight:500;line-height:17px}
+.agent-sfx{display:none}
+body[data-bfcm=on] .agent-sfx{display:inline}
+
+
+/* BFCM v2: full dark page theme from Figma — banner strip under the top bar, content in a white rounded card */
+body[data-bfv="2"]{background:#0e052d url("assets/bfcm/v2-page.jpg?v=1") center top/1920px auto no-repeat}
+body[data-bfv="2"] .side{background:#fff;border-right:0}
+body[data-bfv="2"] main{padding:127px 42px 83px 51px}   /* the 127px strip above the card shows the banner baked into the background */
+body[data-bfv="2"] .wrap{max-width:none;background:#fff;border-radius:20px;padding:32px 32px 56px}
+body[data-bfv="2"] .wrap>*{max-width:1155px;margin-left:auto;margin-right:auto}
+body[data-bfv="2"] .hero{margin-top:0}
+@media(max-width:900px){body[data-bfv="2"] main{padding:127px 16px 40px}body[data-bfv="2"] .wrap{padding:24px 16px 40px}}
+
+/* state visibility */
+.empty-only,.conv-only,.flex-only,.auto-only,.vel-only{display:none}
+body[data-state=empty] .empty-only{display:block}
+body[data-state=flex] .apps.flex-only,body[data-state=auto] .apps.auto-only,body[data-state=vel] .apps.vel-only{display:flex}
+body[data-state=flex] .conv-only,body[data-state=flex] .flex-only,
+body[data-state=auto] .conv-only,body[data-state=auto] .auto-only,
+body[data-state=vel] .conv-only,body[data-state=vel] .vel-only{display:block}
+
+@media(max-width:1100px){.g4{grid-template-columns:repeat(2,1fr)}.g3,.g2{grid-template-columns:1fr}.qs{grid-template-columns:1fr}.qs .a1,.qs .a2{height:auto;aspect-ratio:563/270}}
+@media(max-width:700px){.side{display:none}.g4{grid-template-columns:1fr}.top-right .refer,.top-right .vline,.top-right .icons{display:none}}
+</style>
+</head>
+<body data-state="empty">
+<div class="splash" id="splash" role="status" aria-live="polite" aria-label="Loading Cloudways">
+  <div class="loader" aria-hidden="true"></div>
+  <p class="splash-line">
+    <span>Cloudways: The No.1 AI Managed Hosting for</span>
+    <span class="roll" id="roll"><span class="item">Agents</span><span class="item">Deploying Node JS Apps</span><span class="item">WordPress Apps</span><span class="item">AI Apps</span></span>
+  </p>
+</div>
+<script>
+// decide before first paint so the dashboard never flashes behind the splash
+if(sessionStorage.getItem('cw_splash')||/loading/.test(location.hash))document.documentElement.classList.add('splash-on');
+</script>
+
+<header class="topbar">
+  <img class="logo" src="assets/logo.png?v=4" alt="Cloudways by DigitalOcean">
+  <div class="top-right">
+    <div class="switcher" role="tablist" aria-label="Dashboard state">
+      <button data-s="empty" class="on">Empty</button>
+      <button data-s="flex">Flexible</button>
+      <button data-s="auto">Autonomous</button>
+      <button data-s="vel">Velocity</button>
+      <span class="vline" style="height:16px;align-self:center;margin:0 4px"></span>
+      <button class="toggle" id="t-one" aria-pressed="false" title="Show a single application">1 app</button>
+      <button class="toggle" id="t-trial" aria-pressed="false" title="Show the free-trial state">Trial</button>
+      <button class="toggle" id="t-setup" aria-pressed="false" title="Show an app that is paid but not fully set up">Setup</button>
+      <button class="toggle" id="t-bfcm" aria-pressed="false" title="Black Friday / Cyber Monday offer (banner)">BFCM</button>
+      <button class="toggle" id="t-bfcm2" aria-pressed="false" title="Black Friday / Cyber Monday offer (full dark theme)">BFCM v2</button>
+      <button class="toggle" id="t-copilot" aria-pressed="false" title="Show the Cloudways Copilot incidents section">Copilot</button>
+    </div>
+    <span class="refer"><img src="assets/refer.svg" alt="">Refer &amp; Get $50</span>
+    <span class="vline"></span>
+    <img class="icons" src="assets/top-icons.svg" alt="">
+    <span class="vline"></span>
+    <a class="user" href="login.html" title="Log out" aria-label="John Doe — log out"><img class="avatar" src="assets/avatar.png" alt=""><img class="chev" src="assets/chevron.svg" alt=""></a>
+  </div>
+</header>
+
+<div class="layout">
+  <aside class="side">
+    <nav>
+      <a href="#"><img src="assets/nav-home.png?v=4" alt="Home" width="65"></a>
+      <a href="#"><img src="assets/nav-flexible.png?v=4" alt="Flexible" width="65"></a>
+      <a href="#"><img src="assets/nav-autonomous.png?v=4" alt="Autonomous" width="65"></a>
+      <a href="#"><img src="assets/nav-velocity.png?v=4" alt="Velocity" width="65"></a>
+      <a href="#"><img src="assets/nav-ai.png?v=4" alt="Cloudways AI" width="66"></a>
+    </nav>
+    <nav>
+      <a href="#"><img src="assets/nav-integrations.png?v=4" alt="Integrations" width="65"></a>
+      <a href="#"><img src="assets/nav-support.png?v=4" alt="Support" width="65"></a>
+    </nav>
+  </aside>
+
+  <main>
+  <div class="wrap">
+    <div class="hero">
+      <h1>Hi John Doe, What are we working on today?</h1>
+      <div class="chat">
+        <textarea id="prompt" placeholder="Make a reusable design system for our product team..."></textarea>
+        <div class="acts"><button aria-label="Voice input">🎙</button><button class="send" id="send" aria-label="Send">↑</button></div>
+      </div>
+      <div class="chips">
+        <button class="chip"><img src="assets/chip-ai.png?v=4" alt="">Choose best fit product for me</button>
+        <button class="chip"><img src="assets/chip-ai.png?v=4" alt="">Create a managed server</button>
+        <button class="chip"><img src="assets/chip-ai.png?v=4" alt="">What should I look into today?</button>
+      </div>
+    </div>
+
+    <!-- BFCM: Black Friday banner -->
+    <div class="bfcm-banner"><a href="#"><img src="assets/bfcm/banner.png" alt="This Black Friday: 80% off for 2 months. Launch faster, scale smarter across hosting plans, AI agents, AI website builder and add-ons."></a></div>
+
+    <!-- COPILOT: incidents -->
+    <section class="copilot">
+      <div class="cp-head">
+        <h2>Cloudways Copilot</h2>
+        <div class="cp-tools">
+          <span class="credits"><img src="assets/copilot/info.svg" alt="">1 Credit Remaining</span>
+          <span class="sep"></span>
+          <span class="btns"><button aria-label="History"><img src="assets/copilot/history.svg" alt=""></button><button aria-label="Manage plan"><img src="assets/copilot/manage-plan.svg" alt=""></button><button aria-label="Settings"><img src="assets/copilot/settings.svg" alt=""></button></span>
+        </div>
+      </div>
+      <div class="incidents">
+        <article class="incident">
+          <div class="inc-top"><img class="ico" src="assets/copilot/icon-app.svg" alt=""><div class="inc-main"><div class="inc-src">Looped.com<span class="badge-s">App</span></div><div class="inc-title">Plugin failure</div></div></div>
+          <div class="inc-status"><span class="open"><img src="assets/copilot/warning.svg" alt="">Open</span><img class="dot" src="assets/copilot/dot.svg" alt=""><span class="age">20m</span></div>
+          <p class="inc-body">Heavy automated traffic and slow WordPress cron jobs causing elevated PHP-FPM utilization. Apps on server may have limited functionality.</p>
+          <div class="inc-actions"><a class="btn-outline" href="#">View AI Insight</a></div>
+        </article>
+        <article class="incident">
+          <div class="inc-top"><img class="ico" src="assets/copilot/icon-server.svg" alt=""><div class="inc-main"><div class="inc-src">GC SpiceStore 2.0<span class="badge-s">Server</span></div><div class="inc-title">Webstack is down</div></div></div>
+          <div class="inc-status"><span class="open"><img src="assets/copilot/warning.svg" alt="">Open</span><img class="dot" src="assets/copilot/dot.svg" alt=""><span class="age">20m</span></div>
+          <p class="inc-body">Heavy automated traffic and slow WordPress cron jobs causing elevated PHP-FPM utilization. Apps on server may have limited functionality.</p>
+          <div class="inc-actions"><a class="btn-outline" href="#"><img src="assets/copilot/smartfix.svg" alt="">Review SmartFix</a><a class="btn-ghost" href="#">View AI Insight</a></div>
+        </article>
+        <article class="incident">
+          <div class="inc-top"><img class="ico" src="assets/copilot/icon-app2.svg" alt=""><div class="inc-main"><div class="inc-src">BigBlog.au<span class="badge-s">App</span></div><div class="inc-title">Plugin failure</div></div></div>
+          <div class="inc-status"><span class="open"><img src="assets/copilot/warning.svg" alt="">Open</span><img class="dot" src="assets/copilot/dot.svg" alt=""><span class="age">20m</span></div>
+          <p class="inc-body">Heavy automated traffic and slow WordPress cron jobs causing elevated PHP-FPM utilization. Apps on server may have limited functionality.</p>
+          <div class="inc-actions"><a class="btn-outline" href="#">View AI Insight</a></div>
+        </article>
+      </div>
+      <div class="cp-foot"><span><span class="t">Showing</span> <b>3</b> <span class="t">of</span> <b>7</b> <span class="t">incidents</span></span><a href="#">View All Incidents <img src="assets/copilot/arrow.svg" alt=""></a></div>
+    </section>
+
+    <!-- EMPTY: getting started -->
+    <section class="empty-only">
+      <div class="sec-head"><h2>Getting Started with Cloudways</h2><a href="#"><img src="assets/chip-ai.png?v=4" alt="" width="14" height="14">Choose for me</a></div>
+      <div class="grid g4">
+        <article class="card gs"><img class="thumb" src="assets/gs-ai.png?v=4" alt=""><img class="thumb thumb-bf" src="assets/bfcm/gs-ai.png" alt=""><div class="body"><div class="prod"><img src="assets/ic-ai.png?v=4" alt="">AI Website Builder<span class="pill-off bf-only">80% OFF</span></div><h3>Launch a WordPress Site Fast With No Code</h3><p>Your choice of cloud provider, data center, server size, and PHP app. You drive, with full control at every level.</p><a class="cta" href="#">Create AI Application →</a></div></article>
+        <article class="card gs"><img class="thumb" src="assets/gs-flexible.png?v=4" alt=""><img class="thumb thumb-bf" src="assets/bfcm/gs-flexible.png" alt=""><div class="body"><div class="prod"><img src="assets/ic-flexible.png?v=4" alt="">Flexible<span class="pill-off bf-only">80% OFF</span></div><h3>High-Performance Managed Hosting</h3><p>Your choice of cloud provider, data center, server size, and PHP app. You drive, with full control at every level.</p><a class="cta" href="#">Start Free Trial →</a></div></article>
+        <article class="card gs"><img class="thumb" src="assets/gs-autonomous.png?v=4" alt=""><img class="thumb thumb-bf" src="assets/bfcm/gs-autonomous.png" alt=""><div class="body"><div class="prod"><img src="assets/ic-autonomous.png?v=4" alt="">Autonomous<span class="pill-off bf-only">80% OFF</span></div><h3>Hands-Off Hosting That Scales</h3><p>Hands-off with fully managed hosting that autoscales your WordPress sites under any traffic load.</p><a class="cta" href="#">Start Free Trial →</a></div></article>
+        <article class="card gs"><img class="thumb" src="assets/gs-velocity.png?v=4" alt=""><img class="thumb thumb-bf" src="assets/bfcm/gs-velocity.png" alt=""><div class="body"><div class="prod"><img src="assets/ic-velocity.png?v=4" alt="">Cloudways Velocity<span class="pill-off bf-only">80% OFF</span></div><h3>Front End and Back End Ready</h3><p>Managed Node.js hosting with predictable pricing. Run modern JS frameworks without any hassle.</p><a class="cta" href="#">Deploy Now →</a></div></article>
+      </div>
+    </section>
+
+    <!-- CONVERTED: recent apps -->
+    <section class="conv-only">
+      <h2>Recent Applications</h2>
+      <div class="tabs" role="tablist">
+        <button class="tab" data-s="flex" id="tab-flex">Flexible</button>
+        <button class="tab" data-s="auto" id="tab-auto">Autonomous</button>
+        <button class="tab" data-s="vel" id="tab-vel">Velocity</button>
+      </div>
+
+      <div class="apps flex-only">
+        <div class="card app a-first"><div class="l"><span class="ico" style="background-image:url(assets/row-flex-1.png?v=4)"></span>Nexa Corporation<span class="pill-trial">Trial</span></div><div class="r"><div class="trial-meta" role="status"><span class="left"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>Trial ends in</span><div class="timer" aria-label="Time left in trial"><div><span data-tm="d">02</span><small>Days</small></div><div><span data-tm="h">14</span><small>Hrs</small></div><div><span data-tm="m">32</span><small>Min</small></div><div><span data-tm="s">00</span><small>Sec</small></div></div><a class="btn-primary" href="#">Upgrade</a></div><button class="kebab" aria-label="More">⋮</button></div></div>
+        <div class="card app setup-app"><div class="l"><img class="app-ico" src="assets/setup/app-astra.svg" alt="">Astra Pro</div><div class="r"><button class="pill-setup" data-open-drawer aria-haspopup="dialog" aria-controls="setup-drawer"><img src="assets/setup/pill-progress.svg" alt="">Setup Required</button><button class="kebab" aria-label="More">⋮</button></div></div>
+        <div class="card app multi a-tdf"><div class="l"><span class="ico" style="background-image:url(assets/row-flex-2.png?v=4)"></span>TDF - Magnific Science Site</div><button class="kebab" aria-label="More">⋮</button></div>
+        <div class="card app multi"><div class="l"><span class="ico" style="background-image:url(assets/row-flex-3.png?v=4)"></span>Yanzo Bike Store</div><button class="kebab" aria-label="More">⋮</button></div>
+      </div>
+      <div class="apps auto-only">
+        <div class="card app img a-first"><div class="l"><img class="shot" src="assets/thumb-auto-1.png?v=4" alt="">Neoflex Streaming Web<span class="pill-trial">Trial</span></div><div class="r"><div class="trial-meta" role="status"><span class="left"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>Trial ends in</span><div class="timer" aria-label="Time left in trial"><div><span data-tm="d">02</span><small>Days</small></div><div><span data-tm="h">14</span><small>Hrs</small></div><div><span data-tm="m">32</span><small>Min</small></div><div><span data-tm="s">00</span><small>Sec</small></div></div><a class="btn-primary" href="#">Upgrade</a></div><button class="kebab" aria-label="More">⋮</button></div></div>
+        <div class="card app img setup-app"><div class="l"><img class="shot" src="assets/thumb-auto-2.png?v=4" alt="">Core Web Trust</div><div class="r"><button class="pill-setup" data-open-drawer aria-haspopup="dialog" aria-controls="setup-drawer"><img src="assets/setup/pill-progress.svg" alt="">Setup Required</button><button class="kebab" aria-label="More">⋮</button></div></div>
+        <div class="card app img multi a-core"><div class="l"><img class="shot" src="assets/thumb-auto-2.png?v=4" alt="">Core Web Trust</div><button class="kebab" aria-label="More">⋮</button></div>
+        <div class="card app img multi"><div class="l"><img class="shot" src="assets/thumb-auto-3.png?v=4" alt="">Eyewear Store Online USA</div><button class="kebab" aria-label="More">⋮</button></div>
+      </div>
+
+      <div class="apps vel-only">
+        <div class="card app"><div class="l"><span class="fw-ico express"><img src="assets/velocity/express.png" alt=""></span>Express App Testing</div><div class="r"><button class="kebab" aria-label="More">⋮</button></div></div>
+        <div class="card app multi"><div class="l"><span class="fw-ico react"><span class="react-crop"><img src="assets/velocity/react-sheet.png" alt=""></span></span>React Native</div><div class="r"><button class="kebab" aria-label="More">⋮</button></div></div>
+      </div>
+
+      <a class="view-all" href="#">View All Application <img src="assets/copilot/arrow.svg" alt=""></a>
+
+      <div class="addons flex-only">
+        <h4><b style="font-weight:600">Avail 20% OFF</b> for Next 10 Months on Cloudways Add Ons!</h4>
+        <div class="grid g3" style="gap:16px">
+          <div class="card"><h5><img src="assets/addon-site-manager.png?v=4" alt="">Manage All Your WordPress Sites from One Place</h5><p>Your central solution for safe updates, performance monitoring, visual regression testing, and site management.</p><a class="cta" href="#" style="margin:0;padding:0">Add Apps in Site Manager →</a></div>
+          <div class="card"><h5><img src="assets/addon-cloudflare.png?v=4" alt="">Enhance Your Site Speed</h5><p>Give every visitor a much faster, more reliable experience across all your domains. Try it free for 30 days</p><a class="cta" href="#" style="margin:0;padding:0">Start Free Trial →</a></div>
+          <div class="card"><h5><img src="assets/addon-malware.png?v=4" alt="">Protect your Site from Malicious Attacks</h5><p>Give every visitor a much faster, more reliable experience across all your domains. Try it free for 30 days</p><a class="cta" href="#" style="margin:0;padding:0">Enable Malware →</a></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="conv-only">
+      <h2 class="sp">More from Cloudways</h2>
+      <div class="grid g2 more-grid">
+        <article class="card wide"><div class="prod"><img src="assets/ic-ai.png?v=4" alt="">AI Website Builder</div><h3>Launch a WordPress Site Fast With No Code</h3><p>Your choice of cloud provider, data center, server size, and PHP app. You drive, with full control at every level.</p><a class="cta" href="#">Create AI Application →</a><img class="art" src="assets/more-ai.png?v=4" alt=""></article>
+        <article class="card wide m-velocity"><div class="prod"><img src="assets/ic-velocity.png?v=4" alt="">Cloudways Velocity</div><h3>Front End and Back End Ready</h3><p>Managed Node.js hosting with predictable pricing. Run modern JS frameworks without any hassle.</p><a class="cta" href="#">Get Started Free →</a><img class="art" src="assets/more-velocity.png?v=4" alt=""></article>
+      </div>
+    </section>
+
+    <!-- agents -->
+    <section>
+      <h2 class="sp">Launch your first Managed AI Agent<span class="agent-sfx"> with 80% OFF</span></h2>
+      <div class="grid g2">
+        <article class="card agent"><div class="l"><img class="face" src="assets/agent-hermes.svg" alt=""><div><h3>Hermes Agent <span class="badge agent-sfx">80% OFF</span></h3><p>Lightning-fast conversational AI for dynamic chats, complex reasoning, and automated support.</p></div></div><a href="#">Deploy Hermes</a></article>
+        <article class="card agent"><div class="l"><img class="face" src="assets/agent-openclaw.svg" alt=""><div><h3>OpenClaw Agent <span class="badge agent-sfx">80% OFF</span></h3><p>An autonomous, tool-wielding agent built to seamlessly automate your complex workflows.</p></div></div><a href="#">Deploy OpenClaw</a></article>
+      </div>
+    </section>
+
+    <section>
+      <h2 class="sp">Quick Start Guides</h2>
+      <div class="qs">
+        <a class="tile t-big" href="#"><img class="flat" src="assets/qs-whatsnew.png?v=3" alt="What’s new — Curious about what we’re building?"></a>
+        <a class="tile t-help" href="#"><img src="assets/qs-help-img.png" alt=""><h3>Help Center</h3><p>Advice and answers from our team</p></a>
+        <div class="col">
+          <a class="tile t-small t-tut" href="#"><img class="photo" src="assets/qs-tutorials-img.png" alt=""><img class="play" src="assets/qs-play.svg" alt=""><h3>Tutorials</h3><p>Watch videos and guides</p></a>
+          <a class="tile t-small t-blog" href="#"><img class="flat" src="assets/qs-blog.png?v=3" alt="Blog — Thoughts, news and best practices"></a>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2 class="sp">Love Cloudways? Share it with others</h2>
+      <div class="grid g3">
+        <article class="share"><h3>Agency Partnership Program</h3><p>Unlock VIP perks and earn recurring revenue.</p><img src="assets/share-agency.png?v=4" alt="" width="54"></article>
+        <article class="share"><h3>Affiliate Program</h3><p>Earn high commissions for every new customer.</p><img src="assets/share-affiliate.png?v=4" alt="" width="80"></article>
+        <article class="share"><h3>Referral Program</h3><p>Invite friends to earn free hosting credits.</p><img src="assets/share-referral.png?v=4" alt="" width="40"></article>
+      </div>
+    </section>
+  </div>
+  </main>
+</div>
+
+
+<aside class="drawer" id="setup-drawer" role="dialog" aria-label="Setup your first application" aria-hidden="true">
+  <header><button id="drawer-close" aria-label="Close"><img src="assets/setup/close.svg" alt=""></button><h2>Setup your First Application</h2></header>
+  <div class="count"><span id="steps-count">0 of 5 complete</span></div>
+  <ul class="steps">
+      <li class="step" data-step>
+        <button class="step-head" aria-expanded="false" aria-controls="step-0"><img src="assets/setup/step-progress.svg" alt="">Migrate your website</button>
+        <div class="step-body" id="step-0" role="region"><div class="step-text"><p>Move your existing website to Cloudways with our free migration tool. We copy your files and database, and your current site stays live until you switch over.</p></div><a class="step-cta" href="#">Start Migration</a></div>
+      </li>
+      <li class="step" data-step>
+        <button class="step-head" aria-expanded="false" aria-controls="step-1"><img src="assets/setup/step-progress.svg" alt="">Connect your domain</button>
+        <div class="step-body" id="step-1" role="region"><div class="step-text"><p>To connect your custom domain to a website or hosting provider, log in to your domain registrar <a href="https://www.godaddy.com/resources/ae/skills/how-to-connect-your-domain-name-to-your-hosting-account" target="_blank" rel="noopener">How to Connect Domain to Hosting? A step-by-step guide - GoDaddy</a>,</p><p>Open your DNS or name server settings How to Connect Domain to Hosting? A step-by-step guide - GoDaddy, and update your A records, CNAME records, or name servers to match the values provided by your web host <a href="https://knowledge.workspace.google.com/admin/domains/connect-your-website-to-a-domain-registered-through-google" target="_blank" rel="noopener">Connect your website to a domain registered through Google</a></p></div><a class="step-cta" href="#">Connect Domain</a></div>
+      </li>
+      <li class="step" data-step>
+        <button class="step-head" aria-expanded="false" aria-controls="step-2"><img src="assets/setup/step-progress.svg" alt="">Install SSL</button>
+        <div class="step-body" id="step-2" role="region"><div class="step-text"><p>To connect your custom domain to a website or hosting provider, log in to your domain registrar <a href="https://www.godaddy.com/resources/ae/skills/how-to-connect-your-domain-name-to-your-hosting-account" target="_blank" rel="noopener">How to Connect Domain to Hosting? A step-by-step guide - GoDaddy</a>,</p><p>Open your DNS or name server settings How to Connect Domain to Hosting? A step-by-step guide - GoDaddy, and update your A records, CNAME records, or name servers to match the values provided by your web host <a href="https://knowledge.workspace.google.com/admin/domains/connect-your-website-to-a-domain-registered-through-google" target="_blank" rel="noopener">Connect your website to a domain registered through Google</a></p></div><a class="step-cta" href="#">Setup SSL</a></div>
+      </li>
+      <li class="step" data-step>
+        <button class="step-head" aria-expanded="false" aria-controls="step-3"><img src="assets/setup/step-progress.svg" alt="">Enhance your application speed with Cloudflare</button>
+        <div class="step-body" id="step-3" role="region"><div class="step-text"><p>Serve your site from a global network to cut load times for every visitor. Try it free for 30 days.</p></div><a class="step-cta" href="#">Enable Cloudflare</a></div>
+      </li>
+      <li class="step" data-step>
+        <button class="step-head" aria-expanded="false" aria-controls="step-4"><img src="assets/setup/step-progress.svg" alt="">Enable Malware Protection</button>
+        <div class="step-body" id="step-4" role="region"><div class="step-text"><p>Scan your application for malicious code and block attacks before they reach your visitors. Try it free for 30 days.</p></div><a class="step-cta" href="#">Enable Malware Protection</a></div>
+      </li>
+  </ul>
+</aside>
+
+<script>
+const body=document.body;
+function setState(s){
+  body.dataset.state=s;
+  document.querySelectorAll('.switcher button').forEach(b=>b.classList.toggle('on',b.dataset.s===s));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.toggle('on',t.dataset.s===s));
+  syncToggles();syncHash();
+}
+document.querySelectorAll('[data-s]').forEach(el=>el.addEventListener('click',()=>setState(el.dataset.s)));
+
+// "1 app" and "Trial" are independent toggles layered on the Flexible/Autonomous views
+body.dataset.apps='many';body.dataset.trial='off';
+function bindToggle(id,attr,on,off){
+  const b=document.getElementById(id);
+  b.addEventListener('click',()=>{
+    const next=body.dataset[attr]===on?off:on;
+    body.dataset[attr]=next;
+    b.setAttribute('aria-pressed',String(next===on));
+    syncHash();
+  });
+}
+bindToggle('t-one','apps','one','many');
+bindToggle('t-trial','trial','on','off');
+bindToggle('t-copilot','copilot','on','off');
+body.dataset.copilot='off';
+function syncHash(){
+  const f=[body.dataset.state];
+  if(body.dataset.apps==='one')f.push('one');
+  if(body.dataset.trial==='on')f.push('trial');
+  if(body.dataset.copilot==='on')f.push('copilot');
+  if(body.dataset.setup==='on')f.push('setup');
+  if(body.dataset.bfv==='1')f.push('bfcm');
+  if(body.dataset.bfv==='2')f.push('bfcm2');
+  history.replaceState(null,'','#'+f.join('+'));
+}
+// toggles only apply once the user has converted
+function syncToggles(){
+  const empty=body.dataset.state==='empty';
+  ['t-one','t-trial','t-copilot','t-setup'].forEach(id=>document.getElementById(id).disabled=empty);
+}
+
+// trial countdown (demo value: 2d 14h 32m from page load; swap for the account's real trial end)
+const trialEnd=Date.now()+((2*24+14)*60+32)*60e3;
+const pad=n=>String(n).padStart(2,'0');
+function tick(){
+  let s=Math.max(0,Math.floor((trialEnd-Date.now())/1000));
+  const d=Math.floor(s/86400);s%=86400;
+  const h=Math.floor(s/3600);s%=3600;
+  const v={d:pad(d),h:pad(h),m:pad(Math.floor(s/60)),s:pad(s%60)};
+  document.querySelectorAll('[data-tm]').forEach(el=>el.textContent=v[el.dataset.tm]);
+}
+tick();setInterval(tick,1000);
+const p=document.getElementById('prompt'),send=document.getElementById('send');
+p.addEventListener('input',()=>send.classList.toggle('ready',p.value.trim().length>0));
+
+// setup required: toggle + drawer
+body.dataset.setup='off';body.dataset.drawer='closed';
+bindToggle('t-setup','setup','on','off');
+const drawer=document.getElementById('setup-drawer');
+let lastPill=null;
+function openDrawer(from){lastPill=from||null;body.dataset.drawer='open';drawer.setAttribute('aria-hidden','false');document.getElementById('drawer-close').focus({preventScroll:true})}
+function closeDrawer(){body.dataset.drawer='closed';drawer.setAttribute('aria-hidden','true');if(lastPill)lastPill.focus({preventScroll:true})}
+document.addEventListener('click',e=>{const b=e.target.closest('[data-open-drawer]');if(b)openDrawer(b)});
+document.getElementById('drawer-close').addEventListener('click',closeDrawer);
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&body.dataset.drawer==='open')closeDrawer()});
+document.getElementById('t-setup').addEventListener('click',()=>{if(body.dataset.setup!=='on'&&body.dataset.drawer==='open')closeDrawer()});
+// accordion: one step open at a time
+drawer.querySelectorAll('[data-step]').forEach(li=>{
+  const head=li.querySelector('.step-head');
+  head.addEventListener('click',()=>{
+    const open=!li.classList.contains('open');
+    drawer.querySelectorAll('[data-step]').forEach(o=>{o.classList.remove('open');o.querySelector('.step-head').setAttribute('aria-expanded','false')});
+    if(open){li.classList.add('open');head.setAttribute('aria-expanded','true')}
+  });
+});
+
+// BFCM: Black Friday theme toggle
+body.dataset.bfcm='off';body.dataset.bfv='';
+function setBF(v){   // v: 0 = off, 1 = banner, 2 = full dark theme
+  body.dataset.bfcm=v?'on':'off';body.dataset.bfv=v?String(v):'';
+  document.getElementById('t-bfcm').setAttribute('aria-pressed',String(v===1));
+  document.getElementById('t-bfcm2').setAttribute('aria-pressed',String(v===2));
+  syncHash();
+}
+document.getElementById('t-bfcm').addEventListener('click',()=>setBF(body.dataset.bfv==='1'?0:1));
+document.getElementById('t-bfcm2').addEventListener('click',()=>setBF(body.dataset.bfv==='2'?0:2));
+// apply a link like #flex+one+trial+bfcm2 — runs on load and whenever the #hash changes
+// (opening a link in a tab that already has the page open only changes the hash, it does not reload)
+function applyHash(){
+  const parts=location.hash.slice(1).split('+');
+  const flag=(id,attr,key,onVal,offVal)=>{
+    const on=parts.includes(key);
+    body.dataset[attr]=on?onVal:offVal;
+    document.getElementById(id).setAttribute('aria-pressed',String(on));
+  };
+  flag('t-one','apps','one','one','many');
+  flag('t-setup','setup','setup','on','off');
+  flag('t-trial','trial','trial','on','off');
+  flag('t-copilot','copilot','copilot','on','off');
+  setBF(parts.includes('bfcm2')?2:parts.includes('bfcm')?1:0);
+  setState(['empty','flex','auto','vel'].includes(parts[0])?parts[0]:'empty');
+  if(body.dataset.drawer==='open'&&body.dataset.setup!=='on')closeDrawer();
+}
+applyHash();
+window.addEventListener('hashchange',applyHash);
+
+// typewriter placeholder: types a prompt, holds, erases, moves to the next
+(function(){
+  const el=document.getElementById('prompt');
+  const prompts=[
+    'Make a reusable design system for our product team...',
+    'Create a digitalocean server...',
+    'Launch a WordPress site for my bakery...',
+    'Why is my site slow since yesterday?',
+    'Migrate my store to a managed server...'
+  ];
+  if(matchMedia('(prefers-reduced-motion: reduce)').matches){el.placeholder=prompts[0];return}
+  let i=0,n=0,dir=1,timer;
+  const TYPE=45,ERASE=22,HOLD=2200,GAP=350;
+  function step(){
+    if(document.activeElement===el||el.value){timer=setTimeout(step,500);return}   // pause while the user is typing
+    const text=prompts[i];
+    n+=dir;
+    el.placeholder=text.slice(0,n)+(n<text.length||dir<0?'\u258f':'');
+    let delay=dir>0?TYPE:ERASE;
+    if(dir>0&&n===text.length){dir=-1;delay=HOLD;el.placeholder=text}
+    else if(dir<0&&n===0){dir=1;i=(i+1)%prompts.length;delay=GAP}
+    timer=setTimeout(step,delay);
+  }
+  el.placeholder='';step();
+})();
+
+// loading splash: roll through the phrases once, then reveal the dashboard
+(function(){
+  const root=document.documentElement;
+  if(!root.classList.contains('splash-on'))return;
+  sessionStorage.removeItem('cw_splash');
+  const splash=document.getElementById('splash'),roll=document.getElementById('roll');
+  const items=[...roll.querySelectorAll('.item')];
+  const HOLD=1200,reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let i=-1;
+  function show(n){
+    const prev=items[i],next=items[n];
+    if(prev){prev.classList.remove('active');prev.classList.add('out')}
+    next.classList.remove('out');
+    next.style.transition='none';next.style.transform='translateY(110%)';void next.offsetWidth;   // start below the slot
+    next.style.transition='';next.style.transform='';
+    next.classList.add('active');
+    roll.style.width=next.scrollWidth+'px';
+    i=n;
+  }
+  function finish(){
+    splash.classList.add('leaving');
+    setTimeout(()=>{root.classList.remove('splash-on');splash.classList.remove('leaving')},450);
+  }
+  // wait for the font so the slot is measured with the real glyphs
+  (document.fonts&&document.fonts.ready?document.fonts.ready:Promise.resolve()).then(()=>{
+    show(0);
+    if(reduce){setTimeout(finish,1500);return}
+    let n=0;
+    const t=setInterval(()=>{
+      n++;
+      if(n<items.length){show(n)}
+      else{clearInterval(t);setTimeout(finish,HOLD)}
+    },HOLD+350);
+  });
+})();
+</script>
+</body>
+</html>
