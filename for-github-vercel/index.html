@@ -320,13 +320,27 @@ body[data-bfv="2"] .wrap>*{max-width:1155px;margin-left:auto;margin-right:auto}
 body[data-bfv="2"] .hero{margin-top:0}
 @media(max-width:900px){body[data-bfv="2"] main{padding:127px 16px 40px}body[data-bfv="2"] .wrap{padding:24px 16px 40px}}
 
+
+/* AI Website Builder: v1 = "Websites built with AI" section, v2 = tab in Recent Applications */
+.ai-v1{display:none}
+body[data-aiv1=on]:not([data-state=empty]) .ai-v1{display:block}
+.ai-v1 h2{display:flex;align-items:center;gap:6px}
+.ai-v1 h2 img{width:17px;height:17px}
+.site-card{display:block;width:263px;max-width:100%;margin-top:24px}
+.site-card img{width:100%;height:auto;aspect-ratio:794/630;display:block}
+.app .meta{display:flex;flex-direction:column;line-height:1.35}
+.app .meta small{font-size:11px;font-weight:400;color:var(--body)}
+.app.img .shot.site{object-position:top}
+body[data-aiv1=on] #tab-ai,body[data-aiv1=on] .switcher [data-s=ai]{display:none}   /* v1 shows the section instead of the tab */
+
 /* state visibility */
-.empty-only,.conv-only,.flex-only,.auto-only,.vel-only{display:none}
+.empty-only,.conv-only,.flex-only,.auto-only,.vel-only,.ai-only{display:none}
 body[data-state=empty] .empty-only{display:block}
-body[data-state=flex] .apps.flex-only,body[data-state=auto] .apps.auto-only,body[data-state=vel] .apps.vel-only{display:flex}
+body[data-state=flex] .apps.flex-only,body[data-state=auto] .apps.auto-only,body[data-state=vel] .apps.vel-only,body[data-state=ai] .apps.ai-only{display:flex}
 body[data-state=flex] .conv-only,body[data-state=flex] .flex-only,
 body[data-state=auto] .conv-only,body[data-state=auto] .auto-only,
-body[data-state=vel] .conv-only,body[data-state=vel] .vel-only{display:block}
+body[data-state=vel] .conv-only,body[data-state=vel] .vel-only,
+body[data-state=ai] .conv-only,body[data-state=ai] .ai-only{display:block}
 
 @media(max-width:1100px){.g4{grid-template-columns:repeat(2,1fr)}.g3,.g2{grid-template-columns:1fr}.qs{grid-template-columns:1fr}.qs .a1,.qs .a2{height:auto;aspect-ratio:563/270}}
 @media(max-width:700px){.side{display:none}.g4{grid-template-columns:1fr}.top-right .refer,.top-right .vline,.top-right .icons{display:none}}
@@ -353,12 +367,14 @@ if(sessionStorage.getItem('cw_splash')||/loading/.test(location.hash))document.d
       <button data-s="flex">Flexible</button>
       <button data-s="auto">Autonomous</button>
       <button data-s="vel">Velocity</button>
+      <button data-s="ai" title="AI Website Builder v2: tab in Recent Applications">AI Sites v2</button>
       <span class="vline" style="height:16px;align-self:center;margin:0 4px"></span>
       <button class="toggle" id="t-one" aria-pressed="false" title="Show a single application">1 app</button>
       <button class="toggle" id="t-trial" aria-pressed="false" title="Show the free-trial state">Trial</button>
       <button class="toggle" id="t-setup" aria-pressed="false" title="Show an app that is paid but not fully set up">Setup</button>
       <button class="toggle" id="t-bfcm" aria-pressed="false" title="Black Friday / Cyber Monday offer (banner)">BFCM</button>
       <button class="toggle" id="t-bfcm2" aria-pressed="false" title="Black Friday / Cyber Monday offer (full dark theme)">BFCM v2</button>
+      <button class="toggle" id="t-ai1" aria-pressed="false" title="AI Website Builder v1: Websites built with AI section">AI v1</button>
       <button class="toggle" id="t-copilot" aria-pressed="false" title="Show the Cloudways Copilot incidents section">Copilot</button>
     </div>
     <span class="refer"><img src="assets/refer.svg" alt="">Refer &amp; Get $50</span>
@@ -447,12 +463,19 @@ if(sessionStorage.getItem('cw_splash')||/loading/.test(location.hash))document.d
     </section>
 
     <!-- CONVERTED: recent apps -->
+    <!-- AI Website Builder v1: "Websites built with AI" -->
+    <section class="ai-v1">
+      <h2>Websites built with AI <img src="assets/aisites/sparkle.png" alt=""></h2>
+      <a class="site-card" href="#"><img src="assets/aisites/site-card.png" alt="My Business Website, edited 1 day ago"></a>
+    </section>
+
     <section class="conv-only">
       <h2>Recent Applications</h2>
       <div class="tabs" role="tablist">
         <button class="tab" data-s="flex" id="tab-flex">Flexible</button>
         <button class="tab" data-s="auto" id="tab-auto">Autonomous</button>
         <button class="tab" data-s="vel" id="tab-vel">Velocity</button>
+        <button class="tab" data-s="ai" id="tab-ai">AI Website Builder</button>
       </div>
 
       <div class="apps flex-only">
@@ -466,6 +489,10 @@ if(sessionStorage.getItem('cw_splash')||/loading/.test(location.hash))document.d
         <div class="card app img setup-app"><div class="l"><img class="shot" src="assets/thumb-auto-2.png?v=4" alt="">Core Web Trust</div><div class="r"><button class="pill-setup" data-open-drawer aria-haspopup="dialog" aria-controls="setup-drawer"><img src="assets/setup/pill-progress.svg" alt="">Setup Required</button><button class="kebab" aria-label="More">⋮</button></div></div>
         <div class="card app img multi a-core"><div class="l"><img class="shot" src="assets/thumb-auto-2.png?v=4" alt="">Core Web Trust</div><button class="kebab" aria-label="More">⋮</button></div>
         <div class="card app img multi"><div class="l"><img class="shot" src="assets/thumb-auto-3.png?v=4" alt="">Eyewear Store Online USA</div><button class="kebab" aria-label="More">⋮</button></div>
+      </div>
+
+      <div class="apps ai-only">
+        <div class="card app img"><div class="l"><img class="shot site" src="assets/aisites/site-card.png" alt=""><div class="meta">My Business Website<small>Edited 1 day ago</small></div></div><div class="r"><button class="kebab" aria-label="More">⋮</button></div></div>
       </div>
 
       <div class="apps vel-only">
@@ -557,6 +584,7 @@ if(sessionStorage.getItem('cw_splash')||/loading/.test(location.hash))document.d
 <script>
 const body=document.body;
 function setState(s){
+  if(s==='ai'&&body.dataset.aiv1==='on')s='flex';   // the AI tab doesn't exist in v1
   body.dataset.state=s;
   document.querySelectorAll('.switcher button').forEach(b=>b.classList.toggle('on',b.dataset.s===s));
   document.querySelectorAll('.tab').forEach(t=>t.classList.toggle('on',t.dataset.s===s));
@@ -578,6 +606,9 @@ function bindToggle(id,attr,on,off){
 bindToggle('t-one','apps','one','many');
 bindToggle('t-trial','trial','on','off');
 bindToggle('t-copilot','copilot','on','off');
+body.dataset.aiv1='off';
+bindToggle('t-ai1','aiv1','on','off');
+document.getElementById('t-ai1').addEventListener('click',()=>{if(body.dataset.aiv1==='on'&&body.dataset.state==='ai')setState('flex')});
 body.dataset.copilot='off';
 function syncHash(){
   const f=[body.dataset.state];
@@ -585,6 +616,7 @@ function syncHash(){
   if(body.dataset.trial==='on')f.push('trial');
   if(body.dataset.copilot==='on')f.push('copilot');
   if(body.dataset.setup==='on')f.push('setup');
+  if(body.dataset.aiv1==='on')f.push('aiv1');
   if(body.dataset.bfv==='1')f.push('bfcm');
   if(body.dataset.bfv==='2')f.push('bfcm2');
   history.replaceState(null,'','#'+f.join('+'));
@@ -592,7 +624,7 @@ function syncHash(){
 // toggles only apply once the user has converted
 function syncToggles(){
   const empty=body.dataset.state==='empty';
-  ['t-one','t-trial','t-copilot','t-setup'].forEach(id=>document.getElementById(id).disabled=empty);
+  ['t-one','t-trial','t-copilot','t-setup','t-ai1'].forEach(id=>document.getElementById(id).disabled=empty);
 }
 
 // trial countdown (demo value: 2d 14h 32m from page load; swap for the account's real trial end)
@@ -653,8 +685,9 @@ function applyHash(){
   flag('t-setup','setup','setup','on','off');
   flag('t-trial','trial','trial','on','off');
   flag('t-copilot','copilot','copilot','on','off');
+  flag('t-ai1','aiv1','aiv1','on','off');
   setBF(parts.includes('bfcm2')?2:parts.includes('bfcm')?1:0);
-  setState(['empty','flex','auto','vel'].includes(parts[0])?parts[0]:'empty');
+  setState(['empty','flex','auto','vel','ai'].includes(parts[0])?parts[0]:'empty');
   if(body.dataset.drawer==='open'&&body.dataset.setup!=='on')closeDrawer();
 }
 applyHash();
