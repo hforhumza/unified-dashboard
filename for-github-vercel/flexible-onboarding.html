@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Deploy your first server · Cloudways</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--heading:#253858;--body:#5e6c84;--brand:#2f39bf;--brand-soft:#eaebf9;--brand-20:#d5d7f2;--border:#dfe1e6;--field:#c1c7d0;--sel:#fbfbfe;--green:#00875a;--ink:#091e42}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{font-family:Poppins,system-ui,sans-serif;color:var(--heading);background:#fff;overflow:hidden}
+button,select,input{font:inherit;color:inherit}
+button{background:none;border:0;cursor:pointer;text-align:left}
+img{display:block}
+:focus-visible{outline:2px solid var(--brand);outline-offset:2px}
+[hidden]{display:none!important}
+/* top navigation (same as Launch Pad) */
+.topbar{height:48px;border-bottom:1px solid #eff0f3;display:flex;align-items:center;justify-content:space-between;padding:0 12px 0 16px;position:fixed;top:0;left:0;right:0;background:#fff;z-index:12;font-family:Poppins,system-ui,sans-serif;color:#253858}
+.topbar .logo{width:147px;height:28px;display:block}
+.top-right{display:flex;align-items:center;gap:24px;font-size:12px}
+.refer{display:flex;align-items:center;gap:6px}
+.refer img{width:20px;height:20px}
+.vline{width:1px;height:30px;background:#dfe1e6}
+.user{display:flex;align-items:center;gap:8px}
+.user .avatar{width:30px;height:30px;border-radius:50%}
+.user .chev{width:22px;height:20px}
+@media(max-width:700px){.top-right .refer,.top-right .vline{display:none}}
+.bg{position:absolute;left:-129px;top:-463px;width:2155px;height:1102px;max-width:none;pointer-events:none;z-index:0}
+.page{position:fixed;inset:48px 0 88px 0;overflow:auto;z-index:1}
+.wrap{max-width:1354px;margin:0 auto;padding:40px 60px 32px;position:relative}
+.close{position:fixed;top:60px;right:24px;width:24px;height:24px;display:grid;place-items:center;z-index:5;border-radius:50%}
+.close:hover{background:rgba(9,30,66,.06)}
+.close img{width:22px;height:22px}
+h1{font-size:20px;font-weight:600;line-height:28px}
+.layout{display:flex;justify-content:space-between;gap:51px;margin-top:24px;align-items:flex-start}
+.main{flex:1;max-width:820px;min-width:0}
+.stephead{display:flex;align-items:center;gap:16px;min-height:32px;margin-bottom:8px}
+.back{display:flex;align-items:center;gap:2px;color:var(--brand);font-size:16px;line-height:24px;height:32px}
+.back img{width:14px;height:14px}
+.vr{width:1px;height:18px;background:var(--border)}
+.stepno{font-size:16px;font-weight:500;line-height:24px;color:var(--brand)}
+.title{font-size:16px;font-weight:500;line-height:24px}
+.sub{font-size:13px;line-height:20px;color:var(--body)}
+.titles{display:flex;flex-direction:column;gap:4px;margin-bottom:20px}
+.sec{margin-top:32px}
+.sec:first-of-type{margin-top:0}
+.lbl{font-size:14px;font-weight:500;line-height:22px}
+.lblrow{display:flex;justify-content:space-between;align-items:flex-end}
+.help{font-size:12px;font-weight:500;line-height:18px;color:var(--brand);display:flex;align-items:center;gap:0}
+.help:hover{text-decoration:underline}
+.help img{width:20px;height:20px}
+
+/* option cards */
+.cards{display:flex;gap:16px;flex-wrap:wrap}
+.card{background:#fff;border:1px solid var(--border);border-radius:4px;box-shadow:0 0 20px rgba(0,0,0,.02);transition:border-color .15s,background .15s}
+.card:hover{border-color:#b3b9c4}
+.card.on{background:var(--sel);border-color:var(--brand)}
+.card:disabled{cursor:not-allowed}
+.apps{flex-wrap:nowrap}
+.apps .card{flex:1 1 0;min-width:0;padding:12px 8px;display:flex;align-items:center;justify-content:center;gap:8px;font-size:13px;font-weight:500;line-height:20px;height:56px;white-space:nowrap}
+.apps .card img{width:32px;height:32px;object-fit:contain}
+.field{position:relative;width:398px;max-width:100%}
+.field select,.field input{width:100%;height:48px;border:1px solid var(--field);border-radius:4px;padding:0 12px;font-size:14px;line-height:22px;background:#fff;outline:0;transition:border-color .15s,box-shadow .15s}
+.field select{appearance:none;-webkit-appearance:none;padding-right:40px;cursor:pointer}
+.field select+img{position:absolute;right:12px;top:14px;width:20px;height:20px;pointer-events:none}
+.field select:focus,.field input:focus{border-color:var(--brand);box-shadow:0 0 0 3px rgba(47,57,191,.12)}
+.stacks{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.stack{padding:12px 14px;display:flex;gap:4px;align-items:flex-start;min-height:80px}
+.ic{display:block;flex-shrink:0;background:currentColor;-webkit-mask:var(--m) center/contain no-repeat;mask:var(--m) center/contain no-repeat}
+.stack .ic{width:18px;height:18px;margin:2px 3px 0 0;color:var(--heading)}
+.stack.on .ic,.stype.on .ic{color:var(--brand)}
+.stack b,.stype b,.db b{font-weight:500;font-size:13px;line-height:20px;display:flex;align-items:center;gap:4px;color:var(--heading)}
+.on b{color:var(--brand)}
+.stack p,.stype p,.db p{font-size:11px;line-height:16px;color:var(--body);margin-top:2px}
+.stack b img{width:16px;height:16px}
+.pill{border:1px solid var(--border);border-radius:20px;padding:2px 6px;font-size:12px;font-weight:500;line-height:18px;color:var(--brand);background:#fff}
+
+/* providers / regions */
+.provs{display:grid;grid-template-columns:repeat(5,1fr);gap:16px}
+.prov{height:88px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;font-size:13px;font-weight:500;line-height:20px;position:relative}
+.prov .lg{width:32px;height:32px;display:grid;place-items:center}
+.prov .lg img{max-width:28px;max-height:28px}
+.prov .lock{position:absolute;top:12px;right:12px;width:16px;height:16px}
+.tabs{display:flex;gap:16px;border-bottom:1px solid var(--border);margin-top:20px}
+.tab{padding:0 4px;font-size:14px;line-height:22px;padding-bottom:0;position:relative;height:25px}
+.tab.on{color:var(--brand);font-weight:500}
+.tab.on::after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:3px;background:var(--brand);border-radius:1.5px 1.5px 0 0}
+.regs{display:grid;grid-template-columns:repeat(4,1fr);gap:17px 16px;margin-top:20px}
+.reg{padding:12px 24px 12px 12px;display:flex;align-items:center;gap:9px;font-size:12px;line-height:20px;font-weight:400}
+.reg img{width:22px;height:16px;object-fit:cover}
+.empty{grid-column:1/-1;font-size:13px;color:var(--body);padding:8px 0}
+
+/* db / server type / slider */
+.dbs{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.db{padding:12px 14px;display:flex;gap:4px;align-items:flex-start}
+.db img{width:20px;height:20px;margin-right:2px}
+.stypes{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.stype{padding:12px 14px;display:flex;gap:4px;align-items:flex-start}
+.stype .ic{width:22px;height:22px;color:var(--heading)}
+.slider{background:#fff;border:1px solid var(--border);border-radius:4px;box-shadow:0 0 10px rgba(0,0,0,.02);padding:16px}
+.shead{display:flex;justify-content:space-between;align-items:center}
+.shead h4{font-size:14px;font-weight:600;line-height:22px}
+.tog{position:relative;display:flex;width:194px;height:23px;border:1px solid var(--brand-soft);border-radius:94px;background:#fff;font-size:11px;line-height:21px}
+.tog button{flex:1;text-align:center;position:relative;z-index:1;border-radius:44px;display:flex;align-items:center;justify-content:center;gap:5px}
+.tog button.on{background:var(--brand-soft);color:var(--brand)}
+.tog button img{width:10px;height:9px}
+.track{position:relative;height:50px;margin:16px 0 0}
+.rail{position:absolute;left:0;right:0;top:10px;height:10px;border-radius:15px;background:var(--brand-20)}
+.fill{position:absolute;left:0;top:10px;height:10px;border-radius:15px;background:var(--brand)}
+.thumb{position:absolute;top:2px;width:26px;height:26px;margin-left:-13px;pointer-events:none;transition:left .15s}
+.fill{transition:width .15s}
+.stop{position:absolute;top:13px;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:15px;font-size:12px;font-weight:500;line-height:16px;color:#222e37;height:37px;width:48px;justify-content:space-between}
+.stop i{width:3px;height:3px;border-radius:50%;background:#fff;display:block}
+.stop.first i{visibility:hidden}
+.stop:focus-visible{outline-offset:-2px}
+.stops{position:absolute;inset:0}
+
+/* review */
+.names{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.names label,.proj label{display:block;font-size:14px;font-weight:500;line-height:22px;margin-bottom:8px}
+.names .field{width:100%}
+.proj .t{margin-bottom:4px}
+
+/* summary */
+.sum{width:363px;flex-shrink:0;border:1px solid var(--border);border-radius:4px;padding:24px;min-height:558px;background:#fff}
+.sum h3{font-size:16px;font-weight:600;line-height:26px}
+.sum .sub2{font-size:12px;line-height:18px;color:var(--body);margin-top:8px}
+.ss{padding:16px 0;border-bottom:1px solid var(--border)}
+.ss:last-child{border-bottom:0}
+.ssh{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+.ssh b{font-size:14px;font-weight:500;line-height:22px}
+.ssh button{width:16px;height:16px}
+.ssh img{width:16px;height:16px}
+.srow{display:flex;align-items:center;gap:4px;font-size:12px;line-height:18px;flex-wrap:wrap}
+.srow img.l{width:18px;height:18px}
+.sdiv{width:1px;height:17px;background:var(--border);margin:0 8px}
+.spill{background:var(--brand-soft);border-radius:44px;height:21px;padding:3px 5px;display:flex;align-items:center;gap:2px;color:var(--brand);font-size:11px}
+.spill img{width:11px;height:11px}
+.bul{font-size:12px;line-height:18px;padding-left:16px;margin-top:12px;display:flex;align-items:center;gap:6px}
+.bul::before{content:"";width:3px;height:3px;border-radius:50%;background:var(--heading);margin-right:4px}
+.bul img{width:16px;height:16px}
+.note{background:rgba(244,245,247,.61);border-radius:4px;padding:12px 10px 12px 12px;font-size:12px;line-height:18px;color:var(--body);margin-top:12px}
+.note small{font-size:11px;line-height:16px}
+.note a{color:var(--brand);font-size:11px;cursor:pointer}
+.specs{display:flex;flex-wrap:wrap;gap:12px 21px;padding-left:16px;margin-top:12px;font-size:12px;line-height:18px}
+.specs span{width:124px;display:flex;align-items:center;gap:6px}
+.specs span::before{content:"";width:3px;height:3px;border-radius:50%;background:var(--heading);margin-right:6px}
+.sprem{display:flex;align-items:center;gap:8px}
+
+/* bottom bar */
+.bar{position:fixed;left:0;right:0;bottom:0;height:88px;background:#fff;box-shadow:0 -1px 3px rgba(9,30,66,.1);display:flex;align-items:center;justify-content:space-between;padding:20px 32px;z-index:4;gap:24px}
+.bar h5{font-size:18px;font-weight:600;line-height:26px;color:#222e37}
+.bar p{font-size:14px;line-height:22px}
+.bar p a{color:var(--brand);cursor:pointer}
+.right{display:flex;align-items:center;gap:40px}
+.price{display:flex;align-items:center;gap:32px}
+.price div b{display:block;font-size:20px;font-weight:600;line-height:28px;color:var(--ink)}
+.price div span{font-size:14px;line-height:22px;color:var(--ink)}
+.price .v{width:1px;height:46px;background:var(--border)}
+.cta{height:48px;padding:0 20px 0 24px;border-radius:4px;background:var(--brand);color:#fff;font-size:18px;line-height:26px;display:flex;align-items:center;gap:2px;transition:background .15s;white-space:nowrap}
+.cta:hover{background:#252ea3}
+.cta img{width:20px;height:20px}
+.cta.plain{padding:0 24px}
+
+/* launching overlay */
+.launch{position:fixed;inset:0;background:rgba(255,255,255,.96);z-index:20;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;text-align:center}
+.spin{width:36px;height:36px;border-radius:50%;border:3px solid var(--brand-soft);border-top-color:var(--brand);animation:sp .8s linear infinite}
+@keyframes sp{to{transform:rotate(360deg)}}
+.launch h2{font-size:20px;font-weight:600;line-height:28px}
+.launch p{font-size:13px;color:var(--body)}
+@media(max-width:1100px){.layout{flex-direction:column}.sum{width:100%}.main{max-width:none}.wrap{padding:32px 24px}.apps{flex-wrap:wrap}.apps .card{flex:1 1 calc(50% - 8px)}.provs{grid-template-columns:repeat(3,1fr)}.regs{grid-template-columns:repeat(2,1fr)}.stypes,.stacks,.dbs,.names{grid-template-columns:1fr}.bar p{display:none}.right{gap:16px}.price{gap:16px}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;animation-duration:2s!important}}
+</style>
+</head>
+<body>
+<header class="topbar">
+  <a href="index.html" aria-label="Cloudways home"><img class="logo" src="assets/logo.png?v=4" alt="Cloudways by DigitalOcean"></a>
+  <div class="top-right">
+    <a class="user" href="login.html" title="Log out" aria-label="John Doe, log out"><img class="avatar" src="assets/avatar.png" alt=""><img class="chev" src="assets/chevron.svg" alt=""></a>
+  </div>
+</header>
+<img class="bg" src="assets/onboarding/bg.svg" alt="">
+<a class="close" href="launchpad.html" aria-label="Close"><img src="assets/onboarding/close.svg" alt=""></a>
+
+<div class="page"><div class="wrap">
+  <h1>Deploy your First Server and Application</h1>
+  <div class="layout">
+    <section class="main" id="main" aria-live="polite"></section>
+    <aside class="sum" id="sum" aria-label="Summary"></aside>
+  </div>
+</div></div>
+
+<footer class="bar" id="bar"></footer>
+
+<script>
+const A='assets/onboarding/';
+const $=(s,r=document)=>r.querySelector(s);
+const img=(n,c='',alt='')=>`<img src="${A}${n}.svg" class="${c}" alt="${alt}">`;
+const mask=n=>`style="--m:url(${A}${n}.svg)"`;
+
+/* ---------- data ---------- */
+const APPS=[
+ {id:'wp',name:'Word Press',short:'Wordpress',pre:'WP',icon:'app-wordpress',cfg:['Optimized','Vanilla'],note:'For basic websites, blogs, and content management, WordPress is the ideal, versatile choice.'},
+ {id:'woo',name:'Woo Commerce',short:'WooCommerce',pre:'WC',icon:'app-woo',wide:1,cfg:['Optimized','Vanilla'],note:'Turn WordPress into a full online store with products, carts and payments built in.'},
+ {id:'mag',name:'Magento',short:'Magento',pre:'MG',icon:'app-magento',cfg:['Optimized','Vanilla'],note:'A powerful platform for large catalogs and high-traffic stores.'},
+ {id:'lar',name:'Laravel',short:'Laravel',pre:'LV',icon:'app-laravel',cfg:['Default'],note:'A modern PHP framework for custom web applications and APIs.'},
+ {id:'php',name:'Php',short:'PHP',pre:'PHP',icon:'app-php',cfg:['Default'],note:'A flexible, blank-slate PHP environment for any custom project.'}
+];
+const STACKS=[
+ {id:'hybrid',name:'Hybrid',title:'Hybrid Stack',icon:'hybrid',desc:'A robust setup with .htaccess support, advanced caching for speed, and enhanced security features'},
+ {id:'lightning',name:'Lightning',title:'Lightning Stack',icon:'lightning',pill:'Public Preview',desc:'Ultra-fast Nginx setup, optimized for speed with advanced caching and integrated security.'}
+];
+const PROVS=[
+ {id:'do',name:'DigitalOcean',pre:'DO',icon:'do',blurb:'DigitalOcean offers a developer-friendly cloud platform known for its simplicity, scalability, and affordability.',regions:['ny','ams','sf','lon','blr','fra','sgp','syd']},
+ {id:'vultr',name:'Vultr',pre:'VU',icon:'vultr',blurb:'Vultr provides high-performance cloud compute with a wide global footprint at predictable prices.',regions:['ny','sf','lon','fra','blr','sgp','syd']},
+ {id:'linode',name:'Linode',pre:'LI',icon:'linode',blurb:'Linode (Akamai) offers reliable, straightforward cloud hosting with strong network performance.',regions:['ny','sf','lon','fra','blr','sgp','syd']},
+ {id:'aws',name:'AWS',icon:'aws',locked:1},
+ {id:'gcp',name:'GCP',icon:'gcp',locked:1}
+];
+const REGIONS={ny:['New York','flag-us','usa'],ams:['Amsterdam','flag-nl','europe'],sf:['San Francisco','flag-us','usa'],lon:['London','flag-uk','europe'],blr:['Bangalore','flag-in','asia'],fra:['Frankfurt','flag-de','europe'],sgp:['Singapore','flag-sg','asia'],syd:['Sydney','flag-au','asia']};
+const TABS=[['all','All Locations'],['asia','Asia Pacific'],['europe','Europe'],['usa','USA'],['me','Middle East']];
+const DBS=[
+ {id:'maria',name:'Maria DB v10.11',icon:'mariadb',desc:'Reliable and flexible for most everyday website needs'},
+ {id:'mysql',name:'MySQL v8.4',icon:'mysql',desc:'Optimized performance for faster, high-demand applications'}
+];
+const STYPES=[
+ {id:'basic',name:'Basic',icon:'srv-basic-sel',desc:'Good starting point for all kinds of general websites'},
+ {id:'general',name:'General Purpose',icon:'srv-general',desc:'Upgraded performance for all kinds of websites'},
+ {id:'cpu',name:'CPU Optimised',icon:'srv-cpu',desc:'Extra processing power for complex websites'}
+];
+const RAMS=[1,2,4,8,16,32,48,64];
+const MONTHLY={1:14,2:28,4:67,8:134,16:268,32:536,48:804,64:1072};
+const SPEC={1:[1,25,1],2:[1,50,2],4:[1,50,2],8:[2,160,4],16:[4,320,5],32:[8,640,6],48:[12,960,7],64:[16,1280,8]};
+const TYPE_MULT={basic:1,general:1.25,cpu:1.5};
+const HOURS=348.45;
+
+const S={step:1,app:'wp',cfg:'Optimized',stack:'hybrid',prov:'do',region:'ny',tab:'all',db:'maria',stype:'basic',ram:2,tier:'premium',appName:'WP-01',serverName:'DO-01',project:'My Project',touchedNames:false};
+const app=()=>APPS.find(a=>a.id===S.app), prov=()=>PROVS.find(p=>p.id===S.prov), stack=()=>STACKS.find(s=>s.id===S.stack), db=()=>DBS.find(d=>d.id===S.db), st=()=>STYPES.find(t=>t.id===S.stype);
+const monthly=()=>Math.round(MONTHLY[S.ram]*TYPE_MULT[S.stype]*(S.tier==='standard'?.8:1)*100)/100;
+const hourly=()=>{const h=monthly()/HOURS;return h>=1?h.toFixed(2):String(+h.toFixed(5))};
+const money=n=>'$'+n.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
+
+/* ---------- step bodies ---------- */
+function head(n,title,sub){
+  const back=n>1?`<button class="back" data-go="${n-1}">${img('chev-left')}Back</button><span class="vr"></span>`:'';
+  return `<div class="stephead">${back}<span class="stepno">Step ${n} of 4</span></div>
+  <div class="titles"><div class="title">${title}</div><p class="sub">${sub}</p></div>`;
+}
+const helpBtn=`<button class="help" type="button">Help me Choose${img('chev-right')}</button>`;
+
+function step1(){
+  const a=app();
+  return head(1,'Choose your Application Type','Select the application type that best suits your business or development needs.')+
+  `<div class="cards apps" role="radiogroup" aria-label="Application type">${APPS.map(x=>`<button class="card${x.wide?' wide':''}${x.id===S.app?' on':''}" role="radio" aria-checked="${x.id===S.app}" data-app="${x.id}">${img(x.icon)}${x.name}</button>`).join('')}</div>
+  <div class="sec"><div class="lbl" style="margin-bottom:8px">Additional Configuration</div>
+    <div class="field"><select id="cfg" aria-label="Additional configuration">${a.cfg.map(c=>`<option${c===S.cfg?' selected':''}>${c}</option>`).join('')}</select>${img('dropdown')}</div></div>
+  <div class="sec"><div class="lblrow" style="margin-bottom:16px"><span class="lbl">Application Stack</span>${helpBtn}</div>
+    <div class="stacks" role="radiogroup" aria-label="Application stack">${STACKS.map(s=>`<button class="card stack${s.id===S.stack?' on':''}" role="radio" aria-checked="${s.id===S.stack}" data-stack="${s.id}"><span class="ic" ${mask(s.icon)}></span><span><b>${s.title} ${img('info')}${s.pill?`<span class="pill">${s.pill}</span>`:''}</b><p>${s.desc}</p></span></button>`).join('')}</div></div>`;
+}
+function step2(){
+  const p=prov(), regs=p.regions.map(r=>REGIONS[r]?[r,...REGIONS[r]]:null).filter(Boolean).filter(r=>S.tab==='all'||r[3]===S.tab);
+  return head(2,'Choose Your Cloud Provider','Select the cloud provider that aligns with your application requirements for optimal performance.')+
+  `<div class="provs" role="radiogroup" aria-label="Cloud provider">${PROVS.map(x=>`<button class="card prov${x.id===S.prov?' on':''}" role="radio" aria-checked="${x.id===S.prov}" data-prov="${x.id}"${x.locked?' disabled aria-label="'+x.name+' (locked)"':''}><span class="lg">${img(x.icon)}</span>${x.name}${x.locked?img('lock','lock'):''}</button>`).join('')}</div>
+  <div class="sec"><div class="lblrow"><div><div class="title">Select Region</div><p class="sub">Choose a server location closest to your target audience for faster load times and better performance.</p></div></div>
+    <div class="tabs" role="tablist">${TABS.map(([k,n])=>`<button class="tab${k===S.tab?' on':''}" role="tab" aria-selected="${k===S.tab}" data-tab="${k}">${n}</button>`).join('')}</div>
+    <div class="regs">${regs.length?regs.map(([k,n,f])=>`<button class="card reg${k===S.region?' on':''}" data-region="${k}">${img(f)}${n}</button>`).join(''):'<p class="empty">No locations available in this region yet.</p>'}</div></div>`;
+}
+function step3(){
+  const idx=RAMS.indexOf(S.ram), pct=idx/(RAMS.length-1)*100;
+  return head(3,'Choose Your Database &amp; Server Size','Select the right server size and database type for optimal performance and scalability of your application.')+
+  `<div class="sec"><div class="lbl" style="margin-bottom:16px">Database Type</div>
+    <div class="dbs" role="radiogroup" aria-label="Database type">${DBS.map(d=>`<button class="card db${d.id===S.db?' on':''}" role="radio" aria-checked="${d.id===S.db}" data-db="${d.id}">${img(d.icon)}<span><b>${d.name}</b><p>${d.desc}</p></span></button>`).join('')}</div></div>
+  <div class="sec"><div class="lblrow" style="margin-bottom:16px"><span class="lbl">Server Type</span>${helpBtn}</div>
+    <div class="stypes" role="radiogroup" aria-label="Server type">${STYPES.map(t=>`<button class="card stype${t.id===S.stype?' on':''}" role="radio" aria-checked="${t.id===S.stype}" data-stype="${t.id}"><span class="ic" ${mask(t.icon)}></span><span><b>${t.name}</b><p>${t.desc}</p></span></button>`).join('')}</div></div>
+  <div class="sec"><div class="slider"><div class="shead"><h4>CPU Options</h4>
+    <div class="tog" role="group" aria-label="CPU tier"><button data-tier="premium" class="${S.tier==='premium'?'on':''}">${img('bolt')}Premium</button><button data-tier="standard" class="${S.tier==='standard'?'on':''}">Standard</button></div></div>
+    <div class="track" id="track"><div class="rail"></div><div class="fill" id="fill" style="width:${pct}%"></div>${img('thumb','thumb').replace('class="thumb"','class="thumb" id="thumb" style="left:'+pct+'%"')}
+      <div class="stops">${RAMS.map((r,i)=>`<button class="stop${i===0?' first':''}" data-ram="${r}" style="left:${i/(RAMS.length-1)*100}%" aria-label="${r} GB RAM"><i></i>${r} GB</button>`).join('')}</div></div></div></div>`;
+}
+function step4(){
+  return head(4,'Review and Launch Application','Take a final look at your selections. If everything looks good, you’re all set to launch your server.')+
+  `<div class="names"><div><label for="an">Application Name</label><div class="field"><input id="an" value="${S.appName}"></div></div><div><label for="sn">Server Name</label><div class="field"><input id="sn" value="${S.serverName}"></div></div></div>
+  <div class="sec proj"><div class="title">Manage Project</div><p class="sub" style="margin-bottom:16px">Organize your servers and applications in one place for easier management.</p><div class="field"><input id="pj" value="${S.project}" aria-label="Project name"></div></div>`;
+}
+
+/* ---------- summary ---------- */
+function pillStack(){const s=stack();return `<span class="spill"><img src="${A}${s.icon==='hybrid'?'hybrid-sm':'lightning'}.svg" alt="">${s.name}</span>`}
+function sApp(edit){const a=app();return `<div class="ss"><div class="ssh"><b>Application:</b>${edit?`<button data-go="1" aria-label="Edit application">${img('edit2')}</button>`:''}</div>
+  <div class="srow"><img class="l" src="${A}${a.icon==='app-wordpress'?'wp-sm':a.icon}.svg" alt="">${a.short} ${a.id==='wp'||a.id==='woo'?'(Latest Version)':''} ${pillStack()}</div>
+  <div class="bul">${S.cfg} ${img('check-circle')}</div>${S.step===1?`<div class="note">${a.note} <a>Learn more</a></div>`:''}</div>`}
+function sServer(edit){const p=prov(),r=REGIONS[S.region];return `<div class="ss"><div class="ssh"><b>Server:</b>${edit?`<button data-go="2" aria-label="Edit server">${img('edit2')}</button>`:''}</div>
+  <div class="srow"><img class="l" src="${A}${p.icon==='do'?'do-sm':p.icon}.svg" alt="">${p.name}<span class="sdiv"></span><img src="${A}flag-us-sm.svg" alt="" style="width:16px;height:12px;display:${r[1]==='flag-us'?'block':'none'}">${r[1]!=='flag-us'?`<img src="${A}${r[1]}.svg" alt="" style="width:16px;height:12px;object-fit:cover">`:''}${r[0]}</div>
+  ${S.step===2?`<div class="note"><small>${p.blurb} <a>Learn more</a></small></div>`:''}</div>`}
+function sDb(edit){const d=db();return `<div class="ss"><div class="ssh"><b>Database:</b>${edit?`<button data-go="3" aria-label="Edit database">${img('edit2')}</button>`:''}</div><div class="srow"><img class="l" src="${A}${d.icon}.svg" alt="" style="width:16px;height:16px">${d.name}</div></div>`}
+function sSize(edit){const sp=SPEC[S.ram],t=st();return `<div class="ss"><div class="ssh"><b>Server Size:</b>${edit?`<button data-go="3" aria-label="Edit server size">${img('edit2')}</button>`:''}</div>
+  <div class="sprem"><span class="srow"><span class="ic" style="--m:url(${A}${t.icon}.svg);width:16px;height:16px;color:var(--heading)"></span>${t.name}</span><span class="spill">${S.tier==='premium'?`<img src="${A}bolt-sm.svg" alt="" style="width:9px;height:11px">Premium`:'Standard'}</span></div>
+  <div class="specs"><span>${S.ram} GB RAM</span><span>${sp[0]} Core Processor</span><span>${sp[1]} GB NVMe Disk</span><span>${sp[2]} TB Transfer</span></div></div>`}
+function renderSum(){
+  const n=S.step, edit=n>=3||false;
+  $('#sum').innerHTML=`<h3>Summary</h3><p class="sub2">Get a quick overview of your server and application launch journey.</p>`+
+    sApp(n>=2)+(n>=2?sServer(n>=3):'')+(n>=3?sDb(n>=4)+sSize(n>=4):'');
+  // the blocks above can only be edited from a later step
+}
+
+/* ---------- bottom bar ---------- */
+function renderBar(){
+  const n=S.step, price=n>=3?`<div class="price"><div><b>$${hourly()}</b><span>Hourly</span></div><span class="v"></span><div><b>${money(monthly())}</b><span>Monthly</span></div></div>`:'';
+  const left=n===3?`<div><h5>You are on 3-Days Free Trial</h5><p>Billing starts once you <a>upgrade to full access.</a></p></div>`:
+    `<div><h5>Start 3-Days Free Trial</h5><p>Launch your server to begin your trial. Billing starts once you Upgrade to get Full Access.</p></div>`;
+  const cta=['Choose Server','Configure Server','Finalise','Launch Now'][n-1];
+  $('#bar').innerHTML=left+`<div class="right">${price}<button class="cta${n===4?' plain':''}" id="next">${cta}${n<4?img('arrow'):''}</button></div>`;
+}
+
+function render(){
+  $('#main').innerHTML=[step1,step2,step3,step4][S.step-1]();
+  renderSum();renderBar();
+  document.title=`Step ${S.step} of 4 · Deploy your first server · Cloudways`;
+  if(S.step===4){['an','sn','pj'].forEach(id=>$('#'+id).addEventListener('input',e=>{S[{an:'appName',sn:'serverName',pj:'project'}[id]]=e.target.value;S.touchedNames=true}))}
+}
+function go(n){
+  if(n===4&&!S.touchedNames){S.appName=app().pre+'-01';S.serverName=prov().pre+'-01'}
+  S.step=n;render();$('.page').scrollTop=0;
+}
+
+/* ---------- events ---------- */
+document.addEventListener('click',e=>{
+  const t=e.target.closest('[data-go],[data-app],[data-stack],[data-prov],[data-tab],[data-region],[data-db],[data-stype],[data-tier],[data-ram],#next');
+  if(!t)return;
+  const d=t.dataset;
+  if(t.id==='next'){S.step<4?go(S.step+1):launch();return}
+  if(d.go){go(+d.go);return}
+  if(d.app){S.app=d.app;S.cfg=app().cfg[0]}
+  else if(d.stack)S.stack=d.stack;
+  else if(d.prov){S.prov=d.prov;if(!prov().regions.includes(S.region))S.region=prov().regions[0]}
+  else if(d.tab)S.tab=d.tab;
+  else if(d.region)S.region=d.region;
+  else if(d.db)S.db=d.db;
+  else if(d.stype)S.stype=d.stype;
+  else if(d.tier)S.tier=d.tier;
+  else if(d.ram){S.ram=+d.ram}
+  if(d.ram||d.tier){ // keep the slider mounted so the thumb glides
+    if(d.ram){const i=RAMS.indexOf(S.ram),p=i/(RAMS.length-1)*100;$('#fill').style.width=p+'%';$('#thumb').style.left=p+'%'}
+    if(d.tier)$$('[data-tier]').forEach(b=>b.classList.toggle('on',b.dataset.tier===S.tier));
+    renderSum();renderBar();return;
+  }
+  render();
+});
+function $$(s){return [...document.querySelectorAll(s)]}
+document.addEventListener('change',e=>{if(e.target.id==='cfg'){S.cfg=e.target.value;renderSum()}});
+
+/* slider: drag along the rail to pick a size */
+let drag=false;
+function pick(ev){
+  const tr=$('#track');if(!tr)return;const r=tr.getBoundingClientRect();
+  const p=Math.min(1,Math.max(0,(ev.clientX-r.left)/r.width)), i=Math.round(p*(RAMS.length-1));
+  if(RAMS[i]!==S.ram){S.ram=RAMS[i];const q=i/(RAMS.length-1)*100;$('#fill').style.width=q+'%';$('#thumb').style.left=q+'%';renderSum();renderBar()}
+}
+document.addEventListener('pointerdown',e=>{if(e.target.closest('#track')&&!e.target.closest('.stop')){drag=true;pick(e)}});
+document.addEventListener('pointermove',e=>{if(drag)pick(e)});
+document.addEventListener('pointerup',()=>drag=false);
+
+/* ---------- launch ---------- */
+function launch(){
+  const o=document.createElement('div');o.className='launch';o.setAttribute('role','status');
+  o.innerHTML=`<div class="spin"></div><h2>Launching ${S.appName||'your application'}…</h2><p>Setting up your ${prov().name} server in ${REGIONS[S.region][0]}. This only takes a moment.</p>`;
+  document.body.appendChild(o);
+  try{sessionStorage.setItem('cw_onboarded',JSON.stringify({app:S.appName,server:S.serverName,project:S.project}))}catch{}
+  setTimeout(()=>{location.href='index.html'},2200);
+}
+render();
+</script>
+</body>
+</html>

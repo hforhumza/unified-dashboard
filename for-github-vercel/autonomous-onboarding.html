@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cloudways Autonomous · Get started</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--heading:#253858;--body:#4b5971;--muted:#5e6c84;--brand:#2f39bf;--brand-soft:#eaebf9;--brand-20:#d5d7f2;--border:#dfe1e6;--field:#c1c7d0;--sel:#fbfbfe}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{font-family:Poppins,system-ui,sans-serif;color:var(--heading);background:#fff;overflow:hidden}
+button,input{font:inherit;color:inherit}
+button{background:none;border:0;cursor:pointer;text-align:left}
+img{display:block}
+:focus-visible{outline:2px solid var(--brand);outline-offset:2px}
+[hidden]{display:none!important}
+/* top navigation (same as Launch Pad) */
+.topbar{height:48px;border-bottom:1px solid #eff0f3;display:flex;align-items:center;justify-content:space-between;padding:0 12px 0 16px;position:fixed;top:0;left:0;right:0;background:#fff;z-index:12;font-family:Poppins,system-ui,sans-serif;color:#253858}
+.topbar .logo{width:147px;height:28px;display:block}
+.top-right{display:flex;align-items:center;gap:24px;font-size:12px}
+.refer{display:flex;align-items:center;gap:6px}
+.refer img{width:20px;height:20px}
+.vline{width:1px;height:30px;background:#dfe1e6}
+.user{display:flex;align-items:center;gap:8px}
+.user .avatar{width:30px;height:30px;border-radius:50%}
+.user .chev{width:22px;height:20px}
+@media(max-width:700px){.top-right .refer,.top-right .vline{display:none}}
+.bg{position:absolute;left:-33%;top:-420px;width:178%;max-width:none;pointer-events:none;z-index:0}
+.page{position:fixed;inset:48px 0 0 0;overflow:auto;z-index:1}
+.wrap{max-width:1354px;margin:0 auto;padding:40px 51px 48px}
+.close{position:fixed;top:60px;right:24px;width:24px;height:24px;display:grid;place-items:center;z-index:5;border-radius:50%}
+.close:hover{background:rgba(9,30,66,.06)}
+.close img{width:22px;height:22px}
+h1{font-size:20px;font-weight:600;line-height:28px}
+
+/* ---- plans ---- */
+.tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:32px}
+.tab{height:56px;border:1px solid var(--border);border-radius:4px;background:#fff;display:flex;align-items:center;justify-content:center;transition:border-color .15s,background .15s}
+.tab:hover{border-color:#b3b9c4}
+.tab.on{background:rgba(245,245,252,.4);border-color:var(--brand)}
+.logo{position:relative;width:152px;height:29px;display:flex;align-items:center;justify-content:center}
+.wpl{width:131px;height:25px;overflow:hidden;position:relative}
+.wpl img{position:absolute;height:197.67%;left:-9.95%;top:-48.26%;width:119.83%;max-width:none}
+.woo{width:61px;height:17px}
+.lms{display:flex;align-items:center;gap:3px}
+.lms img:first-child{width:31px;height:29px}
+.lms img:last-child{width:118px;height:12px}
+.plans{display:grid;grid-template-columns:repeat(5,1fr);gap:16px;margin-top:24px}
+.plan{background:#fff;border:1px solid var(--border);border-radius:4px;padding:16px;display:flex;flex-direction:column;gap:16px;min-width:0}
+.plan.ent{border-color:#f1e0f7;background:linear-gradient(-32.6deg,rgba(126,55,243,.1) 28.7%,rgba(219,115,255,0) 102.9%),#fff;gap:30px}
+.pn{font-size:14px;font-weight:500;line-height:22px}
+.price{font-size:24px;font-weight:600;line-height:32px;color:var(--brand)}
+.price small{font-size:12px;font-weight:400;line-height:18px;color:var(--body)}
+.best{font-size:11px;line-height:16px;color:var(--body);margin-top:8px;min-height:32px}
+.btn{height:32px;border:1px solid var(--brand);border-radius:4px;color:var(--brand);font-size:12px;font-weight:500;line-height:18px;text-align:center;display:flex;align-items:center;justify-content:center;padding:0 14px;width:100%;transition:background .15s}
+.btn:hover{background:var(--brand-soft)}
+.btn.sel{border-color:var(--brand-20);color:var(--brand-20);cursor:default}
+.btn.sel:hover{background:none}
+.specs{display:flex;flex-direction:column;gap:8px;font-size:11px;line-height:16px}
+.specs p{display:flex;gap:6px;align-items:center;white-space:nowrap}
+.specs b{font-size:12px;font-weight:500;line-height:18px}
+.specs u{text-underline-position:from-font}
+.sep{height:1px;background:var(--border);margin:2px 0}
+.auto{font-size:11px;line-height:16px}
+.auto p{color:var(--body);margin-top:5px}
+.ent-list{display:flex;flex-direction:column;gap:16px}
+.ent-list p{display:flex;gap:6px;font-size:11px;line-height:16px}
+.ent-list img{width:20px;height:20px;flex-shrink:0}
+.over{margin-top:24px;background:#fcfcfc;border-radius:4px;min-height:40px;padding:8px 16px;display:flex;justify-content:center;align-items:center;gap:20px;flex-wrap:wrap;font-size:12px;line-height:22px}
+.over b{font-weight:600}
+.over em{font-style:normal;font-weight:600;color:var(--brand)}
+.over span{display:flex;gap:6px}
+
+/* ---- configure ---- */
+.cfg{display:flex;justify-content:space-between;gap:40px;margin-top:35px;align-items:flex-start}
+.cfg-main{flex:1;max-width:850px;min-width:0}
+.cfg-main>section+section{margin-top:32px}
+.t{font-size:14px;font-weight:500;line-height:22px}
+.s{font-size:12px;line-height:18px;color:var(--muted)}
+.cfg-main .s{font-size:13px;line-height:20px;margin-top:2px}
+.in{width:100%;height:48px;border:1px solid var(--field);border-radius:4px;padding:0 12px;font-size:14px;background:#fff;outline:0;margin-top:12px;transition:border-color .15s,box-shadow .15s}
+.in:focus{border-color:var(--brand);box-shadow:0 0 0 3px rgba(47,57,191,.12)}
+.err .in{border-color:#d92d20}
+.msg{display:none;font-size:11px;color:#d92d20;margin-top:4px}
+.err .msg{display:block}
+.regs{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:12px}
+.reg{background:#fff;border:1px solid var(--border);border-radius:4px;min-height:44px;padding:0 12px;display:flex;align-items:center;gap:9px;font-size:12px;transition:border-color .15s}
+.reg:hover{border-color:#b3b9c4}
+.reg.on{background:var(--sel);border-color:var(--brand)}
+.reg img{width:22px;height:16px;object-fit:cover}
+.domrow{display:flex;align-items:center;gap:8px}
+.sw{position:relative;width:26px;height:14px;border-radius:7px;background:#c1c7d0;transition:background .15s;flex-shrink:0}
+.sw::after{content:"";position:absolute;top:2px;left:2px;width:10px;height:10px;border-radius:50%;background:#fff;transition:left .15s}
+.sw[aria-checked=true]{background:var(--brand)}
+.sw[aria-checked=true]::after{left:14px}
+.sum{width:360px;flex-shrink:0;background:#fff;border:1px solid var(--border);border-radius:4px;padding:24px}
+.sum h3{font-size:16px;font-weight:600;line-height:26px}
+.sum .s{margin-top:4px}
+.sb{margin-top:20px}
+.sb+.sb{border-top:1px solid var(--border);padding-top:16px}
+.sbh{display:flex;justify-content:space-between;align-items:center}
+.sbh b{font-size:14px;font-weight:500;line-height:22px}
+.sbh button{width:16px;height:16px}
+.sbh img{width:16px;height:16px}
+.row{display:flex;align-items:center;gap:6px;font-size:12px;line-height:18px;margin-top:8px}
+.row img{width:18px;height:18px;object-fit:contain}
+.row .fl{width:16px;height:12px;object-fit:cover}
+.pbox{background:#f4f5f7a0;background:rgba(244,245,247,.61);border-radius:4px;padding:12px;margin-top:12px}
+.pbox>b{display:block;font-size:12px;font-weight:500;line-height:18px;color:var(--brand)}
+.pgrid{display:grid;grid-template-columns:1fr 1fr;gap:6px 12px;margin-top:6px;font-size:11px;line-height:16px}
+.pgrid span::before{content:"• ";margin-right:2px}
+.pgrid b{font-weight:600}
+.tot{display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--border);margin-top:20px;padding-top:20px;font-size:14px;font-weight:500}
+.tot b{font-size:20px;font-weight:600;color:var(--brand)}
+.go{margin-top:20px;width:100%;height:48px;border-radius:4px;background:var(--brand);color:#fff;font-size:14px;font-weight:500;text-align:center;transition:background .15s}
+.go:hover{background:#252ea3}
+.launch{position:fixed;inset:0;background:rgba(255,255,255,.96);z-index:20;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;text-align:center}
+.spin{width:36px;height:36px;border-radius:50%;border:3px solid var(--brand-soft);border-top-color:var(--brand);animation:sp .8s linear infinite}
+@keyframes sp{to{transform:rotate(360deg)}}
+.launch h2{font-size:20px;font-weight:600;line-height:28px}
+.launch p{font-size:13px;color:var(--muted)}
+.toast{position:fixed;left:50%;bottom:32px;transform:translateX(-50%);background:var(--heading);color:#fff;font-size:13px;padding:12px 20px;border-radius:4px;z-index:30;box-shadow:0 4px 16px rgba(9,30,66,.25)}
+@media(max-width:1150px){.plans{grid-template-columns:repeat(2,1fr)}.cfg{flex-direction:column}.sum{width:100%}.regs{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:640px){.plans,.tabs{grid-template-columns:1fr}.wrap{padding:32px 20px}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;animation-duration:2s!important}}
+</style>
+</head>
+<body>
+<header class="topbar">
+  <a href="index.html" aria-label="Cloudways home"><img class="logo" src="assets/logo.png?v=4" alt="Cloudways by DigitalOcean"></a>
+  <div class="top-right">
+    <a class="user" href="login.html" title="Log out" aria-label="John Doe, log out"><img class="avatar" src="assets/avatar.png" alt=""><img class="chev" src="assets/chevron.svg" alt=""></a>
+  </div>
+</header>
+<img class="bg" src="assets/autonomous/bg.svg" alt="">
+<a class="close" id="close" href="launchpad.html" aria-label="Close"><img src="assets/onboarding/close.svg" alt=""></a>
+<div class="page"><div class="wrap" id="root"></div></div>
+
+<script>
+const A='assets/autonomous/',O='assets/onboarding/';
+const $=s=>document.querySelector(s);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+const APPS=[
+ {id:'wp',name:'WordPress',logo:`<div class="wpl"><img src="${A}wp-logo.png" alt="WordPress"></div>`,icon:`${O}wp-sm.svg`},
+ {id:'woo',name:'WooCommerce',logo:`<img class="woo" src="${A}woo.svg" alt="Woo">`,icon:`${O}app-woo.svg`},
+ {id:'lms',name:'WordPress LMS',logo:`<span class="lms"><img src="${A}lms-icon.svg" alt=""><img src="${A}lms-text.svg" alt="WordPress LMS"></span>`,icon:`${A}lms-icon.svg`}
+];
+const PLANS=[
+ {id:'trial',name:'3 Days Free Trial',price:0,best:'For Trial apps receiving visits around 10K/Month',bw:'100 GB',disk:'10 GB',srv:1,auto:'Free Autoscaling'},
+ {id:'growth',name:'Growth',price:100,best:'For Growing businesses that need autoscaling',bw:'150 GB',disk:'20 GB',srv:1,auto:'$0.07/hour/pod beyond baseline'},
+ {id:'scale',name:'Scale',price:200,best:'For Optimized WooCommerce experiences',bw:'250 GB',disk:'50 GB',srv:2,auto:'$0.10/hour/pod beyond baseline'},
+ {id:'plus',name:'Plus',price:400,best:'For LMS platforms & large WooCommerce stores',bw:'1000 GB',disk:'100 GB',srv:3,auto:'$0.12/hour/pod beyond baseline'}
+];
+const REGIONS=[['sc','South Carolina','flag-us'],['fra','Frankfurt','flag-de'],['sgp','Singapore','flag-sg'],['lon','London','flag-uk']];
+
+const S={view:'plans',app:'wp',plan:null,name:'My Autonomous Application',region:'sc',domain:false,domainName:''};
+const app=()=>APPS.find(a=>a.id===S.app), plan=()=>PLANS.find(p=>p.id===S.plan), reg=()=>REGIONS.find(r=>r[0]===S.region);
+
+function planCard(p){
+  const sel=S.plan===p.id;
+  return `<article class="plan"><div><p class="pn">${p.name}</p><p class="price">$${p.price}${p.price?'<small>/month</small>':''}</p><p class="best">${p.best}</p></div>
+  <button class="btn${sel?' sel':''}" data-plan="${p.id}" ${sel?'aria-disabled="true"':''}>${sel?'Selected':'Get Started'}</button>
+  <div class="specs"><div class="specs" style="gap:8px"><p>Website: <b>1</b></p><p>Bandwidth: <b>${p.bw}</b></p><p>Disk Space: <b>${p.disk}</b></p><p><u>Visits:</u> <b>Unmetered</b></p><p><u>Autoscale Servers:</u> <b>${p.srv}</b></p><p>PHP Workers: <b>100/server</b></p></div>
+  <div class="sep"></div><div class="auto">Autoscaling<p>${p.auto}</p></div></div></article>`;
+}
+function viewPlans(){
+  return `<h1>Select your Cloudways Autonomous Plan</h1>
+  <div class="tabs" role="tablist" aria-label="Application">${APPS.map(a=>`<button class="tab${a.id===S.app?' on':''}" role="tab" aria-selected="${a.id===S.app}" aria-label="${a.name}" data-app="${a.id}"><span class="logo">${a.logo}</span></button>`).join('')}</div>
+  <div class="plans">${PLANS.map(planCard).join('')}
+    <article class="plan ent"><div><p class="pn">Enterprise</p><p class="best" style="min-height:0;margin-top:8px">Beyond standard plans? We'll create a cost-optimized solution for your needs.</p></div>
+      <button class="btn" id="ent">Let’s Build Your Plan</button>
+      <div class="ent-list"><p><img src="${A}check.svg" alt="">Optimized resources for your traffic and usage patterns.</p><p><img src="${A}check.svg" alt="">Custom resource allocation and baseline capacity.</p><p><img src="${A}check.svg" alt="">Expert consultation to match plan to requirements.</p></div></article></div>
+  <div class="over"><b>Overage Charges:</b><span>Disk Space: <em>$1 per GB</em></span><span>Bandwidth <em>$0.04 Per 1GB</em></span></div>`;
+}
+function viewConfig(){
+  const p=plan(),a=app(),r=reg();
+  return `<h1>Launch Your First Autonomous Application</h1>
+  <div class="cfg"><div class="cfg-main">
+    <section id="f-name"><div class="t">Application Name</div><p class="s">Enter a name for your application. You can change it anytime later.</p>
+      <input class="in" id="name" value="${esc(S.name)}" aria-label="Application name" maxlength="60"><p class="msg">Give your application a name.</p></section>
+    <section><div class="t">Select Region</div><p class="s">Select a region closer to your audience, to optimise application performance</p>
+      <div class="regs" role="radiogroup" aria-label="Region">${REGIONS.map(([k,n,f])=>`<button class="reg${k===S.region?' on':''}" role="radio" aria-checked="${k===S.region}" data-region="${k}"><img src="${O}${f}.svg" alt="">${n}</button>`).join('')}</div></section>
+    <section><div class="domrow"><span class="t" id="dl">Custom Domain</span><button class="sw" role="switch" aria-checked="${S.domain}" aria-labelledby="dl" id="sw"></button></div><p class="s" style="margin-top:6px">Customize your domain configuration</p>
+      ${S.domain?`<input class="in" id="dom" value="${esc(S.domainName)}" placeholder="www.example.com" aria-label="Custom domain" style="max-width:420px">`:''}</section>
+  </div>
+  <aside class="sum" aria-label="Summary"><h3>Summary</h3><p class="s">Get a quick overview of your application launch journey.</p>
+    <div class="sb"><div class="sbh"><b>Application &amp; Plan:</b><button id="edit" aria-label="Change plan"><img src="${O}edit.svg" alt=""></button></div>
+      <div class="row"><img src="${a.icon}" alt="">${a.name}</div>
+      <div class="pbox"><b>${p.name}</b><div class="pgrid"><span>Bandwidth: <b>${p.bw}</b></span><span>Disk Space: <b>${p.disk}</b></span><span>Visits: <b>Unmetered</b></span><span>Autoscale Server: <b>${p.srv}</b></span></div></div></div>
+    <div class="sb"><div class="sbh"><b>Region:</b></div><div class="row"><img class="fl" src="${O}${r[2]}.svg" alt="">${r[1]}</div></div>
+    <div class="sb"><div class="sbh"><b>Domain:</b></div><div class="row" id="sdom">${S.domain&&S.domainName.trim()?esc(S.domainName.trim()):'Default'}</div></div>
+    <div class="tot"><span>Total Cost</span><b>${p.price?'$'+p.price:'$0'}</b></div>
+    <button class="go" id="go">${p.price?'Subscribe &amp; Launch':'Start Free Trial'}</button></aside></div>`;
+}
+function render(){
+  $('#root').innerHTML=S.view==='plans'?viewPlans():viewConfig();
+  $('#close').href='launchpad.html';
+  document.title=S.view==='plans'?'Select your Cloudways Autonomous Plan':'Launch your first Autonomous application';
+  $('.page').scrollTop=0;
+}
+function toast(t){const e=document.createElement('div');e.className='toast';e.setAttribute('role','status');e.textContent=t;document.body.appendChild(e);setTimeout(()=>e.remove(),3200)}
+
+document.addEventListener('click',e=>{
+  const t=e.target.closest('[data-app],[data-plan],[data-region],#ent,#sw,#edit,#go');if(!t)return;
+  const d=t.dataset;
+  if(d.app){S.app=d.app;render()}
+  else if(d.plan){if(S.plan===d.plan&&S.view==='plans'&&t.classList.contains('sel'))return;S.plan=d.plan;S.view='config';render()}
+  else if(d.region){S.region=d.region;render()}
+  else if(t.id==='ent')toast('Thanks! Our team will reach out to build your plan.');
+  else if(t.id==='sw'){S.name=$('#name').value;S.domain=!S.domain;render();if(S.domain)$('#dom').focus()}
+  else if(t.id==='edit'){S.name=$('#name').value;S.view='plans';render()}
+  else if(t.id==='go')launch();
+});
+document.addEventListener('input',e=>{
+  if(e.target.id==='name'){S.name=e.target.value;$('#f-name').classList.remove('err')}
+  if(e.target.id==='dom'){S.domainName=e.target.value;$('#sdom').textContent=S.domainName.trim()||'Default'}
+});
+
+function launch(){
+  S.name=$('#name').value;
+  if(!S.name.trim()){$('#f-name').classList.add('err');$('#name').focus();return}
+  const o=document.createElement('div');o.className='launch';o.setAttribute('role','status');
+  o.innerHTML=`<div class="spin"></div><h2>Launching ${esc(S.name.trim())}…</h2><p>Setting up your ${esc(plan().name)} plan in ${esc(reg()[1])}. This only takes a moment.</p>`;
+  document.body.appendChild(o);
+  try{sessionStorage.setItem('cw_autonomous',JSON.stringify({name:S.name.trim(),plan:S.plan,app:S.app,region:S.region}))}catch{}
+  setTimeout(()=>{location.href='index.html#auto'},2200);
+}
+render();
+</script>
+</body>
+</html>

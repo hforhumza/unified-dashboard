@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Move an existing project · Cloudways</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--heading:#253858;--muted:#5e6c84;--brand:#2f39bf;--brand-soft:#eaebf9;--sel:#fbfbfe;--border:#eff0f3;--border2:#dfe1e6;--field:#c1c7d0}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Poppins,system-ui,sans-serif;color:var(--heading);background:#fff;min-height:100vh;overflow-x:hidden}
+button,input{font:inherit;color:inherit}
+button{background:none;border:0;cursor:pointer;text-align:left}
+img{display:block}
+:focus-visible{outline:2px solid var(--brand);outline-offset:2px}
+[hidden]{display:none!important}
+
+/* top navigation (same as Launch Pad) */
+.topbar{height:48px;border-bottom:1px solid #eff0f3;display:flex;align-items:center;justify-content:space-between;padding:0 12px 0 16px;position:fixed;top:0;left:0;right:0;background:#fff;z-index:12;font-size:12px}
+.topbar .logo{width:147px;height:28px;display:block}
+.top-right{display:flex;align-items:center;gap:24px}
+.refer{display:flex;align-items:center;gap:6px}
+.refer img{width:20px;height:20px}
+.vline{width:1px;height:30px;background:#dfe1e6}
+.user{display:flex;align-items:center;gap:8px}
+.user .avatar{width:30px;height:30px;border-radius:50%}
+.user .chev{width:22px;height:20px}
+@media(max-width:700px){.top-right .refer,.top-right .vline{display:none}}
+
+.bg{position:fixed;inset:48px 0 auto 0;height:330px;z-index:0;pointer-events:none;background:radial-gradient(700px 260px at 0% 0%,rgba(190,206,250,.75),transparent 70%),radial-gradient(760px 260px at 100% 10%,rgba(224,214,250,.7),transparent 70%),linear-gradient(180deg,rgba(236,240,253,.9),rgba(255,255,255,0))}
+main{position:relative;z-index:1;padding:162px 20px 64px;display:flex;flex-direction:column;align-items:center}
+h1{font-size:20px;font-weight:600;line-height:36px;text-align:center}
+.list{width:599px;max-width:100%;margin-top:40px;display:flex;flex-direction:column;gap:16px}
+.opt{display:flex;align-items:center;gap:24px;width:100%;padding:16px;background:#fff;border:1px solid var(--border2);border-radius:4px;transition:border-color .15s,background .15s,transform .2s,box-shadow .2s}
+.opt:nth-child(3){border-color:var(--border)}
+.opt:hover,.opt:focus-visible{background:var(--sel);border-color:var(--brand);box-shadow:0 6px 18px rgba(47,57,191,.1);transform:translateY(-1px)}
+.opt .l{display:flex;align-items:center;gap:11px;flex:1;min-width:0}
+.opt .l img{width:40px;height:40px;flex-shrink:0}
+.opt b{display:block;font-size:14px;font-weight:500;line-height:21px}
+.opt span.d{display:block;font-size:11px;line-height:16px;color:var(--muted);margin-top:0}
+.opt .go{width:16px;height:16px;opacity:0;transform:translateX(-6px);transition:opacity .2s,transform .2s;flex-shrink:0}
+.opt:hover .go,.opt:focus-visible .go{opacity:1;transform:none}
+
+/* managed migration request */
+.scrim{position:fixed;inset:0;background:rgba(9,30,66,.45);z-index:30;display:grid;place-items:center;padding:20px;animation:fade .2s}
+@keyframes fade{from{opacity:0}}
+.dlg{width:460px;max-width:100%;background:#fff;border-radius:8px;padding:24px;box-shadow:0 24px 60px rgba(9,30,66,.3);animation:up .25s cubic-bezier(.2,.7,.2,1)}
+@keyframes up{from{transform:translateY(12px);opacity:0}}
+.dlg h2{font-size:16px;font-weight:600;line-height:24px}
+.dlg p.s{font-size:12px;line-height:18px;color:var(--muted);margin-top:4px}
+.fld{margin-top:16px}
+.fld label{display:block;font-size:12px;font-weight:500;line-height:18px;margin-bottom:6px}
+.fld input{width:100%;height:40px;border:1px solid var(--field);border-radius:4px;padding:0 12px;font-size:13px;outline:0;transition:border-color .15s,box-shadow .15s}
+.fld input:focus{border-color:var(--brand);box-shadow:0 0 0 3px rgba(47,57,191,.12)}
+.fld .e{display:none;font-size:11px;color:#d92d20;margin-top:4px}
+.fld.err input{border-color:#d92d20}
+.fld.err .e{display:block}
+.acts{display:flex;justify-content:flex-end;gap:12px;margin-top:24px}
+.b{height:36px;padding:0 16px;border-radius:4px;font-size:13px;font-weight:500;transition:background .15s}
+.b.p{background:var(--brand);color:#fff}
+.b.p:hover{background:#252ea3}
+.b.s{border:1px solid var(--border2)}
+.b.s:hover{background:#f6f6fa}
+.done{text-align:center;padding:12px 0 4px}
+.done i{width:44px;height:44px;border-radius:50%;background:#00875a;display:grid;place-items:center;margin:0 auto 14px;animation:pop .35s}
+.done i::after{content:"";width:9px;height:16px;border:solid #fff;border-width:0 3px 3px 0;transform:rotate(45deg) translate(-1px,-2px)}
+@keyframes pop{from{transform:scale(.5);opacity:0}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+.close{position:fixed;top:60px;right:20px;width:32px;height:32px;display:grid;place-items:center;border-radius:50%;z-index:5;transition:background .2s,transform .3s}
+.close:hover{background:rgba(9,30,66,.07);transform:rotate(90deg)}
+.close img{width:22px;height:22px}
+</style>
+</head>
+<body>
+<header class="topbar">
+  <a href="index.html" aria-label="Cloudways home"><img class="logo" src="assets/logo.png?v=4" alt="Cloudways by DigitalOcean"></a>
+  <div class="top-right">
+    <a class="user" href="login.html" title="Log out" aria-label="John Doe, log out"><img class="avatar" src="assets/avatar.png" alt=""><img class="chev" src="assets/chevron.svg" alt=""></a>
+  </div>
+</header>
+<div class="bg" aria-hidden="true"></div>
+
+<a class="close" href="launchpad.html" aria-label="Close"><img src="assets/agents-onb/close.svg" alt=""></a>
+
+<main>
+  <h1>Where does your web/app live today?</h1>
+  <div class="list">
+    <a class="opt" href="launchpad.html#migrate-host" style="text-decoration:none;color:inherit">
+      <span class="l"><img src="assets/move/wp.svg" alt=""><span><b>Automated WordPress Migration</b><span class="d">Move your WordPress site to Cloudways automatically, with no downtime.</span></span></span>
+      <img class="go" src="assets/move/arrow.svg" alt="">
+    </a>
+    <button class="opt" type="button" id="managed">
+      <span class="l"><img src="assets/move/managed.svg" alt=""><span><b>Managed Migration</b><span class="d">Our migration team moves your site or app for you.</span></span></span>
+      <img class="go" src="assets/move/arrow.svg" alt="">
+    </button>
+    <a class="opt" href="velocity-onboarding.html" style="text-decoration:none;color:inherit">
+      <span class="l"><img src="assets/move/git.svg" alt=""><span><b>Deploy from Git</b><span class="d">Deploy an existing project directly from your Git repository.</span></span></span>
+      <img class="go" src="assets/move/arrow.svg" alt="">
+    </a>
+  </div>
+</main>
+
+<script>
+const $=s=>document.querySelector(s);
+$('#managed').addEventListener('click',()=>{
+  const s=document.createElement('div');s.className='scrim';s.setAttribute('role','dialog');s.setAttribute('aria-modal','true');s.setAttribute('aria-labelledby','dt');
+  s.innerHTML=`<div class="dlg"><div id="dbody"><h2 id="dt">Request a managed migration</h2><p class="s">Tell us where your site lives and our team will contact you to plan the move.</p>
+  <form id="mf" novalidate><div class="fld" id="f-u"><label for="u">Current site or repository URL</label><input id="u" placeholder="https://example.com" autocomplete="off"><p class="e">Enter the site or repository URL.</p></div>
+  <div class="fld" id="f-e"><label for="e">Contact email</label><input id="e" type="email" placeholder="you@company.com" autocomplete="email"><p class="e">Enter a valid email address.</p></div>
+  <div class="acts"><button type="button" class="b s" id="x">Cancel</button><button class="b p" type="submit">Request migration</button></div></form></div></div>`;
+  document.body.appendChild(s);$('#u').focus();
+  const close=()=>s.remove();
+  s.addEventListener('click',e=>{if(e.target===s)close()});
+  s.addEventListener('keydown',e=>{if(e.key==='Escape')close()});
+  $('#x').onclick=close;
+  $('#mf').addEventListener('submit',e=>{
+    e.preventDefault();
+    const u=$('#u').value.trim(),m=$('#e').value.trim();
+    const okU=u.length>3,okE=/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(m);
+    $('#f-u').classList.toggle('err',!okU);$('#f-e').classList.toggle('err',!okE);
+    if(!okU){$('#u').focus();return}if(!okE){$('#e').focus();return}
+    $('#dbody').innerHTML=`<div class="done"><i></i><h2>Request received</h2><p class="s">Our migration team will email you at ${m.replace(/[&<>"]/g,'')} to get started.</p><div class="acts" style="justify-content:center"><button class="b p" id="ok">Done</button></div></div>`;
+    $('#ok').onclick=()=>{close()};$('#ok').focus();
+  });
+});
+</script>
+</body>
+</html>

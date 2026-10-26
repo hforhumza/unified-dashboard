@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Build your dream app or website with AI · Cloudways</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--heading:#253858;--body:#4b5971;--muted:#5e6c84;--brand:#2f39bf;--violet:#6a4bd8;--brand-soft:#eaebf9;--line:#d5d7f2}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{font-family:Poppins,system-ui,sans-serif;color:var(--heading);background:#fff;overflow-x:hidden}
+button,textarea,input{font:inherit;color:inherit}
+button{background:none;border:0;cursor:pointer;text-align:left}
+img{display:block}
+a{color:var(--brand)}
+:focus-visible{outline:2px solid var(--brand);outline-offset:2px}
+[hidden]{display:none!important}
+
+/* top navigation (same as Launch Pad) */
+.topbar{height:48px;border-bottom:1px solid #eff0f3;display:flex;align-items:center;justify-content:space-between;padding:0 12px 0 16px;position:fixed;top:0;left:0;right:0;background:#fff;z-index:12;font-family:Poppins,system-ui,sans-serif;color:#253858}
+.topbar .logo{width:147px;height:28px;display:block}
+.top-right{display:flex;align-items:center;gap:24px;font-size:12px}
+.refer{display:flex;align-items:center;gap:6px}
+.refer img{width:20px;height:20px}
+.vline{width:1px;height:30px;background:#dfe1e6}
+.user{display:flex;align-items:center;gap:8px}
+.user .avatar{width:30px;height:30px;border-radius:50%}
+.user .chev{width:22px;height:20px}
+@media(max-width:700px){.top-right .refer,.top-right .vline{display:none}}
+
+/* ---------- animated backdrop ---------- */
+.bg{position:fixed;inset:0;z-index:0;overflow:hidden;background:#fff;pointer-events:none}
+.bg::before{content:"";position:absolute;left:-10%;right:-10%;top:0;height:58vh;background:linear-gradient(180deg,#5b3fc6 0,#8a63cf 26%,rgba(214,200,244,.55) 58%,rgba(255,255,255,0) 100%)}
+.blob{position:absolute;border-radius:50%;filter:blur(70px);opacity:.55;will-change:transform}
+.b1{width:520px;height:340px;left:-80px;top:-140px;background:#4a38c0;animation:drift1 16s ease-in-out infinite alternate}
+.b2{width:560px;height:360px;right:-100px;top:-170px;background:#8f55d6;animation:drift2 19s ease-in-out infinite alternate}
+.b3{width:460px;height:260px;left:34%;top:-120px;background:#6a7bf0;opacity:.35;animation:drift3 23s ease-in-out infinite alternate}
+@keyframes drift1{to{transform:translate(120px,50px) scale(1.12)}}
+@keyframes drift2{to{transform:translate(-140px,40px) scale(1.08)}}
+@keyframes drift3{to{transform:translate(-90px,70px) scale(1.25)}}
+.bg::after{content:"";position:absolute;inset:0;background:radial-gradient(520px 320px at var(--mx,50%) var(--my,30%),rgba(255,255,255,.18),transparent 70%);transition:background .2s}
+
+.close{position:fixed;top:60px;right:20px;width:32px;height:32px;display:grid;place-items:center;border-radius:50%;z-index:5;transition:background .2s,transform .3s}
+.close:hover{background:rgba(255,255,255,.35);transform:rotate(90deg)}
+.close img{width:22px;height:22px;filter:brightness(0) saturate(100%) invert(22%) sepia(40%) saturate(1500%) hue-rotate(225deg)}
+
+main{position:relative;z-index:2;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:88px 20px 72px}
+.in{opacity:0;transform:translateY(14px);animation:rise .7s cubic-bezier(.2,.7,.2,1) forwards;animation-delay:calc(var(--i,0)*90ms + 80ms)}
+@keyframes rise{to{opacity:1;transform:none}}
+
+}
+h1{font-size:24px;font-weight:600;line-height:32px;text-align:center;margin-top:0}
+h1 span{background:linear-gradient(100deg,#4b3bd0 0,#8a5ae0 40%,#4b3bd0 80%);background-size:220% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:shine 5s linear infinite}
+@keyframes shine{to{background-position:-220% 0}}
+.sub{font-size:14px;line-height:22px;color:var(--body);text-align:center;margin-top:24px}
+.sub b{font-weight:600;color:var(--brand)}
+
+/* ---------- prompt card ---------- */
+.pc{position:relative;width:598px;max-width:100%;margin-top:24px;border-radius:8px;padding:1px;background:var(--line);transition:box-shadow .3s,transform .3s}
+.pc::before{content:"";position:absolute;inset:0;border-radius:8px;padding:1.5px;background:conic-gradient(from var(--a,0deg),#5b3fc6,#8f55d6,#5fb4ff,#5b3fc6);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;opacity:0;transition:opacity .3s;animation:spin 3.5s linear infinite}
+@property --a{syntax:"<angle>";inherits:false;initial-value:0deg}
+@keyframes spin{to{--a:360deg}}
+.pc:focus-within{box-shadow:0 8px 30px rgba(95,63,198,.22);transform:translateY(-1px)}
+.pc:focus-within::before{opacity:1}
+.pc.shake{animation:shake .4s}
+@keyframes shake{20%{transform:translateX(-6px)}40%{transform:translateX(6px)}60%{transform:translateX(-4px)}80%{transform:translateX(3px)}}
+.pi{background:#fff;border-radius:7px;padding:16px 12px 12px 12px;box-shadow:0 2px 10px rgba(47,57,191,.06);min-height:124px;display:flex;flex-direction:column}
+textarea{width:100%;flex:1;min-height:56px;border:0;outline:0;resize:none;font-size:13px;line-height:20px;padding:0 4px;background:transparent}
+textarea::placeholder{color:#5e6c84;opacity:1}
+.tools{display:flex;align-items:center;justify-content:space-between;margin-top:8px}
+.plus{width:28px;height:28px;border-radius:6px;display:grid;place-items:center;font-size:18px;color:var(--muted);transition:background .15s,transform .2s}
+.plus:hover{background:var(--brand-soft);transform:rotate(90deg)}
+.send{width:28px;height:28px;border-radius:4px;background:var(--brand);display:grid;place-items:center;transition:background .15s,transform .15s,opacity .2s,box-shadow .2s;opacity:.55}
+.send.on{opacity:1;box-shadow:0 4px 12px rgba(47,57,191,.35)}
+.send:hover{background:#252ea3;transform:translateY(-1px)}
+.send svg{width:16px;height:16px;transition:transform .2s}
+.send.on:hover svg{transform:translateY(-2px)}
+.files{display:flex;gap:6px;flex-wrap:wrap;margin-left:8px;flex:1}
+.files span{display:inline-flex;align-items:center;gap:6px;font-size:11px;line-height:16px;background:var(--brand-soft);color:var(--brand);border-radius:12px;padding:2px 8px;animation:pop .25s}
+.files button{font-size:13px;line-height:1;color:var(--brand)}
+@keyframes pop{from{transform:scale(.7);opacity:0}}
+.note{font-size:11px;line-height:16px;color:var(--body);text-align:center;margin-top:14px}
+.note a{text-decoration:underline}
+.chips{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-top:28px}
+.chip{display:flex;align-items:center;gap:6px;background:#fff;border:1px solid var(--line);border-radius:4px;height:28px;padding:0 10px;font-size:11px;line-height:16px;transition:transform .2s,box-shadow .2s,border-color .2s}
+.chip img{width:12px;height:12px;transition:transform .5s}
+.chip:hover{transform:translateY(-3px);border-color:#a99bec;box-shadow:0 6px 14px rgba(95,63,198,.16)}
+.chip:hover img{transform:rotate(180deg) scale(1.25)}
+.chip:active{transform:translateY(-1px) scale(.98)}
+
+/* ---------- generating overlay ---------- */
+.gen{position:fixed;inset:0;z-index:20;background:rgba(255,255,255,.97);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;text-align:center;padding:24px;animation:fade .35s}
+@keyframes fade{from{opacity:0}}
+.orb{width:64px;height:64px;border-radius:50%;background:conic-gradient(from 0deg,#5b3fc6,#8f55d6,#5fb4ff,#5b3fc6);animation:rot 1.6s linear infinite;position:relative}
+.orb::after{content:"";position:absolute;inset:5px;border-radius:50%;background:#fff}
+.orb::before{content:"";position:absolute;inset:-10px;border-radius:50%;background:inherit;filter:blur(16px);opacity:.45}
+@keyframes rot{to{transform:rotate(360deg)}}
+.gen h2{font-size:20px;font-weight:600;line-height:28px}
+.gen p.q{max-width:480px;font-size:13px;line-height:20px;color:var(--muted);font-style:italic}
+.steps{list-style:none;display:flex;flex-direction:column;gap:10px;text-align:left;margin-top:4px}
+.steps li{display:flex;align-items:center;gap:10px;font-size:13px;line-height:20px;color:#8993a4;transition:color .3s}
+.steps li i{width:16px;height:16px;border-radius:50%;border:2px solid #d5d7f2;display:grid;place-items:center;transition:all .3s;flex-shrink:0}
+.steps li.now{color:var(--heading)}
+.steps li.now i{border-color:var(--brand);border-top-color:transparent;animation:rot .8s linear infinite}
+.steps li.done{color:var(--heading)}
+.steps li.done i{background:var(--brand);border-color:var(--brand);animation:none}
+.steps li.done i::after{content:"";width:4px;height:7px;border:solid #fff;border-width:0 1.5px 1.5px 0;transform:rotate(45deg) translate(-1px,-1px)}
+.bar{width:260px;height:4px;border-radius:2px;background:var(--brand-soft);overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,#5b3fc6,#8f55d6);border-radius:2px;transition:width .7s ease}
+
+@media(max-width:700px){main{padding-top:110px}h1{font-size:20px;line-height:28px}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}.in{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<header class="topbar">
+  <a href="index.html" aria-label="Cloudways home"><img class="logo" src="assets/logo.png?v=4" alt="Cloudways by DigitalOcean"></a>
+  <div class="top-right">
+    <a class="user" href="login.html" title="Log out" aria-label="John Doe, log out"><img class="avatar" src="assets/avatar.png" alt=""><img class="chev" src="assets/chevron.svg" alt=""></a>
+  </div>
+</header>
+<div class="bg" aria-hidden="true"><span class="blob b1"></span><span class="blob b2"></span><span class="blob b3"></span></div>
+<a class="close" href="launchpad.html" aria-label="Close"><img src="assets/agents-onb/close.svg" alt=""></a>
+
+<main>
+  <h1 class="in" style="--i:1">Build Your Dream App/Website with <span>AI</span></h1>
+  <p class="sub in" style="--i:2">Go from idea to live in minutes, from <b>$7.99</b> /site/mo. Start with a 7-day free trial</p>
+
+  <form class="pc in" id="form" style="--i:3" novalidate>
+    <div class="pi">
+      <label class="sr" for="prompt" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">Describe the app or website you’re building</label>
+      <textarea id="prompt" rows="3" maxlength="600" placeholder="Describe the app or website you’re building...."></textarea>
+      <div class="tools">
+        <button type="button" class="plus" id="plus" aria-label="Attach a file">+</button>
+        <div class="files" id="files" aria-live="polite"></div>
+        <button type="submit" class="send" id="send" aria-label="Build with AI"><svg viewBox="0 0 16 16" fill="none"><path d="M8 13V3M8 3L3.5 7.500M8 3l4.500 4.500" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      </div>
+      <input type="file" id="file" accept="image/*,.pdf,.doc,.docx" hidden multiple>
+    </div>
+  </form>
+  <p class="note in" style="--i:4">This information is processed by AI. By submitting a prompt, you agree to the <a href="#" onclick="return false">Public Preview Terms.</a></p>
+
+  <div class="chips in" style="--i:5">
+    <button class="chip" type="button" data-p="Build a skin products store with product pages, a cart and a blog about skincare"><img src="assets/aisites/sparkle.png" alt="">Build a Skin products Store</button>
+    <button class="chip" type="button" data-p="Create a portfolio website for a freelance photographer with a gallery and contact form"><img src="assets/aisites/sparkle.png" alt="">Create a Portfolio Website</button>
+    <button class="chip" type="button" data-p="Build a fitness tracking app with workout plans, progress charts and daily reminders"><img src="assets/aisites/sparkle.png" alt="">Build a Fitness Tracking App</button>
+  </div>
+</main>
+
+<script>
+const $=s=>document.querySelector(s);
+const ta=$('#prompt'),send=$('#send'),pc=$('#form');
+
+/* soft light that follows the pointer across the gradient */
+addEventListener('pointermove',e=>{
+  const b=$('.bg');b.style.setProperty('--mx',(e.clientX/innerWidth*100)+'%');b.style.setProperty('--my',(e.clientY/innerHeight*60)+'%');
+},{passive:true});
+
+/* typewriter placeholder while the box is empty and idle */
+const IDEAS=['Describe the app or website you’re building....','A habit-tracking app with reminders and streaks','A booking site for my yoga studio in Leeds','An online store for handmade candles','A portfolio for my architecture practice','A landing page for my new mobile app'];
+let idea=0,ch=0,del=false,tw;
+const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
+function type(){
+  if(ta.value||document.activeElement===ta){tw=setTimeout(type,600);return}
+  const s=IDEAS[idea];
+  ch+=del?-1:1;ta.placeholder=s.slice(0,ch)+(ch%2?'':'');
+  let d=del?22:48;
+  if(!del&&ch===s.length){del=true;d=2200}
+  else if(del&&ch===0){del=false;idea=(idea+1)%IDEAS.length;d=350}
+  tw=setTimeout(type,d);
+}
+if(!reduced)setTimeout(type,2600);
+ta.addEventListener('focus',()=>{ta.placeholder='Describe the app or website you’re building....'});
+ta.addEventListener('blur',()=>{if(!ta.value){ch=0;del=false}});
+
+/* enable the send button once there's something to build from */
+function sync(){send.classList.toggle('on',ta.value.trim().length>=3)}
+ta.addEventListener('input',sync);
+ta.addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();pc.requestSubmit()}});
+
+/* example chips type themselves into the box */
+let typing;
+document.querySelectorAll('.chip').forEach(b=>b.addEventListener('click',()=>{
+  clearInterval(typing);ta.value='';ta.focus();
+  const t=b.dataset.p;let i=0;
+  if(reduced){ta.value=t;sync();return}
+  typing=setInterval(()=>{ta.value=t.slice(0,++i);sync();if(i>=t.length)clearInterval(typing)},14);
+}));
+
+/* attachments */
+const file=$('#file'),files=$('#files');
+$('#plus').addEventListener('click',()=>file.click());
+file.addEventListener('change',()=>{
+  [...file.files].slice(0,3).forEach(f=>{
+    const s=document.createElement('span');
+    s.innerHTML='<em style="font-style:normal;max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap"></em><button type="button" aria-label="Remove">×</button>';
+    s.firstChild.textContent=f.name;s.lastChild.onclick=()=>s.remove();files.appendChild(s);
+  });file.value='';
+});
+
+/* submit: playful "building your site" screen, then on to the dashboard */
+pc.addEventListener('submit',e=>{
+  e.preventDefault();
+  const v=ta.value.trim();
+  if(v.length<3){pc.classList.remove('shake');void pc.offsetWidth;pc.classList.add('shake');ta.focus();return}
+  try{sessionStorage.setItem('cw_aibuilder',JSON.stringify({prompt:v}))}catch{}
+  const STEPS=['Understanding your idea','Designing layout and style','Writing pages and content','Setting up hosting'];
+  const o=document.createElement('div');o.className='gen';o.setAttribute('role','status');
+  o.innerHTML=`<div class="orb"></div><h2>Building your project…</h2><p class="q"></p><ul class="steps">${STEPS.map(s=>`<li><i></i>${s}</li>`).join('')}</ul><div class="bar"><i></i></div>`;
+  o.querySelector('.q').textContent='“'+(v.length>110?v.slice(0,110)+'…':v)+'”';
+  document.body.appendChild(o);
+  const li=[...o.querySelectorAll('li')],bar=o.querySelector('.bar i');
+  const gap=reduced?150:900;
+  li.forEach((el,i)=>{
+    setTimeout(()=>{el.classList.add('now');bar.style.width=((i+.5)/li.length*100)+'%'},i*gap);
+    setTimeout(()=>{el.classList.remove('now');el.classList.add('done');bar.style.width=((i+1)/li.length*100)+'%'},i*gap+gap-80);
+  });
+  setTimeout(()=>{location.href='index.html#ai'},li.length*gap+450);
+});
+
+/* arriving from the Launch Pad with a prompt already typed */
+const q=new URLSearchParams(location.search).get('q');
+if(q){ta.value=q;sync()}
+setTimeout(()=>{if(!q)ta.focus({preventScroll:true})},1000);
+</script>
+</body>
+</html>

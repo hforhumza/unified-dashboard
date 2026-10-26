@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cloudways Launch Pad</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* Cloudways dashboard tokens (same as index.html) */
+:root{
+  --heading:#253858; --body:#4b5971; --brand:#2f39bf; --brand-hover:#252ea3; --brand-soft:#e9eaf9;
+  --border:#eff0f3; --border-strong:#dfe1e6; --tint:#f5f5fc; --tint2:#fbfbfe; --success:#1a7f4b; --danger:#d92d20;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Poppins,system-ui,sans-serif;color:var(--heading);background:#fff;font-size:14px;line-height:normal}
+a{color:var(--brand);text-decoration:none;font-weight:500}
+a:hover{text-decoration:underline}
+button{font:inherit;cursor:pointer;border:0;background:none;color:inherit}
+img{display:block}
+button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid var(--brand);outline-offset:2px}
+[hidden]{display:none!important}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* ---------- header: identical to the dashboard (no side navigation in this flow) ---------- */
+.topbar{height:48px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 12px 0 16px;position:sticky;top:0;background:#fff;z-index:10}
+.topbar .logo{width:147px;height:28px}
+.top-right{display:flex;align-items:center;gap:24px;font-size:12px}
+.refer{display:flex;align-items:center;gap:6px}
+.refer img{width:20px;height:20px}
+.vline{width:1px;height:30px;background:var(--border)}
+.user{display:flex;align-items:center;gap:8px}
+.user .avatar{width:30px;height:30px;border-radius:50%}
+.user .chev{width:22px;height:20px}
+.layout{display:flex;min-height:calc(100vh - 48px)}
+main{flex:1;padding:52px 24px 120px;min-width:0}
+.wrap{max-width:1155px;margin:0 auto}
+
+/* ---------- shared bits ---------- */
+h2{font-size:16px;font-weight:500;line-height:24px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:36px;padding:0 20px;border-radius:4px;font-size:12px;font-weight:500;white-space:nowrap;border:1px solid transparent}
+.btn-primary{background:var(--brand);color:#fff}
+.btn-primary:hover:not(:disabled){background:var(--brand-hover);text-decoration:none}
+.btn-primary:disabled{background:#c9ccf0;cursor:not-allowed}
+.btn-outline{border-color:var(--brand);color:var(--brand);background:#fff}
+.btn-outline:hover{background:var(--tint);text-decoration:none}
+.btn-ghost{color:var(--body)}
+.btn-ghost:hover{background:var(--tint)}
+.pill{display:inline-block;font-size:10px;font-weight:500;line-height:17px;padding:0 6px;border-radius:3px;background:var(--brand-soft);color:var(--brand);white-space:nowrap}
+.pill.grey{background:#f1f2f6;color:var(--body)}
+
+/* ---------- launch pad home ---------- */
+.hero{display:flex;flex-direction:column;align-items:center;gap:16px;text-align:center}
+.hero h1{font-size:20px;font-weight:600;line-height:36px}
+.chat{width:569px;max-width:100%;min-height:52px;display:flex;align-items:center;gap:12px;border:1px solid var(--border);border-radius:4px;padding:8px 8px 8px 20px;position:relative;background:#fff;text-align:left}
+@property --beam-angle{syntax:"<angle>";initial-value:0deg;inherits:false}
+.chat::before,.chat::after{content:"";position:absolute;inset:-1px;border-radius:5px;padding:1.5px;pointer-events:none;
+  background:conic-gradient(from var(--beam-angle),transparent 0deg,transparent 280deg,#8b5cf6 320deg,#2f39bf 345deg,#0fafff 360deg);
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;animation:beam 4s linear infinite}
+.chat::after{filter:blur(6px);opacity:.55}
+.chat:focus-within::before,.chat:focus-within::after{animation-duration:2.2s}
+@keyframes beam{to{--beam-angle:360deg}}
+.chat textarea{flex:1;min-width:0;border:0;outline:0;resize:none;font:inherit;font-size:13px;line-height:22.75px;color:var(--heading);height:34px;max-height:120px;padding:5px 0;overflow:hidden;background:transparent}
+.chat textarea::placeholder{color:var(--body)}
+.chat .acts{display:flex;flex-shrink:0}
+.chat .send{width:32px;height:32px;border-radius:4px;display:grid;place-items:center;background:#d5d7f2;color:#fff}
+.chat .send.ready{background:var(--brand)}
+.chips{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;max-width:760px}
+.chip{display:flex;align-items:center;gap:4px;padding:6px 10px;border:1px solid var(--border);border-radius:4px;font-size:11px;font-weight:500;background:#fff}
+.chip img{width:11px;height:11px}
+.chip:hover{background:var(--tint)}
+.hint{font-size:12px;color:var(--body)}
+.hint:empty{display:none}
+.hint b{color:var(--heading);font-weight:500}
+
+.start{margin-top:32px}
+.start h2.sp{margin-bottom:24px}
+.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+.gs{display:flex;flex-direction:column;text-align:left;border:1px solid var(--border);border-radius:4px;background:#fff;overflow:hidden;transition:border-color .15s,box-shadow .15s}
+.gs:hover{border-color:#c5c9ee;box-shadow:0 4px 16px rgba(47,57,191,.08)}
+.gs.pulse{animation:pulse 1.2s ease 2}
+@keyframes pulse{50%{border-color:var(--brand);box-shadow:0 0 0 4px rgba(47,57,191,.12)}}
+.gs .art{display:block;height:150px;overflow:hidden;position:relative;background:linear-gradient(135deg,#eef4fd,#dbe9fb)}
+.gs .art img{width:100%;height:100%;object-fit:cover}
+.start .gs .art{height:auto;aspect-ratio:369/204;background:#f6f6fd}
+.start .gs .art img{object-position:center}
+.art-agent{background:linear-gradient(135deg,#e9e3fb,#dce8fb)!important}
+.art-agent .av{position:absolute;width:68px;height:68px;border-radius:50%;background:#fff;display:grid;place-items:center;box-shadow:0 4px 14px rgba(47,57,191,.16)}
+.art-agent .av img{width:56px!important;height:56px!important;border-radius:50%}
+.art-agent .a1{left:38px;top:26px}
+.art-agent .a2{right:38px;bottom:22px}
+.art-agent .bub{position:absolute;display:flex;flex-direction:column;gap:4px;padding:8px 10px;border-radius:8px;background:#fff;box-shadow:0 2px 8px rgba(47,57,191,.12)}
+.art-agent .bub i{display:block;height:4px;border-radius:2px;background:#d9dcf3}
+.art-agent .bub i:first-child{width:46px}.art-agent .bub i:last-child{width:30px}
+.art-agent .b1{left:116px;top:34px;border-top-left-radius:2px}
+.art-agent .b2{right:116px;bottom:32px;border-bottom-right-radius:2px;background:var(--brand)}
+.art-agent .b2 i{background:rgba(255,255,255,.7)}
+.gs .gb{display:flex;flex-direction:column;flex:1;padding:24px 20px 20px}
+.gs .prod{display:flex;align-items:center;gap:8px;font-size:12px;font-weight:500;line-height:18px}
+.gs .pi{width:18px;height:18px;display:grid;place-items:center;color:var(--brand)}
+.gs .pi svg{width:18px;height:18px}
+.gs h3{font-size:15px;font-weight:500;line-height:21px;margin:0 0 4px}
+.gs p{font-size:12px;line-height:18px;color:var(--body);margin-bottom:14px}
+.gs .bl{list-style:none;display:flex;flex-direction:column;gap:6px;margin:0 0 20px;padding:0}
+.gs .bl li{position:relative;padding-left:20px;font-size:12px;line-height:18px;color:var(--heading)}
+.gs .bl li::before{content:"";position:absolute;left:0;top:2px;width:14px;height:14px;background:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none'><path d='M3.500 8.500l3 3 6-6.500' stroke='%232f39bf' stroke-width='1.800' stroke-linecap='round' stroke-linejoin='round'/></svg>") center/14px no-repeat}
+.gs .go{margin-top:auto;align-self:flex-start;display:inline-flex;align-items:center;justify-content:center;padding:6px 15px;border:1px solid var(--brand);border-radius:4px;background:#fff;color:var(--brand);font-size:12px;font-weight:500;line-height:normal;white-space:nowrap;transition:background .15s,color .15s,border-color .15s}
+.gs:hover .go,.gs:focus-visible .go{background:var(--brand);color:#fcfcfc}
+.gs:hover .go:hover{background:#252ea3;border-color:#252ea3}
+.skip{display:flex;justify-content:center;margin-top:28px;font-size:12px}
+
+/* ---------- wizard ---------- */
+.wiz{background:transparent}
+.w-body{padding:8px 0 8px;min-height:360px}
+.w-title{font-size:18px;font-weight:500;line-height:28px}
+.w-sub{font-size:12px;color:var(--body);line-height:18px;margin-top:4px;max-width:640px}
+.routed{display:flex;align-items:flex-start;gap:12px;margin-bottom:24px;padding:12px 16px;border:1px solid #d5d7f2;border-radius:4px;background:linear-gradient(90deg,#f0f1fc,#f8f8fe);font-size:12px;line-height:18px}
+.routed img{width:14px;height:14px;margin-top:2px}
+.routed a{margin-left:auto;white-space:nowrap}
+.opts{display:grid;gap:16px;margin-top:24px}
+.opts.c2{grid-template-columns:repeat(2,minmax(0,374px))}
+.opts.c3{grid-template-columns:repeat(3,1fr)}
+.opts.c1{grid-template-columns:minmax(0,374px)}
+.opt{position:relative;display:flex;flex-direction:column;gap:6px;text-align:left;padding:20px;border:1px solid var(--border);border-radius:4px;background:#fff;transition:border-color .15s,background .15s}
+.opt:hover{border-color:#c5c9ee;background:var(--tint2)}
+.opt[aria-pressed=true]{border-color:var(--brand);background:var(--tint2);box-shadow:0 0 0 1px var(--brand)}
+.opt[aria-pressed=true]::after{content:"✓";position:absolute;top:14px;right:14px;width:18px;height:18px;border-radius:50%;background:var(--brand);color:#fff;font-size:11px;display:grid;place-items:center;line-height:1}
+.opt .top{display:flex;align-items:center;gap:10px}
+.opt .top img{height:20px;width:auto}
+.opt .top img.face{width:44px;height:44px}
+.opt .top .ico{width:36px;height:36px;border-radius:50%;background:var(--brand-soft);color:var(--brand);display:grid;place-items:center;flex-shrink:0}
+.opt .top .ico svg{width:18px;height:18px}
+.opt h4{font-size:14px;font-weight:500;line-height:21px}
+.opt p{font-size:12px;line-height:18px;color:var(--body);padding-right:20px}
+/* centred, focused wizard layout */
+.w-title{font-size:22px;line-height:32px;text-align:center}
+.w-sub{text-align:center;margin-left:auto;margin-right:auto}
+.opts{justify-content:center}
+.form,.repos{margin-left:auto;margin-right:auto}
+.plan{max-width:980px;margin-left:auto;margin-right:auto}
+.git-row,.connected{justify-content:center}
+.routed{max-width:820px;margin-left:auto;margin-right:auto}
+.fld .opt-l{font-weight:400}
+
+/* option cards with an illustration on top (same look as the dashboard's Getting Started cards) */
+.opt.has-art{padding:0;gap:0;overflow:hidden}
+.opt .art{display:block;width:100%;aspect-ratio:270/150;overflow:hidden;position:relative;background:linear-gradient(135deg,#eef4fd,#dbe9fb)}
+.opt .art img{width:100%;height:100%;object-fit:cover;object-position:top left;display:block}
+.opt .ob{display:flex;flex-direction:column;gap:6px;padding:20px}
+.opt.has-art[aria-pressed=true]::after{top:12px;right:12px;box-shadow:0 0 0 3px rgba(255,255,255,.9)}
+.opt .art-ag{background:linear-gradient(135deg,#e9e3fb,#dce8fb)}
+.opt .art-ag .avc{position:absolute;left:50%;top:50%;width:88px;height:88px;margin:-44px 0 0 -44px;border-radius:50%;background:#fff;display:grid;place-items:center;box-shadow:0 6px 18px rgba(47,57,191,.18)}
+.opt .art-ag .avc img{width:72px;height:72px;border-radius:50%;object-fit:cover}
+.opt .art-ag .bub{position:absolute;display:flex;flex-direction:column;gap:4px;padding:8px 10px;border-radius:8px;background:#fff;box-shadow:0 2px 8px rgba(47,57,191,.12)}
+.opt .art-ag .bub i{display:block;height:4px;border-radius:2px;background:#d9dcf3}
+.opt .art-ag .bub i:first-child{width:46px}.opt .art-ag .bub i:last-child{width:30px}
+.opt .art-ag .bub.l{left:34px;top:30px;border-top-left-radius:2px}
+.opt .art-ag .bub.r{right:34px;bottom:28px;border-bottom-right-radius:2px;background:var(--brand)}
+.opt .art-ag .bub.r i{background:rgba(255,255,255,.7)}
+.opt .ptag{display:inline-flex;align-items:center;gap:6px;margin-top:10px;font-size:11px;color:var(--body)}
+.opt .ptag img{height:14px;width:auto}
+.opt .tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
+.opt.sm{padding:14px 16px}
+.opt.sm h4{font-size:13px}
+.price{font-size:11px;color:var(--body)}
+
+.form{display:grid;gap:20px;margin-top:24px;max-width:720px}
+.f2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.fld label{display:block;font-size:12px;font-weight:500;margin-bottom:6px}
+.fld .opt-l{font-weight:400;color:var(--body)}
+.fld input,.fld select,.fld textarea{width:100%;border:1px solid var(--border-strong);border-radius:4px;padding:0 12px;font:inherit;font-size:12px;color:var(--heading);background:#fff;height:38px}
+.fld textarea{height:110px;padding:10px 12px;line-height:18px;resize:vertical}
+.fld input:focus,.fld select:focus,.fld textarea:focus{border-color:var(--brand);outline:0;box-shadow:0 0 0 3px rgba(47,57,191,.12)}
+.fld .help{font-size:11px;color:var(--body);margin-top:4px}
+.fld.err input,.fld.err textarea{border-color:var(--danger)}
+.fld .e{display:none;color:var(--danger);font-size:11px;margin-top:4px}
+.fld.err .e{display:block}
+.group-l{font-size:12px;font-weight:500;margin-bottom:8px}
+.sizes{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+
+.git-row{display:flex;gap:12px;flex-wrap:wrap;margin-top:24px}
+.gitbtn{display:inline-flex;align-items:center;gap:10px;padding:0 18px;height:44px;border:1px solid var(--border-strong);border-radius:4px;font-size:12px;font-weight:500;background:#fff}
+.gitbtn:hover{background:var(--tint2)}
+.gitbtn[aria-pressed=true]{border-color:var(--brand);background:var(--tint2)}
+.gitbtn i{width:22px;height:22px;border-radius:50%;display:grid;place-items:center;font-style:normal;font-size:11px;font-weight:600;color:#fff}
+.connected{display:flex;align-items:center;gap:8px;margin-top:16px;font-size:12px;color:var(--success);font-weight:500}
+.spin{width:14px;height:14px;border-radius:50%;border:2px solid #d5d7f2;border-top-color:var(--brand);animation:sp .7s linear infinite;display:inline-block}
+@keyframes sp{to{transform:rotate(360deg)}}
+.repos{display:grid;gap:8px;margin-top:20px;max-width:720px}
+.repo{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px 16px;border:1px solid var(--border);border-radius:4px;text-align:left;background:#fff;font-size:12px}
+.repo:hover{background:var(--tint2)}
+.repo[aria-pressed=true]{border-color:var(--brand);background:var(--tint2);box-shadow:0 0 0 1px var(--brand) inset}
+.repo b{font-weight:500;font-size:13px}
+.repo small{display:block;color:var(--body);font-size:11px;margin-top:2px}
+
+.plan{display:grid;grid-template-columns:1.3fr 1fr;gap:24px;margin-top:24px}
+.panel{border:1px solid var(--border);border-radius:4px;padding:20px;background:#fff}
+.panel h5{font-size:12px;font-weight:600;margin-bottom:14px}
+.steps{list-style:none;display:grid;gap:0}
+.steps li{display:flex;gap:12px;padding:12px 0;border-top:1px solid var(--border);align-items:flex-start;font-size:12px;line-height:18px}
+.steps li:first-child{border-top:0;padding-top:0}
+.steps .n{width:22px;height:22px;border-radius:50%;background:var(--brand-soft);color:var(--brand);display:grid;place-items:center;font-size:11px;font-weight:600;flex-shrink:0}
+.steps .st{margin-left:auto;flex-shrink:0;width:18px;height:18px;display:grid;place-items:center}
+.steps li.done .n{background:var(--success);color:#fff}
+.steps li.done .st::before{content:"✓";color:var(--success);font-weight:600}
+.steps li small{display:block;color:var(--body);font-size:11px}
+.kv{display:grid;gap:10px;font-size:12px}
+.kv div{display:flex;justify-content:space-between;gap:12px}
+.kv dt{color:var(--body)}
+.kv dd{font-weight:500;text-align:right}
+.bg-note{margin-top:14px;padding:10px 12px;border-radius:4px;background:var(--tint);font-size:11px;line-height:17px;color:var(--body)}
+
+/* Back / Continue bar: pinned to the bottom of the screen, aligned with the 1155px content column */
+.w-foot{position:fixed;left:0;right:0;bottom:0;z-index:5;display:flex;justify-content:space-between;align-items:center;gap:16px;padding:14px max(24px,calc((100vw - 1155px)/2));background:#fff;border-top:1px solid var(--border)}
+.success{display:flex;flex-direction:column;align-items:center;text-align:center;padding:24px 0 16px}
+.success .big{width:56px;height:56px;border-radius:50%;background:#e4f5ec;color:var(--success);display:grid;place-items:center;font-size:26px;margin-bottom:16px}
+.success p{font-size:12px;color:var(--body);max-width:420px;margin:6px 0 20px;line-height:18px}
+.success .row{display:flex;gap:12px;flex-wrap:wrap;justify-content:center}
+
+@media(max-width:1000px){.opts.c3{grid-template-columns:1fr}.opts.c2{grid-template-columns:1fr}.plan{grid-template-columns:1fr}.sizes{grid-template-columns:repeat(2,1fr)}.f2{grid-template-columns:1fr}}
+@media(max-width:1100px){.cards{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:760px){.cards{grid-template-columns:1fr;max-width:420px;margin:0 auto}}
+@media(max-width:700px){.top-right>:not(.user){display:none}main{padding:28px 16px 80px}.w-body{padding:24px 0 8px}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+
+/* bullet links with hover video preview */
+.vl{cursor:pointer;border-bottom:1px dashed rgba(47,57,191,.55);transition:color .15s,border-color .15s}
+.vl::after{content:"";display:inline-block;width:12px;height:12px;margin-left:5px;vertical-align:-1px;background:var(--brand);opacity:.75;-webkit-mask:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'><circle cx='6' cy='6' r='5.500' fill='none' stroke='black'/><path d='M5 3.800v4.400L8.600 6z' fill='black'/></svg>") center/12px no-repeat;mask:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'><circle cx='6' cy='6' r='5.500' fill='none' stroke='black'/><path d='M5 3.800v4.400L8.600 6z' fill='black'/></svg>") center/12px no-repeat}
+.vl:hover,.vl:focus-visible{color:var(--brand);border-bottom-color:var(--brand)}
+.vp{position:fixed;z-index:60;width:300px;background:#fff;border:1px solid var(--border);border-radius:8px;box-shadow:0 14px 40px rgba(9,30,66,.22);overflow:hidden;pointer-events:none;opacity:0;transform:translateY(6px) scale(.97);transition:opacity .18s,transform .18s}
+.vp.on{opacity:1;transform:none}
+.vp .m{position:relative;aspect-ratio:16/9;background:#f1f2fb;overflow:hidden}
+.vp video,.vp .fb{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.vp .fb{background-size:cover;background-position:center}
+@keyframes kb{from{transform:scale(1)}to{transform:scale(1.14) translate(-2%,-1%)}}
+.vp .bdg{position:absolute;left:10px;bottom:10px;display:flex;align-items:center;gap:6px;background:rgba(9,30,66,.72);color:#fff;font-size:10px;line-height:14px;padding:3px 8px;border-radius:10px}
+.vp .bdg i{width:6px;height:6px;border-radius:50%;background:#ff5b5b;animation:rec 1.2s infinite}
+@keyframes rec{50%{opacity:.3}}
+.vp .c{padding:10px 12px;font-size:12px;line-height:18px;font-weight:500;color:var(--heading)}
+.vm{position:fixed;inset:0;z-index:70;background:rgba(9,30,66,.6);display:grid;place-items:center;padding:20px;animation:vfade .2s}
+@keyframes vfade{from{opacity:0}}
+.vm .box{width:780px;max-width:100%;background:#fff;border-radius:8px;overflow:hidden;box-shadow:0 24px 60px rgba(9,30,66,.4);animation:vup .25s cubic-bezier(.2,.7,.2,1)}
+@keyframes vup{from{transform:translateY(14px);opacity:0}}
+.vm .m{position:relative;aspect-ratio:16/9;background:#f1f2fb}
+.vm video,.vm .fb{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;background:#f6f6fd}
+.vm .h{display:flex;justify-content:space-between;align-items:center;padding:14px 16px;font-size:14px;font-weight:500}
+.vm .h button{width:28px;height:28px;border-radius:50%;font-size:18px;line-height:1;text-align:center}
+.vm .h button:hover{background:var(--brand-soft)}
+@media(hover:none){.vp{display:none}}
+@media(prefers-reduced-motion:reduce){.vp,.vm *{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+<header class="topbar">
+  <a href="index.html" aria-label="Cloudways home"><img class="logo" src="assets/logo.png?v=4" alt="Cloudways by DigitalOcean"></a>
+  <div class="top-right">
+    <a class="user" href="login.html" title="Log out" aria-label="John Doe — log out"><img class="avatar" src="assets/avatar.png" alt=""><img class="chev" src="assets/chevron.svg" alt=""></a>
+  </div>
+</header>
+
+<div class="layout">
+
+  <main>
+  <div class="wrap">
+
+    <!-- ===================== LAUNCH PAD HOME ===================== -->
+    <div id="home">
+      <div class="hero">
+        <h1>Welcome aboard, John Doe</h1>
+        <form class="chat" id="chat" novalidate>
+          <label class="sr" for="prompt">Describe what you want to build or bring to Cloudways</label>
+          <textarea id="prompt" rows="1" placeholder="What do you want to build or bring to Cloudways today?"></textarea>
+          <div class="acts"><button class="send" id="send" type="submit" aria-label="Send">↑</button></div>
+        </form>
+        <p class="hint" id="hint" role="status" aria-live="polite"></p>
+        <div class="chips" id="chips">
+          <button class="chip" type="button" data-q="Build a site without coding"><img src="assets/chip-ai.png?v=4" alt="">Build a site without coding</button>
+          <button class="chip" type="button" data-q="Host an auto-scaling WordPress site"><img src="assets/chip-ai.png?v=4" alt="">Host an auto-scaling WordPress site</button>
+          <button class="chip" type="button" data-q="Deploy a Node.js/React project"><img src="assets/chip-ai.png?v=4" alt="">Deploy a Node.js / React project</button>
+          <button class="chip" type="button" data-q="Deploy an AI chatbot"><img src="assets/chip-ai.png?v=4" alt="">Deploy an AI chatbot</button>
+        </div>
+      </div>
+
+      <section class="start">
+        <h2 class="sp">Choose how you want to start</h2>
+        <div class="cards" id="cards">
+          <button class="gs" type="button" data-flow="migrate">
+            <span class="art"><img src="assets/launchpad/card-migrate.png" alt=""></span>
+            <span class="gb">
+              <h3>Move an existing Project</h3>
+              <p>Bring a site over from another host, an AI tool like Lovable, or your own Git repository.</p>
+              <ul class="bl"><li><span class="vl" role="link" tabindex="0" data-video="assets/videos/move-any-host.mp4" data-poster="assets/videos/thumb.jpg" data-title="From any host, Lovable or Git">From any host, Lovable or Git</span></li><li>Files, database and settings move together</li><li><span class="vl" role="link" tabindex="0" data-video="assets/videos/move-no-downtime.mp4" data-poster="assets/videos/thumb.jpg" data-title="Go live without downtime">Go live without downtime</span></li><li>Expert help if you get stuck</li></ul>
+              <span class="go">Start moving</span>
+            </span>
+          </button>
+          <button class="gs" type="button" data-flow="scratch">
+            <span class="art"><img src="assets/launchpad/art-flexible.png" alt=""></span>
+            <span class="gb">
+              <h3>Create from Scratch</h3>
+              <p>Launch WordPress, Magento or Laravel, or deploy a React or Node.js app. You choose the stack.</p>
+              <ul class="bl"><li>WordPress, Magento, Laravel or PHP</li><li>React, Node.js and Angular apps</li><li><span class="vl" role="link" tabindex="0" data-video="assets/videos/scratch-provider-region.mp4" data-poster="assets/videos/thumb.jpg" data-title="Choose your cloud provider and region">Choose your cloud provider and region</span></li><li><span class="vl" role="link" tabindex="0" data-video="assets/videos/scratch-server-stack.mp4" data-poster="assets/videos/thumb.jpg" data-title="Full control of server size and stack">Full control of server size and stack</span></li></ul>
+              <span class="go">Start creating</span>
+            </span>
+          </button>
+          <button class="gs" type="button" data-flow="ai">
+            <span class="art"><img src="assets/launchpad/card-build.png" alt=""></span>
+            <span class="gb">
+              <h3>Build with AI</h3>
+              <p>Describe your site in plain words and AI builds it for you in minutes. No code needed.</p>
+              <ul class="bl"><li><span class="vl" role="link" tabindex="0" data-video="assets/videos/ai-describe.mp4" data-poster="assets/videos/thumb.jpg" data-title="Describe it in plain words">Describe it in plain words</span></li><li>Pages, content and design generated</li><li><span class="vl" role="link" tabindex="0" data-video="assets/videos/ai-edit.mp4" data-poster="assets/videos/thumb.jpg" data-title="Edit anything once it’s built">Edit anything once it’s built</span></li><li>Hosting set up for you</li></ul>
+              <span class="go">Build with AI</span>
+            </span>
+          </button>
+          <button class="gs" type="button" data-flow="agent">
+            <span class="art"><img src="assets/launchpad/card-agent.png" alt=""></span>
+            <span class="gb">
+              <h3>Automate your Workflow</h3>
+              <p>Launch an agent that chats with customers or automates your tasks. No server needed.</p>
+              <ul class="bl"><li>Managed agents ready in minutes</li><li><span class="vl" role="link" tabindex="0" data-video="assets/videos/agent-connect-tools.mp4" data-poster="assets/videos/thumb.jpg" data-title="Connect tools like WhatsApp and Slack">Connect tools like WhatsApp and Slack</span></li><li>No server to manage</li><li><span class="vl" role="link" tabindex="0" data-video="assets/videos/agent-provider-key.mp4" data-poster="assets/videos/thumb.jpg" data-title="Bring your own AI provider key">Bring your own AI provider key</span></li></ul>
+              <span class="go">Choose an agent</span>
+            </span>
+          </button>
+        </div>
+      </section>
+
+          </div>
+
+    <!-- ===================== WIZARD ===================== -->
+    <section class="wiz" id="wiz" hidden aria-live="polite">
+      <div class="w-body" id="w-body"></div>
+      <div class="w-foot" id="w-foot">
+        <button class="btn btn-ghost" id="back" type="button">← Back</button>
+        <button class="btn btn-primary" id="next" type="button">Continue</button>
+      </div>
+    </section>
+
+  </div>
+  </main>
+</div>
+
+<script>
+const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* ======================================================================
+   Product catalogue + sample data (placeholders, swap for the real API)
+   ====================================================================== */
+const PROD={
+  flexible:  {name:'Flexible',          ic:'ic-flexible.png',   hash:'flex', needs:['Server','App'],            blurb:'Full control over your server and application.'},
+  autonomous:{name:'Autonomous',        ic:'ic-autonomous.png', hash:'auto', needs:['App only (serverless)'],   blurb:'Hands-off, auto-scaling serverless hosting.'},
+  velocity:  {name:'Cloudways Velocity',ic:'ic-velocity.png',   hash:'vel',  needs:['Git','Server','App'],      blurb:'Deploy frontend and backend code straight from your repository.'},
+  aibuilder: {name:'AI Website Builder',ic:'ic-ai.png',         hash:'ai',   needs:['Server','App'],            blurb:'Describe your site and we build it. Hosting is set up for you.'},
+  agent:     {name:'Managed AI Agent',  ic:'chip-ai.png',       hash:'',     needs:['Agent'],                   blurb:'Standalone agent. No server or app needed.'}
+};
+const PROVIDERS=['DigitalOcean','Amazon Web Services','Google Cloud','Linode','Vultr'];
+const REGIONS=['London','New York','Frankfurt','Singapore','Sydney'];
+const SIZES=[{id:'1',n:'1 GB',d:'1 vCPU · 25 GB',p:'$14'},{id:'2',n:'2 GB',d:'1 vCPU · 50 GB',p:'$28'},{id:'4',n:'4 GB',d:'2 vCPU · 80 GB',p:'$54'},{id:'8',n:'8 GB',d:'4 vCPU · 160 GB',p:'$105'}];
+const APPS=['WordPress','WooCommerce','Magento','Laravel','Custom PHP'];
+const GITS={github:{n:'GitHub',c:'#24292f'},bitbucket:{n:'Bitbucket',c:'#2684ff'},gitlab:{n:'GitLab',c:'#e24329'}};
+const REPOS=[{id:'storefront-react',fw:'React',d:'Updated 2 days ago'},{id:'api-node',fw:'Node.js',d:'Updated 5 days ago'},{id:'marketing-next',fw:'Next.js',d:'Updated last week'},{id:'admin-angular',fw:'Angular',d:'Updated 3 weeks ago'}];
+const AGENTS={
+  hermes:  {n:'Hermes Agent',  job:'Chat with customers and answer questions', why:'Fast conversational AI for support, dynamic chats and complex reasoning.', img:'agent-hermes.svg',  d:'Lightning-fast conversational AI for dynamic chats, complex reasoning and customer support.'},
+  openclaw:{n:'OpenClaw Agent',job:'Automate my workflows', why:'An autonomous agent that uses tools to get your tasks done for you.', img:'agent-openclaw.svg',d:'An autonomous, tool-wielding agent built to seamlessly automate your complex workflows.'}
+};
+const ICO={
+  host:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="6" rx="1.5"/><rect x="3" y="14" width="18" height="6" rx="1.5"/><path d="M7 7h.01M7 17h.01"/></svg>',
+  code:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8 8l-4 4 4 4M16 8l4 4-4 4M13.5 5l-3 14"/></svg>',
+  git:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="2.2"/><circle cx="6" cy="18" r="2.2"/><circle cx="18" cy="9" r="2.2"/><path d="M6 8.2v7.6M18 11.2c0 3-3 3-8 4.2"/></svg>',
+  spark:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.8 4.7L18.5 9.5l-4.7 1.8L12 16l-1.8-4.7L5.5 9.5l4.7-1.8L12 3z"/></svg>',
+  cms:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M8 14h8M8 17h5"/></svg>',
+  steady:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 15c3-6 5 6 9 0s6 6 9-1"/></svg>',
+  surge:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 19l5-6 4 3 8-11M15 5h5v5"/></svg>'
+};
+
+/* ======================================================================
+   State
+   ====================================================================== */
+let S={};            // answers collected so far
+let hist=[];         // ids of the steps visited (for Back + breadcrumbs)
+let routedNote=null; // banner shown when the Copilot routed the user
+let routedLen=0;     // history length at the step the Copilot landed on (the banner shows there only)
+const wiz=$('#wiz'),home=$('#home'),body=$('#w-body'),nextBtn=$('#next'),backBtn=$('#back');
+
+/* ======================================================================
+   Step definitions
+   Each step: title, sub, render(): html, ok(): bool, next(): step id, enter(): defaults
+   ====================================================================== */
+const pt=k=>({l:PROD[k].name,ic:PROD[k].ic+'?v=4'});   // small "runs on …" tag: the product name is secondary
+const artHtml=a=>{
+  if(!a)return '';
+  if(a.startsWith('agent:')){const id=a.slice(6);return `<span class="art art-ag" aria-hidden="true"><span class="avc"><img src="assets/${AGENTS[id].img}" alt=""></span><span class="bub l"><i></i><i></i></span><span class="bub r"><i></i><i></i></span></span>`}
+  return `<span class="art"><img src="assets/launchpad/${a}" alt=""></span>`;
+};
+const optCard=(key,o,cols)=>{
+  const head=`<span class="top">${o.img&&!o.art?`<img class="face" src="assets/${o.img}" alt="">`:o.ico?`<span class="ico">${o.ico}</span>`:''}<h4>${esc(o.t)}</h4>${o.badge?`<span class="pill">${esc(o.badge)}</span>`:''}</span><p>${o.d}</p>${o.tags?`<span class="tags">${o.tags.map(t=>`<span class="pill grey">${esc(t)}</span>`).join('')}</span>`:''}${o.ptag?`<span class="ptag">${o.ptag.ic?`<img src="assets/${o.ptag.ic}" alt="">`:''}${esc(o.ptag.l)}</span>`:''}`;
+  return `<button type="button" class="opt ${o.sm?'sm':''} ${o.art?'has-art':''}" data-key="${key}" data-val="${o.id}" aria-pressed="${S[key]===o.id}">${artHtml(o.art)}${o.art?`<span class="ob">${head}</span>`:head}</button>`;
+};
+const opts=(key,list,cols)=>`<div class="opts c${cols||list.length}">${list.map(o=>optCard(key,o)).join('')}</div>`;
+
+const STEPS={
+  /* ---------- Flow 2: migrate ---------- */
+  'migrate.source':{crumb:'Source',title:'Where does your website live today?',sub:'Tell us where it is now and we’ll pick the best way to bring it over.',
+    render:()=>opts('source',[
+      {id:'host',t:'On another hosting provider',d:'Moving a WordPress or PHP site? We’ll guide you through it, step by step.',art:'source-host.svg'},
+      {id:'lovable',t:'In an AI tool like Lovable',d:'Bring over the code you exported from Lovable, v0 or Bolt.',art:'source-lovable.svg'},
+      {id:'git',t:'In my own Git repository',d:'Connect GitHub, Bitbucket or GitLab and deploy straight from your code.',art:'source-git.svg'}],3),
+    ok:()=>!!S.source,next:()=>'migrate.engine'},
+  'migrate.engine':{crumb:'Engine',title:'How should it run on Cloudways?',
+    get sub(){return S.source==='host'?'Both options run WordPress and PHP sites. Choose how hands-on you want to be.':'Code from AI tools and Git repositories goes live straight from your repository.'},
+    enter(){if(S.source!=='host')S.engine='velocity'; else if(S.engine==='velocity')delete S.engine},
+    render:()=>S.source==='host'
+      ?opts('engine',[
+        {id:'flexible',t:'Full control of my server and app',d:'Pick your server size and tune the stack. Best for predictable traffic and custom setups.',art:'art-flexible.png',ptag:pt('flexible')},
+        {id:'autonomous',t:'Hands-off hosting that scales itself',d:'No server to manage. Your site grows automatically when traffic spikes.',art:'art-autonomous.png',ptag:pt('autonomous')}],2)
+      :`<div class="opts c1">${optCard('engine',{id:'velocity',t:'Go live straight from my code',d:'Connect your repository and every push builds and publishes automatically.',art:'art-velocity.png',ptag:pt('velocity')})}</div>`,
+    ok:()=>!!S.engine,next:()=>S.engine==='velocity'?'git':'configure'},
+
+  /* ---------- Flow 3: create ---------- */
+  'create.how':{crumb:'Build method',title:'How would you like to build it?',sub:'Pick the way that suits you. You can always change your mind later.',
+    render:()=>opts('build',[
+      ...(S.scratch?[]:[{id:'ai',t:'Build it for me with AI',badge:'No code',d:'Describe your site in plain words and we’ll create it for you.',art:'art-ai.png',ptag:pt('aibuilder')}]),
+      {id:'cms',t:'Launch WordPress, Magento or Laravel',d:'Set up a popular CMS or PHP app on hosting that fits your traffic.',art:'art-flexible.png'},
+      {id:'js',t:'Deploy a React, Node.js or Angular app',d:'Connect your Git repository and go live in minutes.',art:'art-velocity.png',ptag:pt('velocity')}],S.scratch?2:3),
+    ok:()=>!!S.build,next:()=>({ai:'describe',cms:'create.traffic',js:'git'})[S.build]},
+  'create.traffic':{crumb:'Traffic',title:'How does your traffic behave?',sub:'We’ll match the hosting to your traffic, so you never pay for what you don’t need.',
+    render:()=>opts('traffic',[
+      {id:'steady',t:'Steady traffic, I want control',d:'I’ll choose my server size and tune the stack myself.',art:'art-flexible.png',ptag:pt('flexible')},
+      {id:'surge',t:'Traffic spikes, scale it for me',d:'Hands-off hosting that grows automatically when visitors flood in.',art:'art-autonomous.png',ptag:pt('autonomous')}],2),
+    ok:()=>!!S.traffic,next:()=>{S.engine=S.traffic==='steady'?'flexible':'autonomous';return 'configure'}},
+
+  /* ---------- AI builder ---------- */
+  'describe':{crumb:'Describe',title:'Tell us about your website',sub:'Describe it in plain words. You can fine-tune everything after it’s created.',
+    enter(){S.engine='aibuilder'},
+    render:()=>`<div class="form"><div class="fld" id="f-desc"><label for="desc">What should your site be about?</label>
+      <textarea id="desc" placeholder="e.g. A site for my bakery in Leeds with online ordering, a menu page and a contact form.">${esc(S.desc||'')}</textarea><p class="e">Add a little more detail (at least 10 characters).</p></div>
+      <div class="fld"><label for="siteName">Site name <span class="opt-l">(optional)</span></label><input id="siteName" value="${esc(S.appName||'')}" placeholder="My business website"></div></div>`,
+    bind(){$('#desc').oninput=e=>{S.desc=e.target.value;$('#f-desc').classList.remove('err');sync()};$('#siteName').oninput=e=>S.appName=e.target.value},
+    ok:()=>(S.desc||'').trim().length>=10,fail(){$('#f-desc').classList.add('err')},next:()=>'plan'},
+
+  /* ---------- Velocity: Git ---------- */
+  'git':{crumb:'Connect Git',title:'Connect your code',sub:'Authorise your Git provider, then choose the repository you want to put live.',
+    enter(){S.engine='velocity'},
+    render:()=>`<div class="git-row">${Object.entries(GITS).map(([k,g])=>`<button class="gitbtn" type="button" data-git="${k}" aria-pressed="${S.git===k}"><i style="background:${g.c}">${g.n[0]}</i>${g.n}</button>`).join('')}</div>
+      <div id="git-state">${gitState()}</div>`,
+    bind(){$$('.gitbtn').forEach(b=>b.onclick=()=>connectGit(b.dataset.git));bindRepos()},
+    ok:()=>S.gitOk&&!!S.repo,next:()=>'configure'},
+
+  /* ---------- shared configure ---------- */
+  'configure':{crumb:'Configure',get title(){return S.engine==='autonomous'?'Name your app and choose where it runs':'Choose your server and name your app'},
+    get sub(){return S.engine==='autonomous'?'There’s no server to manage. We’ll scale it for you.':'Sample sizes and prices. You can change everything later.'},
+    enter(){if(S.engine==='velocity'&&S.repo&&!S.appName)S.appName=S.repo;if(!S.provider)S.provider=PROVIDERS[0];if(!S.region)S.region=REGIONS[0];if(!S.size)S.size='2';if(!S.appType)S.appType=S.flow==='migrate'?'WordPress':(S.build==='js'?'Node.js':'WordPress')},
+    render:()=>{
+      const e=S.engine,mig=S.flow==='migrate';
+      const sel=(id,list,v)=>`<select id="${id}">${list.map(x=>`<option ${x===v?'selected':''}>${esc(x)}</option>`).join('')}</select>`;
+      const sizes=`<div><p class="group-l">Server size</p><div class="sizes" role="group" aria-label="Server size">${SIZES.map(z=>`<button type="button" class="opt sm" data-key="size" data-val="${z.id}" aria-pressed="${S.size===z.id}"><h4>${z.n}</h4><p style="padding:0">${z.d}</p><span class="price">${z.p}/month</span></button>`).join('')}</div></div>`;
+      const nameFld=`<div class="fld" id="f-name"><label for="appName">App name</label><input id="appName" value="${esc(S.appName||'')}" placeholder="my-awesome-app"><p class="e">Give your app a name.</p></div>`;
+      const srcFld=mig&&S.source==='host'?`<div class="fld"><label for="srcUrl">Current site URL <span class="opt-l">(optional)</span></label><input id="srcUrl" value="${esc(S.srcUrl||'')}" placeholder="https://www.example.com"><p class="help">We’ll start the migration once your app is ready.</p></div>`:'';
+      if(e==='flexible')return `<div class="form">${sizes}<div class="f2"><div class="fld"><label for="provider">Cloud provider</label>${sel('provider',PROVIDERS,S.provider)}</div><div class="fld"><label for="region">Region</label>${sel('region',REGIONS,S.region)}</div></div>
+        <div class="f2">${mig?'':`<div class="fld"><label for="appType">Application</label>${sel('appType',APPS,S.appType)}</div>`}${nameFld}</div>${srcFld}</div>`;
+      if(e==='autonomous')return `<div class="form"><div class="f2">${mig?'':`<div class="fld"><label for="appType">Application</label>${sel('appType',APPS.slice(0,3),S.appType)}</div>`}<div class="fld"><label for="region">Region</label>${sel('region',REGIONS,S.region)}</div></div>${nameFld}${srcFld}</div>`;
+      return `<div class="form">${sizes}<div class="f2"><div class="fld"><label for="provider">Cloud provider</label>${sel('provider',PROVIDERS,S.provider)}</div><div class="fld"><label for="region">Region</label>${sel('region',REGIONS,S.region)}</div></div>${nameFld}</div>`;
+    },
+    bind(){
+      ['provider','region','appType'].forEach(k=>{const el=$('#'+k);if(el)el.onchange=e=>S[k]=e.target.value});
+      const n=$('#appName');n.oninput=e=>{S.appName=e.target.value;$('#f-name').classList.remove('err');sync()};
+      const u=$('#srcUrl');if(u)u.oninput=e=>S.srcUrl=e.target.value;
+    },
+    ok:()=>(S.appName||'').trim().length>0,fail(){$('#f-name').classList.add('err');$('#appName').focus()},next:()=>'plan'},
+
+  /* ---------- plan + launch ---------- */
+  'plan':{crumb:'Review',title:'Ready to launch?',sub:'Here’s exactly what we’ll set up for you. Nothing is created until you confirm.',
+    render:()=>{
+      const p=planFor();
+      return `<div class="plan"><div class="panel"><h5>What we’ll set up</h5><ol class="steps">${p.steps.map((t,i)=>`<li><span class="n">${i+1}</span><span>${t.t}${t.d?`<small>${t.d}</small>`:''}</span></li>`).join('')}</ol>${p.note?`<p class="bg-note">${p.note}</p>`:''}</div>
+      <div class="panel"><h5>Summary</h5><dl class="kv">${p.kv.map(([k,v])=>`<div><dt>${k}</dt><dd>${esc(v)}</dd></div>`).join('')}</dl></div></div>`},
+    ok:()=>true,next:()=>'launch',nextLabel:()=>S.engine==='aibuilder'?'Generate my website':'Launch'},
+
+  'launch':{crumb:'Launch',title:'',sub:'',render:()=>'',ok:()=>true,next:()=>null,final:true},
+
+  /* ---------- Flow 4: managed AI agent ---------- */
+  'agent.pick':{crumb:'Choose agent',title:'What should your agent do?',sub:'Pick the agent that fits the job. Both run on their own, with no server or app to set up.',
+    render:()=>opts('agentId',Object.entries(AGENTS).map(([id,a])=>({id,t:a.job,d:a.why,img:a.img,art:'agent:'+id,ptag:{l:a.n}})),2),
+    ok:()=>!!S.agentId,next:()=>'agent.config'},
+  'agent.config':{crumb:'Configure & deploy',title:'Teach your agent',sub:'Give it a name, tell it what to do, and add something to learn from.',
+    enter(){S.engine='agent';if(!S.agentName)S.agentName=''},
+    render:()=>`<div class="form"><div class="fld" id="f-an"><label for="aName">Agent name</label><input id="aName" value="${esc(S.agentName||'')}" placeholder="${S.agentId==='hermes'?'Support Hermes':'Workflow OpenClaw'}"><p class="e">Give your agent a name.</p></div>
+      <div class="fld"><label for="aIns">Initial instructions</label><textarea id="aIns" placeholder="${S.agentId==='hermes'?'You are a friendly support agent for my online store. Answer questions about orders and returns.':'Every morning, check my inbox, summarise urgent emails and create tasks in my project board.'}">${esc(S.instr||'')}</textarea></div>
+      <div class="fld"><label for="aKb">Knowledge base <span class="opt-l">(optional)</span></label><input id="aKb" value="${esc(S.kb||'')}" placeholder="Paste a URL, e.g. https://docs.example.com"><p class="help">Add a docs link now. You can upload files after deployment.</p></div></div>`,
+    bind(){$('#aName').oninput=e=>{S.agentName=e.target.value;$('#f-an').classList.remove('err');sync()};$('#aIns').oninput=e=>S.instr=e.target.value;$('#aKb').oninput=e=>S.kb=e.target.value},
+    ok:()=>(S.agentName||'').trim().length>0,fail(){$('#f-an').classList.add('err');$('#aName').focus()},next:()=>'launch',nextLabel:()=>'Deploy agent'}
+};
+
+/* ---------- helpers used by steps ---------- */
+function gitState(){
+  if(!S.git)return '';
+  if(S.gitBusy)return `<p class="connected" style="color:var(--body)"><span class="spin"></span> Waiting for ${GITS[S.git].n} authorisation…</p>`;
+  if(!S.gitOk)return '';
+  return `<p class="connected">✓ Connected to ${GITS[S.git].n} as @johndoe</p>
+   <div class="repos" role="group" aria-label="Repositories">${REPOS.map(r=>`<button type="button" class="repo" data-repo="${r.id}" aria-pressed="${S.repo===r.id}"><span><b>${GITS[S.git].n==='GitHub'?'acme/':'team/'}${r.id}</b><small>${r.d}</small></span><span class="pill">${r.fw}</span></button>`).join('')}</div>`;
+}
+function connectGit(k){
+  if(S.gitBusy)return;
+  S.git=k;S.gitOk=false;S.repo=null;S.gitBusy=true;redrawGit();
+  setTimeout(()=>{S.gitBusy=false;S.gitOk=true;redrawGit()},reduce?0:900);
+}
+function redrawGit(){
+  $$('.gitbtn').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.git===S.git)));
+  $('#git-state').innerHTML=gitState();bindRepos();sync();
+}
+function bindRepos(){$$('.repo').forEach(b=>b.onclick=()=>{S.repo=b.dataset.repo;S.appName=S.appName||S.repo;$$('.repo').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));sync()})}
+
+function planFor(){
+  const P=PROD[S.engine]||PROD.flexible,srv=SIZES.find(z=>z.id===S.size)||SIZES[1];
+  const mig=S.flow==='migrate',srcLabel={host:'another host',lovable:'Lovable',git:'your Git repository'}[S.source];
+  let steps=[],kv=[],note='';
+  if(S.engine==='flexible'){
+    steps=[{t:'Create your server',d:`${S.provider} · ${S.region} · ${srv.n} (${srv.p}/month)`},{t:`Create your app: ${esc(S.appName)}`,d:mig?'WordPress':S.appType}];
+    if(mig)steps.push({t:'Move your website over',d:`From ${srcLabel}${S.srcUrl?` (${esc(S.srcUrl)})`:''}`});
+    kv=[['Hosting','Full control · Flexible'],['Server',`${srv.n} · ${S.provider}`],['Region',S.region],['App',S.appName]];
+  }else if(S.engine==='autonomous'){
+    steps=[{t:`Create your app: ${esc(S.appName)}`,d:`No server to manage · scales automatically · ${S.region}`}];
+    if(mig)steps.push({t:'Move your website over',d:`From ${srcLabel}${S.srcUrl?` (${esc(S.srcUrl)})`:''}`});
+    kv=[['Hosting','Hands-off · Autonomous'],['Server','None to manage'],['Region',S.region],['App',S.appName]];
+    note='Autonomous needs no server. Only the app is created.';
+  }else if(S.engine==='velocity'){
+    steps=[{t:'Connect your code',d:`${GITS[S.git].n} · @johndoe`},{t:'Create your server',d:`${S.provider} · ${S.region} · ${srv.n} (${srv.p}/month)`},{t:`Build and publish ${esc(S.repo)}`,d:'From the main branch, on every push'}];
+    kv=[['Hosting','Deploys from your code · Velocity'],['Repository',`${GITS[S.git].n}: ${S.repo}`],['Server',`${srv.n} · ${S.provider}`],['App',S.appName]];
+  }else if(S.engine==='aibuilder'){
+    steps=[{t:'Create your website with AI',d:esc((S.desc||'').slice(0,90))+((S.desc||'').length>90?'…':'')},{t:'Review and edit it',d:'Fine-tune your site in the AI Website Builder'}];
+    kv=[['Built with','AI Website Builder'],['Site',S.appName||'My business website'],['Hosting','Set up for you']];
+    note='Behind the scenes we create Flexible hosting (a server and an app) automatically, so there’s nothing to configure.';
+  }else if(S.engine==='agent'){
+    const a=AGENTS[S.agentId];
+    steps=[{t:`Bring “${esc(S.agentName)}” to life`,d:`${a.n}${S.kb?', learning from your knowledge base':''}`}];
+    kv=[['Agent',a.n],['Name',S.agentName],['Instructions',S.instr?'Added':'None yet'],['Hosting','Managed by Cloudways']];
+    note='No server or app is created or shown. Agents deploy on their own.';
+  }
+  return {steps,kv,note};
+}
+
+/* ======================================================================
+   Engine
+   ====================================================================== */
+function openFlow(flow,startId,preset){
+  S=Object.assign({flow},preset||{});hist=[startId];
+  home.hidden=true;wiz.hidden=false;draw();wiz.scrollIntoView({block:'start'});window.scrollBy(0,-70);
+}
+function stepFlow(){return S.flow}
+function cur(){return STEPS[hist[hist.length-1]]}
+function draw(){
+  const id=hist[hist.length-1],st=STEPS[id];
+  if(st.enter)st.enter();
+  // Flexible hosting has its own guided setup (server + app) instead of the generic configure step
+  if(id==='configure'&&S.engine==='flexible'){location.href='flexible-onboarding.html';return}
+  // Autonomous likewise starts with plan selection
+  if(id==='configure'&&S.engine==='autonomous'){location.href='autonomous-onboarding.html';return}
+  // Velocity (Node.js from a repo) has its own plan, region and repository setup
+  if((id==='git'||id==='configure')&&S.engine==='velocity'){location.href='velocity-onboarding.html';return}
+  // Managed AI agents: name, server size and provider key in their own flow
+  // AI Website Builder has its own prompt-first screen
+  if(id==='describe'){location.href='ai-website-builder.html'+(S.desc?'?q='+encodeURIComponent(S.desc):'');return}
+  if(id==='agent.config'){location.href='agent-onboarding.html'+(S.agentId==='hermes'?'#hermes':'');return}
+  if(st.final){return drawLaunch()}
+  $('#w-foot').hidden=false;
+  const note=routedNote&&hist.length===routedLen?`<div class="routed" role="status"><img src="assets/chip-ai.png?v=4" alt=""><span>${routedNote}</span><a href="#" id="reroute">Choose a different path</a></div>`:'';
+  body.innerHTML=`${note}<h2 class="w-title">${esc(st.title)}</h2><p class="w-sub">${esc(st.sub||'')}</p>${st.render()}`;
+  nextBtn.textContent=st.nextLabel?st.nextLabel():'Continue';
+  if(st.bind)st.bind();
+  const rr=$('#reroute');if(rr)rr.onclick=e=>{e.preventDefault();goHome()};
+  sync();
+  const f=$('input:not([type=hidden]),textarea',body);if(f&&(id==='describe'||id==='agent.config'))f.focus({preventScroll:true});
+}
+function sync(){const st=cur();nextBtn.disabled=!(st&&st.ok&&st.ok())}
+body.addEventListener('click',e=>{
+  const o=e.target.closest('.opt[data-key]');if(!o)return;
+  S[o.dataset.key]=o.dataset.val;
+  $$(`.opt[data-key="${o.dataset.key}"]`,body).forEach(x=>x.setAttribute('aria-pressed',String(x===o)));
+  sync();
+});
+nextBtn.onclick=()=>{
+  const st=cur();
+  if(!st.ok()){if(st.fail)st.fail();return}
+  const n=st.next();if(!n)return;
+  hist.push(n);draw();window.scrollTo({top:0});
+};
+backBtn.onclick=()=>{
+  if(hist.length<=1)return goHome();
+  hist.pop();draw();
+};
+function goHome(){wiz.hidden=true;home.hidden=false;S={};hist=[];routedNote=null;routedLen=0;window.scrollTo({top:0})}
+
+/* ---------- launch / progress ---------- */
+function drawLaunch(){
+  const p=planFor(),done=[];
+  $('#w-foot').hidden=true;
+  const verb=S.engine==='aibuilder'?'Building your website…':S.engine==='agent'?'Deploying your agent…':'Launching…';
+  body.innerHTML=`<h2 class="w-title" id="l-title">${verb}</h2><p class="w-sub" id="l-sub">This usually takes a couple of minutes. You can safely leave this page.</p>
+    <div class="panel" style="margin:24px auto 0;max-width:640px"><ol class="steps" id="l-steps">${p.steps.map((t,i)=>`<li data-i="${i}"><span class="n">${i+1}</span><span>${t.t}${t.d?`<small>${t.d}</small>`:''}</span><span class="st"><span class="spin"></span></span></li>`).join('')}</ol></div>`;
+  const items=$$('#l-steps li');
+  items.forEach(li=>{ if(+li.dataset.i>0)li.querySelector('.st').innerHTML='' });
+  let i=0;
+  const tick=()=>{
+    const li=items[i];li.classList.add('done');li.querySelector('.st').innerHTML='';
+    i++;
+    if(i<items.length){items[i].querySelector('.st').innerHTML='<span class="spin"></span>';setTimeout(tick,reduce?0:1100)}
+    else setTimeout(finish,reduce?0:500);
+  };
+  setTimeout(tick,reduce?0:1200);
+  function finish(){
+    const P=PROD[S.engine]||PROD.flexible;
+    const to=S.engine==='agent'?'index.html':'index.html#'+P.hash;
+    const name=S.engine==='agent'?S.agentName:(S.appName||'Your site');
+    const msgs={aibuilder:()=>'Your site is ready to review and edit.',agent:()=>`${esc(AGENTS[S.agentId].n)} is live and ready for its first conversation.`,autonomous:()=>'Your serverless app is live and will scale on its own.',velocity:()=>'Your app is built and deployed from your repository.',flexible:()=>'Your server and app are ready.'};
+    const msg=(msgs[S.engine]||msgs.flexible)();
+    body.innerHTML=`<div class="success"><span class="big">✓</span><h2 class="w-title">${esc(name)} is ready</h2><p>${msg}</p><div class="row"><a class="btn btn-primary" href="${to}">Go to my dashboard</a><button class="btn btn-outline" id="again" type="button">Start something else</button></div></div>`;
+    $('#again').onclick=goHome;
+  }
+}
+
+/* ======================================================================
+   Entry points
+   ====================================================================== */
+if(location.hash==='#create-cms'){history.replaceState(null,'',location.pathname);setTimeout(()=>openFlow('create','create.traffic',{build:'cms'}),0)}
+if(location.hash==='#migrate-host'){history.replaceState(null,'',location.pathname);setTimeout(()=>openFlow('migrate','migrate.engine',{source:'host'}),0)}
+$$('#cards .gs').forEach(b=>b.onclick=()=>{
+  const f=b.dataset.flow;routedNote=null;
+  if(f==='migrate')location.href='move-project.html';
+  if(f==='scratch')location.href='create-project.html';
+  if(f==='ai')location.href='ai-website-builder.html';
+  if(f==='agent')location.href='agent-onboarding.html';
+});
+
+/* ---------- Flow 1: Copilot routing ---------- */
+function route(q){
+  const t=q.toLowerCase(),has=(...w)=>w.some(x=>t.includes(x));
+  if(has('chatbot','chat bot','ai agent','agent','hermes','openclaw','assistant bot'))
+    return {flow:'agent',start:'agent.pick',preset:{agentId:has('openclaw','automate','workflow')?'openclaw':'hermes'},msg:`Got it, you want an AI agent. Let’s choose the right one and set it up.`};
+  if(has('migrate','move my','transfer','switch from','bring my')){
+    const src=has('lovable','v0','bolt','ai generated','code generator')?'lovable':has('github','gitlab','bitbucket','git repo','repository')?'git':'host';
+    return {flow:'migrate',start:'migrate.engine',hist:['migrate.source','migrate.engine'],preset:{source:src},msg:`Got it, you’re moving a site${src==='host'?' from another host':src==='lovable'?' from Lovable':' from a Git repository'}. I’ve skipped ahead to how you’d like it to run.`};
+  }
+  if(has('node','react','next.js','nextjs','angular','vue','vite','javascript','typescript','github','gitlab','bitbucket','git '))
+    return {flow:'create',start:'git',preset:{build:'js',engine:'velocity'},msg:`Got it, you’re deploying a JavaScript project. Let’s connect your code.`};
+  if(has('auto-scal','autoscal','auto scal','serverless','surge','spike','hands-off','hands off','scale automatically'))
+    return {flow:'create',start:'configure',hist:['create.how','create.traffic','configure'],preset:{build:'cms',traffic:'surge',engine:'autonomous'},msg:`Got it, a WordPress site that scales on its own. There’s no server to manage, so you only need to set up the app.`};
+  if(has('without coding','no code','no-code','nocode','website builder','build a site','build me a site','build a website','describe'))
+    return {flow:'create',start:'describe',preset:{build:'ai',engine:'aibuilder',desc:q.length>=10?q:''},msg:`Got it, no coding needed. Describe your site and we’ll build it. Hosting is set up for you.`};
+  if(has('wordpress','woocommerce','magento','laravel','php','cms','blog','shop','store'))
+    return {flow:'create',start:'create.traffic',hist:['create.how','create.traffic'],preset:{build:'cms'},msg:`Got it, a CMS site. One quick question so we pick the right hosting.`};
+  return null;
+}
+function runRoute(q){
+  q=q.trim();if(!q)return;
+  const r=route(q),hint=$('#hint');
+  if(!r){
+    hint.innerHTML='I’m not sure which path fits yet. Pick one below, or add a few more details.';
+    $$('#cards .gs').forEach(c=>{c.classList.remove('pulse');void c.offsetWidth;c.classList.add('pulse')});
+    return;
+  }
+  hint.textContent='';routedNote=r.msg;
+  S={flow:r.flow};
+  S=Object.assign({flow:r.flow},r.preset||{});hist=(r.hist||[r.start]).slice();routedLen=hist.length;
+  home.hidden=true;wiz.hidden=false;draw();window.scrollTo({top:0});
+}
+const prompt=$('#prompt'),send=$('#send');
+const fit=()=>{prompt.style.height='34px';const h=Math.min(prompt.scrollHeight,120);prompt.style.height=h+'px';prompt.style.overflowY=prompt.scrollHeight>120?'auto':'hidden'};
+prompt.addEventListener('input',()=>{send.classList.toggle('ready',prompt.value.trim().length>0);fit()});
+prompt.addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();$('#chat').requestSubmit()}});
+$('#chat').addEventListener('submit',e=>{e.preventDefault();runRoute(prompt.value)});
+$('#chips').onclick=e=>{const c=e.target.closest('.chip');if(!c)return;prompt.value=c.dataset.q;send.classList.add('ready');fit();runRoute(c.dataset.q)};
+
+/* ---------- typewriter placeholder ---------- */
+(function(){
+  const lines=[
+    'I want to migrate my high-traffic WooCommerce site',
+    'I need to host a React app from GitHub',
+    'Build me a site without coding',
+    'Host an auto-scaling WordPress site',
+    'Deploy an AI chatbot for customer support'
+  ];
+  const base='What do you want to build or bring to Cloudways today?';
+  if(reduce){prompt.placeholder=base;return}
+  let i=0,n=0,dir=1;prompt.placeholder='';
+  (function step(){
+    if(document.activeElement===prompt||prompt.value){setTimeout(step,500);return}
+    const t=lines[i];n+=dir;
+    prompt.placeholder=t.slice(0,n)+(n<t.length||dir<0?'▏':'');
+    let d=dir>0?45:22;
+    if(dir>0&&n===t.length){dir=-1;d=2200;prompt.placeholder=t}
+    else if(dir<0&&n===0){dir=1;i=(i+1)%lines.length;d=350}
+    setTimeout(step,d);
+  })();
+})();
+</script>
+<script>
+/* hover preview + click-to-watch for the bullet links on the start cards */
+(()=>{
+  const pop=document.createElement('div');pop.className='vp';pop.setAttribute('aria-hidden','true');document.body.appendChild(pop);
+  let timer=null,cur=null;
+  const media=(el,controls)=>{
+    const m=document.createElement('div');m.className='m';
+    const fb=()=>{const f=document.createElement('div');f.className='fb';f.style.backgroundImage=`url(${el.dataset.poster})`;return f};
+    const v=document.createElement('video');v.muted=true;v.loop=!controls;v.playsInline=true;v.preload='metadata';v.poster=el.dataset.poster;v.controls=!!controls;
+    v.src=el.dataset.video;
+    v.addEventListener('error',()=>{v.remove();m.appendChild(fb());},{once:true});
+    m.appendChild(v);return {m,v};
+  };
+  function show(el){
+    cur=el;pop.innerHTML='';
+    const {m,v}=media(el,false);pop.appendChild(m);
+    const c=document.createElement('div');c.className='c';c.textContent=el.dataset.title;pop.appendChild(c);
+    const r=el.getBoundingClientRect(),w=300,h=w*9/16+38;
+    let x=Math.min(Math.max(8,r.left),innerWidth-w-8),y=r.top-h-10;if(y<8)y=r.bottom+10;
+    pop.style.left=x+'px';pop.style.top=y+'px';pop.classList.add('on');
+    v.play&&v.play().catch(()=>{});
+  }
+  function hide(){clearTimeout(timer);cur=null;pop.classList.remove('on');const v=pop.querySelector('video');if(v)v.pause()}
+  function open(el){
+    hide();
+    const o=document.createElement('div');o.className='vm';o.setAttribute('role','dialog');o.setAttribute('aria-modal','true');o.setAttribute('aria-label',el.dataset.title);
+    const {m,v}=media(el,true);
+    o.innerHTML='<div class="box"><div class="h"><span></span><button type="button" aria-label="Close">×</button></div></div>';
+    o.querySelector('span').textContent=el.dataset.title;
+    const box=o.querySelector('.box');box.insertBefore(m,box.querySelector('.h'));
+    document.body.appendChild(o);v.play&&v.play().catch(()=>{});
+    const close=()=>{v.pause();o.remove();document.removeEventListener('keydown',k);el.focus()};
+    const k=e=>{if(e.key==='Escape')close()};
+    document.addEventListener('keydown',k);
+    o.addEventListener('click',e=>{if(e.target===o||e.target.closest('.h button'))close()});
+    o.querySelector('.h button').focus();
+  }
+  document.querySelectorAll('.vl').forEach(el=>{
+    el.addEventListener('pointerenter',()=>{clearTimeout(timer);timer=setTimeout(()=>show(el),180)});
+    el.addEventListener('pointerleave',hide);
+    el.addEventListener('focus',()=>{clearTimeout(timer);timer=setTimeout(()=>show(el),120)});
+    el.addEventListener('blur',hide);
+    const go=e=>{e.stopPropagation();e.preventDefault();open(el)};
+    el.addEventListener('click',go);
+    el.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' ')go(e)});
+  });
+  addEventListener('scroll',hide,{passive:true});
+})();
+</script>
+</body>
+</html>

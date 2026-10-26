@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sign up · Cloudways</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--heading:#253858;--body:#4b5971;--brand:#2f39bf;--brand-hover:#252ea3;--border:#dfe1e6;--field:#c1c7d0;--hint:#a5adba;--danger:#d92d20}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{min-height:100%}
+body{font-family:Poppins,system-ui,sans-serif;color:var(--heading);background:#fff;font-size:13px;line-height:normal;display:flex;min-height:100vh}
+a{color:var(--brand);text-decoration:none;font-weight:500}
+a:hover{text-decoration:underline}
+button,input,select{font:inherit}
+img{display:block}
+:focus-visible{outline:2px solid var(--brand);outline-offset:2px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+[hidden]{display:none!important}
+
+/* ---------- left: form ---------- */
+.left{flex:1;min-width:0;display:flex;flex-direction:column;padding:32px}
+.top{display:flex;align-items:center;justify-content:space-between;height:28px}
+.top .logo{height:28px;width:auto}
+.top p{font-size:13px;color:var(--heading)}
+.content{flex:1;display:flex;justify-content:center;padding:32px 0 48px}
+.card{width:440px;max-width:100%}
+h1{font-size:20px;font-weight:700;line-height:28px}
+.sub{color:var(--body);line-height:20px}
+.head{margin-bottom:20px}
+
+.social{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.social button{height:54px;border:1px solid var(--border);border-radius:4px;background:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;font-size:11px;color:var(--heading);cursor:pointer;transition:background .15s,border-color .15s}
+.social button:hover{background:#f8f9fc;border-color:#c5c9d3}
+.social button img{width:16px;height:16px}
+.or{display:flex;align-items:center;gap:10px;margin:24px 0;font-size:11px;color:var(--body);text-transform:uppercase}
+.or::before,.or::after{content:"";flex:1;height:1px;background:var(--border)}
+
+form{display:grid;gap:20px}
+.fields{display:grid;gap:16px}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.fld label{display:block;font-size:12px;font-weight:400;line-height:18px;margin-bottom:6px}
+.box{position:relative}
+.box input,.box select{width:100%;height:40px;border:1px solid var(--field);border-radius:4px;padding:0 12px;font-size:13px;line-height:20px;color:var(--heading);background:#fff;outline:0;transition:border-color .15s,box-shadow .15s}
+.box input::placeholder{color:var(--hint)}
+.box input:hover,.box select:hover{border-color:#a5adba}
+.box input:focus,.box select:focus{border-color:var(--brand);box-shadow:0 0 0 3px rgba(47,57,191,.12)}
+.box select{appearance:none;-webkit-appearance:none;padding-right:40px;cursor:pointer;background:#fff url("assets/signup/chevron.svg") no-repeat right 10px center/20px 20px;color:var(--hint)}
+.box select.has-value{color:var(--heading)}
+.box select option{color:var(--heading)}
+.box.pw input{padding-right:44px}
+.eye,.promo-link{background:none;border:0}
+.eye{position:absolute;right:4px;top:4px;width:32px;height:32px;display:grid;place-items:center;border-radius:4px;color:var(--body);cursor:pointer}
+.eye:hover{background:#f1f2f6}
+.fld.err .box input,.fld.err .box select{border-color:var(--danger)}
+.fld.err .box input:focus,.fld.err .box select:focus{box-shadow:0 0 0 3px rgba(217,45,32,.12)}
+.msg{display:none;color:var(--danger);font-size:11px;margin-top:4px}
+.fld.err .msg{display:block}
+.help{font-size:11px;color:var(--body);margin-top:4px}
+
+.promo-link{display:inline-flex;align-items:center;gap:6px;padding:0 2px;font-size:13px;font-weight:500;line-height:20px;color:var(--brand);width:fit-content;cursor:pointer}
+.promo-link img{width:20px;height:15px}
+.promo-link:hover{text-decoration:underline}
+.promo-box{margin-top:12px}
+
+.agree{display:flex;align-items:flex-start;gap:6px;font-size:13px;line-height:20px;cursor:pointer}
+.agree input{position:absolute;opacity:0;width:20px;height:20px;margin:0;cursor:pointer}
+.agree .sq{width:20px;height:20px;flex-shrink:0;background:url("assets/signup/checkbox.svg") no-repeat center/20px 20px;border-radius:4px;transition:background-color .15s}
+.agree input:checked+.sq{background:var(--brand) url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none'><path d='M5.5 10.5l3 3 6-6.5' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/></svg>") no-repeat center/20px 20px}
+.agree input:focus-visible+.sq{outline:2px solid var(--brand);outline-offset:2px}
+.agree.err .sq{box-shadow:0 0 0 1px var(--danger)}
+.agree-wrap .msg{margin-left:26px}
+.agree-wrap.err .msg{display:block}
+.agree a{font-weight:500}
+
+.submit{width:100%;height:40px;border:0;border-radius:4px;background:var(--brand);color:#fff;font-size:13px;font-weight:500;cursor:pointer;transition:background .15s}
+.submit:hover{background:var(--brand-hover)}
+.submit:disabled{opacity:.7;cursor:progress}
+
+/* ---------- right: promo panel ---------- */
+.right{width:37.3%;min-width:420px;max-width:560px;position:relative;overflow:hidden;background:#fdfbff;display:flex;flex-direction:column;align-items:center;padding:92px 0 64px}
+.glow{position:absolute;max-width:none;pointer-events:none}
+.g1{left:439px;top:-606px;width:1575.96px;height:1366.55px}
+.g2{left:-519px;top:-677px;width:2303.96px;height:2084px;opacity:.6}
+.rc{position:relative;width:365px;max-width:calc(100% - 40px);display:flex;flex-direction:column;align-items:center}
+.rc h2{font-size:24px;font-weight:600;line-height:32px;text-align:center}
+.rc h2 span{display:block;color:var(--brand)}
+.rule{width:349px;max-width:100%;height:1px;margin-top:32px}
+.rc h3{font-size:18px;font-weight:500;line-height:26px;margin-top:40px}
+.checks{list-style:none;display:grid;gap:16px;margin-top:24px}
+.checks li{display:flex;align-items:center;gap:12px;font-size:14px;line-height:22px;color:var(--heading)}
+.checks img{width:18.24px;height:18.24px;flex-shrink:0}
+.rule.r2{margin-top:92px}
+.medals{display:flex;gap:2.7px;margin-top:32px}
+.medals img{width:44.63px;height:57.92px}
+.g2row{display:flex;align-items:center;gap:10px;margin-top:11px;height:26px}
+.g2row .g2{position:static;width:24px;height:24px;opacity:1}
+.g2row .line{width:1px;height:26px}
+.stars{display:flex}
+.stars img{width:24px;height:24px}
+.rated{font-size:16px;font-weight:500;line-height:24px;margin-top:11px;text-align:center}
+
+@media(max-width:900px){.right{display:none}.left{padding:20px}.content{padding-top:24px}}
+@media(max-width:480px){.social{grid-template-columns:repeat(2,1fr)}.row2{grid-template-columns:1fr}.top p{font-size:12px}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<main class="left">
+  <div class="top">
+    <img class="logo" src="assets/login/logo.svg" alt="Cloudways by DigitalOcean">
+    <p>Already have an account? <a href="login.html">Login</a></p>
+  </div>
+
+  <div class="content">
+    <section class="card" aria-labelledby="su-title">
+      <div class="head">
+        <h1 id="su-title">Get Started Absolutely Free</h1>
+        <p class="sub">Free trial, No credit card required</p>
+      </div>
+
+      <div class="social">
+        <button type="button" data-provider="DigitalOcean"><img src="assets/login/do.svg" alt="">DigitalOcean</button>
+        <button type="button" data-provider="LinkedIn"><img src="assets/login/linkedin.svg" alt="">Linkedin</button>
+        <button type="button" data-provider="GitHub"><img src="assets/login/github.svg" alt="">GitHub</button>
+        <button type="button" data-provider="Google"><img src="assets/login/google.svg" alt="">Google</button>
+      </div>
+
+      <div class="or">Or continue with</div>
+
+      <form id="signup" novalidate>
+        <div class="fields">
+          <div class="row2">
+            <div class="fld" id="f-first"><label for="first">First Name</label><div class="box"><input id="first" name="first" autocomplete="given-name" placeholder="Enter your first name"></div><p class="msg">Enter your first name.</p></div>
+            <div class="fld" id="f-last"><label for="last">Last Name</label><div class="box"><input id="last" name="last" autocomplete="family-name" placeholder="Enter your last name"></div><p class="msg">Enter your last name.</p></div>
+          </div>
+          <div class="row2">
+            <div class="fld" id="f-email"><label for="email">Email</label><div class="box"><input id="email" name="email" type="email" autocomplete="email" placeholder="Enter your email"></div><p class="msg">Enter a valid email address.</p></div>
+            <div class="fld" id="f-pass"><label for="pass">Create Password</label>
+              <div class="box pw"><input id="pass" name="password" type="password" autocomplete="new-password" placeholder="Create a password">
+                <button type="button" class="eye" id="eye" aria-label="Show password" aria-pressed="false"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/><path id="slash" d="M3 3l18 18" style="display:none"/></svg></button></div>
+              <p class="msg">Use at least 8 characters.</p></div>
+          </div>
+          <div class="fld" id="f-role"><label for="role">I would best describe my self as</label>
+            <div class="box"><select id="role" name="role"><option value="" selected>Please select</option><option>Developer</option><option>Agency or freelancer</option><option>Business owner</option><option>Designer</option><option>Marketer</option><option>Other</option></select></div>
+            <p class="msg">Please select an option.</p></div>
+          <div class="fld" id="f-spend"><label for="spend">My monthly hosting spending is</label>
+            <div class="box"><select id="spend" name="spend"><option value="" selected>Please select</option><option>Less than $50</option><option>$50 – $200</option><option>$200 – $500</option><option>$500 – $1,000</option><option>More than $1,000</option><option>I’m not sure yet</option></select></div>
+            <p class="msg">Please select an option.</p></div>
+        </div>
+
+        <div>
+          <button type="button" class="promo-link" id="promo-btn" aria-expanded="false" aria-controls="promo-box"><img src="assets/signup/promo.svg" alt="">I have a promo code</button>
+          <div class="fld promo-box" id="promo-box" hidden><label class="sr" for="promo">Promo code</label><div class="box"><input id="promo" name="promo" autocomplete="off" placeholder="Enter your promo code"></div></div>
+        </div>
+
+        <div class="agree-wrap" id="f-agree">
+          <label class="agree"><input type="checkbox" id="agree"><span class="sq"></span><span>I agree to Cloudways <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a></span></label>
+          <p class="msg">Please accept the terms to continue.</p>
+        </div>
+
+        <button class="submit" id="submit" type="submit">Sign Up</button>
+      </form>
+    </section>
+  </div>
+</main>
+
+<aside class="right" aria-label="Why Cloudways">
+  <img class="glow g1" src="assets/signup/glow-top.svg" alt="">
+  <img class="glow g2" src="assets/signup/glow-big.svg" alt="">
+  <div class="rc">
+    <h2>Unleash the Power of <span>Managed Cloud Hosting</span></h2>
+    <img class="rule" src="assets/signup/rule-top.svg" alt="">
+    <h3>Your Plan Comes With:</h3>
+    <ul class="checks">
+      <li><img src="assets/signup/check.svg" alt="">Simplicity that saves times</li>
+      <li><img src="assets/signup/check.svg" alt="">Flexibility that adapts</li>
+      <li><img src="assets/signup/check.svg" alt="">Performance without bounds</li>
+      <li><img src="assets/signup/check.svg" alt="">24/7 real-time expert support</li>
+    </ul>
+    <img class="rule r2" src="assets/signup/rule-bottom.svg" alt="">
+    <div class="medals" aria-hidden="true"><img src="assets/signup/medal-2.svg" alt=""><img src="assets/signup/medal-1.svg" alt=""><img src="assets/signup/medal-3.svg" alt=""></div>
+    <div class="g2row" role="img" aria-label="Rated 5 out of 5 on G2">
+      <img class="g2" src="assets/signup/g2.svg" alt=""><img class="line" src="assets/signup/g2-line.svg" alt="">
+      <span class="stars"><img src="assets/signup/star.svg" alt=""><img src="assets/signup/star.svg" alt=""><img src="assets/signup/star.svg" alt=""><img src="assets/signup/star.svg" alt=""><img src="assets/signup/star.svg" alt=""></span>
+    </div>
+    <p class="rated">Rated #1 SMB Hosting on G2</p>
+  </div>
+</aside>
+
+<script>
+const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
+const NEXT='launchpad.html';   // a new account's first stop: the Launch Pad
+const form=$('#signup'),btn=$('#submit');
+
+/* show / hide password */
+$('#eye').addEventListener('click',()=>{
+  const p=$('#pass'),show=p.type==='password';
+  p.type=show?'text':'password';
+  $('#eye').setAttribute('aria-pressed',String(show));
+  $('#eye').setAttribute('aria-label',show?'Hide password':'Show password');
+  $('#slash').style.display=show?'':'none';
+});
+
+/* selects: grey placeholder until a choice is made */
+$$('select').forEach(s=>s.addEventListener('change',()=>{s.classList.toggle('has-value',!!s.value);s.closest('.fld').classList.remove('err')}));
+
+/* promo code */
+$('#promo-btn').addEventListener('click',e=>{
+  const box=$('#promo-box'),open=box.hidden;
+  box.hidden=!open;e.currentTarget.setAttribute('aria-expanded',String(open));
+  if(open)$('#promo').focus();
+});
+
+/* clear a field's error as soon as the person fixes it */
+$$('input').forEach(i=>i.addEventListener('input',()=>{const f=i.closest('.fld,.agree-wrap');if(f)f.classList.remove('err')}));
+$('#agree').addEventListener('change',()=>$('#f-agree').classList.remove('err'));
+
+function go(who){
+  try{sessionStorage.setItem('cw_user',who)}catch{}
+  btn.disabled=true;btn.textContent='Creating your account…';
+  setTimeout(()=>{location.href=NEXT},600);
+}
+
+form.addEventListener('submit',e=>{
+  e.preventDefault();
+  const checks=[
+    ['f-first',$('#first').value.trim().length>0,'#first'],
+    ['f-last',$('#last').value.trim().length>0,'#last'],
+    ['f-email',/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test($('#email').value.trim()),'#email'],
+    ['f-pass',$('#pass').value.length>=8,'#pass'],
+    ['f-role',!!$('#role').value,'#role'],
+    ['f-spend',!!$('#spend').value,'#spend'],
+    ['f-agree',$('#agree').checked,'#agree']
+  ];
+  let firstBad=null;
+  checks.forEach(([id,ok,sel])=>{$('#'+id).classList.toggle('err',!ok);if(!ok&&!firstBad)firstBad=sel});
+  if(firstBad){$(firstBad).focus();return}
+  go($('#first').value.trim());
+});
+
+/* social sign-up (prototype: goes straight to the next screen) */
+$$('[data-provider]').forEach(b=>b.addEventListener('click',()=>go(b.dataset.provider)));
+</script>
+</body>
+</html>
