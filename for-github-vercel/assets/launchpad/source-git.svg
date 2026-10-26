@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 270 150" fill="none">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="270" y2="150" gradientUnits="userSpaceOnUse"><stop stop-color="#eef4fd"/><stop offset="1" stop-color="#e3e9fb"/></linearGradient>
+    <filter id="sh" x="-20%" y="-20%" width="140%" height="150%"><feDropShadow dx="0" dy="3" stdDeviation="4" flood-color="#2f39bf" flood-opacity=".14"/></filter>
+  </defs>
+  <rect width="270" height="150" fill="url(#bg)"/>
+  <circle cx="236" cy="22" r="32" fill="#fff" opacity=".35"/><circle cx="28" cy="130" r="28" fill="#fff" opacity=".3"/>
+  <g filter="url(#sh)"><rect x="48" y="24" width="174" height="102" rx="8" fill="#fff"/></g>
+  <!-- commit graph -->
+  <path d="M78 42v66" stroke="#2f39bf" stroke-width="3" stroke-linecap="round"/>
+  <path d="M78 62c0 12 28 8 28 24" stroke="#8b5cf6" stroke-width="3" stroke-linecap="round"/>
+  <path d="M78 90c0-10 22-8 22-20" stroke="#1a7f4b" stroke-width="3" stroke-linecap="round" opacity=".0"/>
+  <circle cx="78" cy="42" r="6" fill="#fff" stroke="#2f39bf" stroke-width="3"/><circle cx="78" cy="75" r="6" fill="#fff" stroke="#2f39bf" stroke-width="3"/><circle cx="78" cy="108" r="6" fill="#2f39bf"/>
+  <circle cx="106" cy="86" r="6" fill="#fff" stroke="#8b5cf6" stroke-width="3"/>
+  <g stroke-linecap="round" stroke-width="5"><path d="M94 42h60" stroke="#dfe2ee"/><path d="M120 86h58" stroke="#dfe2ee"/><path d="M94 75h42" stroke="#dfe2ee"/><path d="M94 108h72" stroke="#dfe2ee"/></g>
+  <rect x="168" y="36" width="42" height="14" rx="7" fill="#e9eaf9"/><path d="M178 43h22" stroke="#2f39bf" stroke-width="3" stroke-linecap="round"/>
+  <rect x="188" y="79" width="22" height="14" rx="7" fill="#ede7fb"/><path d="M194 86h10" stroke="#8b5cf6" stroke-width="3" stroke-linecap="round"/>
+  <g transform="translate(176 100)"><rect width="34" height="16" rx="8" fill="#1a7f4b"/><path d="M11 8l4 3.5L23 4.5" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></g>
+</svg>
